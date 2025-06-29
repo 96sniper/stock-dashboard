@@ -63,13 +63,12 @@ with tab2:
     st.write("Daily Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
     #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_tail_candle_count.pdf"
-    pdf_path = os.path.join(os.path.dirname(__file__), "daily_tail_candle_count.pdf")
+   image_path = os.path.join(os.path.dirname(__file__), "daily_tail_candle_count.png")
 
-    with open(pdf_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode("utf-8")
-
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="700px" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    if os.path.exists(image_path):
+        st.image(image_path, width=1500)
+    else:
+        st.warning("Daily Tail Candle Count image not found.")
 
     # Display Bullish Tail Candles
     #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_summary_data.xlsx"
@@ -111,13 +110,12 @@ with tab3:
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
     #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_close_above_below_count.pdf"
-    pdf_path = os.path.join(os.path.dirname(__file__), "daily_close_above_below_count.pdf")
+    image_path = os.path.join(os.path.dirname(__file__), "daily_close_above_below_count.png")
 
-    with open(pdf_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode("utf-8")
-
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="700px" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    if os.path.exists(image_path):
+        st.image(image_path, width=1500)
+    else:
+        st.warning("Daily Close Above Below Count image not found.")
 
 # Weekly Tails
 with tab4:
