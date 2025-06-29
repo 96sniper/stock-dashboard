@@ -73,7 +73,8 @@ with tab2:
     st.markdown(pdf_display, unsafe_allow_html=True)
 
     # Display Bullish Tail Candles
-    excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_summary_data.xlsx"
+    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_summary_data.xlsx"
+    excel_path = os.path.join(os.path.dirname(__file__), "daily_summary_data.xlsx")
     try:
         df = pd.read_excel(excel_path)
         bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
@@ -89,7 +90,8 @@ with tab2:
         st.error(f"Error loading Excel file: {e}")
 
     # Display Bearish Tail Candles
-    excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_summary_data.xlsx"
+    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_summary_data.xlsx"
+    excel_path = os.path.join(os.path.dirname(__file__), "daily_summary_data.xlsx")
     try:
         df = pd.read_excel(excel_path)
         bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
@@ -133,7 +135,8 @@ with tab4:
     st.markdown(pdf_display, unsafe_allow_html=True)
 
     # Display Bullish Tail Candles
-    excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_summary_data.xlsx"
+    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_summary_data.xlsx"
+    excel_path = os.path.join(os.path.dirname(__file__), "weekly_summary_data.xlsx")
     try:
         df = pd.read_excel(excel_path)
         bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
@@ -149,7 +152,8 @@ with tab4:
         st.error(f"Error loading Excel file: {e}")
 
     # Display Bearish Tail Candles
-    excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_summary_data.xlsx"
+    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_summary_data.xlsx"
+    excel_path = os.path.join(os.path.dirname(__file__), "weekly_summary_data.xlsx")
     try:
         df = pd.read_excel(excel_path)
         bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
@@ -193,7 +197,8 @@ with tab6:
     st.markdown(pdf_display, unsafe_allow_html=True)
 
     # Display Bullish Tail Candles
-    excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_summary_data.xlsx"
+    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_summary_data.xlsx"
+    excel_path = os.path.join(os.path.dirname(__file__), "monthly_summary_data.xlsx")
     try:
         df = pd.read_excel(excel_path)
         bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
@@ -209,7 +214,8 @@ with tab6:
         st.error(f"Error loading Excel file: {e}")
 
     # Display Bearish Tail Candles
-    excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_summary_data.xlsx"
+    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_summary_data.xlsx"
+    excel_path = os.path.join(os.path.dirname(__file__), "monthly_summary_data.xlsx")
     try:
         df = pd.read_excel(excel_path)
         bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
