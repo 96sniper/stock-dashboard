@@ -53,7 +53,7 @@ with tab1:
     image_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.png")
 
     if os.path.exists(image_path):
-        st.image(image_path, width=900)
+        st.image(image_path, width=1500)
     else:
         st.warning("SPY seasonality image not found.")
 
