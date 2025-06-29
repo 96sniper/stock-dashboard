@@ -235,7 +235,8 @@ with tab7:
 # Upcoming Earnings
 with tab8:
     st.header("Upcoming Earnings")
-    file_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\earnings_calendar.csv"
+    #file_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\earnings_calendar.csv"
+    file_path = os.path.join(os.path.dirname(__file__), "earnings_calendar.csv")
     df = pd.read_csv(file_path)
     st.dataframe(df, use_container_width=True)
 
