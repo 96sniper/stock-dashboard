@@ -53,7 +53,7 @@ with tab1:
     pdf_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.pdf")
 
     with open(pdf_path, "rb") as f:
-    st.download_button(
+        st.download_button(
         label="📄 Download SPY Seasonality PDF",
         data=f,
         file_name="spy_seasonality.pdf",
