@@ -49,16 +49,13 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(["Home Page", "Daily Ta
 # Home Page
 with tab1:
     st.header("SPY Seasonality")
-    
-    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\spy_seasonality.pdf"
-    pdf_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.pdf")
 
-    try:
-        images = convert_from_path(pdf_path, dpi=200)
-        for page in images:
-            st.image(page, use_column_width=True)
-    except Exception as e:
-        st.error(f"Could not render PDF: {e}")
+    image_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.png")
+
+    if os.path.exists(image_path):
+        st.image(image_path, use_column_width=True)
+    else:
+        st.warning("SPY seasonality image not found.")
 
 # Daily Tails
 with tab2:
