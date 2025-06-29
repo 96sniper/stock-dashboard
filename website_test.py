@@ -3,6 +3,7 @@ import streamlit.components.v1 as components
 import base64
 import pandas as pd
 import os
+from pdf2image import convert_from_path
 
 # Set to Wide Mode
 st.set_page_config(layout="wide")
@@ -52,13 +53,12 @@ with tab1:
     #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\spy_seasonality.pdf"
     pdf_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.pdf")
 
-    with open(pdf_path, "rb") as f:
-        st.download_button(
-        label="📄 Download SPY Seasonality PDF",
-        data=f,
-        file_name="spy_seasonality.pdf",
-        mime="application/pdf"
-    )
+    try:
+        images = convert_from_path(pdf_path, dpi=200)
+        for page in images:
+            st.image(page, use_column_width=True)
+    except Exception as e:
+        st.error(f"Could not render PDF: {e}")
 
 # Daily Tails
 with tab2:
