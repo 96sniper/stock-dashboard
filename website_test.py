@@ -63,7 +63,8 @@ with tab2:
     st.header("Daily Tail Candles")
     st.write("Daily Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
-    pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_tail_candle_count.pdf"
+    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_tail_candle_count.pdf"
+    pdf_path = os.path.join(os.path.dirname(__file__), "daily_tail_candle_count.pdf")
 
     with open(pdf_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode("utf-8")
@@ -108,7 +109,8 @@ with tab3:
     st.header("Daily Close Above/Below")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
-    pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_close_above_below_count.pdf"
+    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_close_above_below_count.pdf"
+    pdf_path = os.path.join(os.path.dirname(__file__), "daily_close_above_below_count.pdf")
 
     with open(pdf_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode("utf-8")
@@ -121,7 +123,8 @@ with tab4:
     st.header("Weekly Tail Candles")
     st.write("Weekly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
-    pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_tail_candle_count.pdf"
+    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_tail_candle_count.pdf"
+    pdf_path = os.path.join(os.path.dirname(__file__), "weekly_tail_candle_count.pdf")
 
     with open(pdf_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode("utf-8")
@@ -166,7 +169,8 @@ with tab5:
     st.header("Weekly Close Above/Below")
     st.write("Weekly Close Above Candles minus Weekly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
-    pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_close_above_below_count.pdf"
+    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_close_above_below_count.pdf"
+    pdf_path = os.path.join(os.path.dirname(__file__), "weekly_close_above_below_count.pdf")
 
     with open(pdf_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode("utf-8")
@@ -179,7 +183,8 @@ with tab6:
     st.header("Monthly Tail Candles")
     st.write("Monthly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
-    pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_tail_candle_count.pdf"
+    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_tail_candle_count.pdf"
+    pdf_path = os.path.join(os.path.dirname(__file__), "monthly_tail_candle_count.pdf")
 
     with open(pdf_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode("utf-8")
@@ -224,7 +229,8 @@ with tab7:
     st.header("Monthly Close Above/Below")
     st.write("Monthly Close Above Candles minus Monthly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
-    pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_close_above_below_count.pdf"
+    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_close_above_below_count.pdf"
+    pdf_path = os.path.join(os.path.dirname(__file__), "monthly_close_above_below_count.pdf")
 
     with open(pdf_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode("utf-8")
