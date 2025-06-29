@@ -53,10 +53,12 @@ with tab1:
     pdf_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.pdf")
 
     with open(pdf_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode("utf-8")
-
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000px" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    st.download_button(
+        label="📄 Download SPY Seasonality PDF",
+        data=f,
+        file_name="spy_seasonality.pdf",
+        mime="application/pdf"
+    )
 
 # Daily Tails
 with tab2:
