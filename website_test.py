@@ -48,6 +48,8 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(["Home Page", "Daily Ta
 
 # Home Page
 with tab1:
+
+    # SPY Seasonality
     st.header("SPY Seasonality")
 
     image_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.png")
@@ -56,6 +58,26 @@ with tab1:
         st.image(image_path, width=1500)
     else:
         st.warning("SPY seasonality image not found.")
+
+    # QQQ Seasonality
+    st.subheader("QQQ Seasonality")
+
+    image_path = os.path.join(os.path.dirname(__file__), "qqq_seasonality.png")
+
+    if os.path.exists(image_path):
+        st.image(image_path, width=1500)
+    else:
+        st.warning("QQQ seasonality image not found.")
+
+    # IWM Seasonality
+    st.subheader("IWM Seasonality")
+
+    image_path = os.path.join(os.path.dirname(__file__), "iwm_seasonality.png")
+
+    if os.path.exists(image_path):
+        st.image(image_path, width=1500)
+    else:
+        st.warning("IWM seasonality image not found.")
 
 # Daily Tails
 with tab2:
