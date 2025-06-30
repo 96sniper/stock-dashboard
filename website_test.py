@@ -237,7 +237,7 @@ with tab6:
         bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
         bearish_wick_count = len(bearish_wicks)
 
-        st.subheader(f"Daily Bearish Wick Candles — Count: {bearish_wick_count}")
+        st.subheader(f"Monthly Bearish Wick Candles — Count: {bearish_wick_count}")
         
         if not bearish_wicks.empty:
             st.dataframe(bearish_wicks.reset_index(drop=True))
