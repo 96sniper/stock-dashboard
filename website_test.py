@@ -309,8 +309,8 @@ with tab9:
         today_date = date.today() - timedelta(days=1)
        
         if first_date == today_date:
-            bullish_df = df[df['Candle Signal'] == 'Bearish Wick']
-            if not bullish_df.empty:
+            bearish_df = df[df['Candle Signal'] == 'Bearish Wick']
+            if not beaerish_df.empty:
                 st.subheader("Bearish Wick Candles — Hourly")
                 st.dataframe(bearish_df.reset_index(drop=True), use_container_width=True)
             else:
