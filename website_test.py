@@ -4,7 +4,7 @@ import base64
 import pandas as pd
 import os
 from pdf2image import convert_from_path
-from datetime import date
+from datetime import date, timedelta
 
 # Set to Wide Mode
 st.set_page_config(layout="wide")
@@ -279,15 +279,15 @@ with tab9:
     try:
         df = pd.read_csv(file_path, parse_dates=["Date"])
 
+        # Used to test Dates
         st.write("First row raw value:", df.loc[0, 'Date'])
         st.write("Parsed date:", df.loc[0, 'Date'].date())
         st.write("Today's date:", date.today())
 
-
         # Check if the first row's Date matches today's date in mm/dd/yyyy format
         first_date = df.loc[0, 'Date'].date()
-        today_date = date.today()
-
+        today_date = date.today() - timedelta(days=1)
+       
         if first_date == today_date:
             bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
             if not bullish_df.empty:
