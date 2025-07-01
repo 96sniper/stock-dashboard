@@ -287,13 +287,17 @@ with tab9:
        
         if first_date == today_date:
             bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
+            bull_count = len(bullish_df)
+            
             if not bullish_df.empty:
                 st.subheader("Bullish Wick Candles — Hourly")
                 st.dataframe(bullish_df.reset_index(drop=True), use_container_width=True)
             else:
                 st.info("No 'Bullish Wick' signals found for today.")
+                bull_count = 0
         else:
             st.warning("There is no data for today yet.")
+        st.text(f"bull_count: {bull_count}")
     except Exception as e:
         st.error(f"Failed to process file: {e}")
 
