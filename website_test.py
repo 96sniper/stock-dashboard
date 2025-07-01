@@ -283,7 +283,7 @@ with tab9:
         first_date = df.loc[0, 'Date'].date()
         today_date = date.today()
 
-        if first_date == today_str:
+        if first_date == today_date:
             bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
             if not bullish_df.empty:
                 st.subheader("Bullish Wick Candles — Hourly")
