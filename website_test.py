@@ -277,6 +277,13 @@ with tab9:
     bull_count = 0
     bear_count = 0
 
+     # 🧮 Display Totals at the Top
+    col1, col2 = st.columns(2)
+    col1.metric("Bullish Wick Count", bull_count)
+    col2.metric("Bearish Wick Count", bear_count)
+
+    st.markdown("---")
+    
     # 8:30 Bullish
     st.header("8:30 1hr Bullish Tail Candles")
     file_path = os.path.join(os.path.dirname(__file__), "8_30am_hourly_summary_data.csv")
@@ -299,7 +306,6 @@ with tab9:
                 st.info("No 'Bullish Wick' signals found for today.")
         else:
             st.warning("There is no data for today yet.")
-        st.text(f"bull_count: {bull_count}")
     except Exception as e:
         st.error(f"Failed to process file: {e}")
 
@@ -328,11 +334,9 @@ with tab9:
     except Exception as e:
         st.error(f"Failed to process file: {e}")
 
-    # 🧮 Display Totals at the Top
+   
     st.markdown("---")
-    col1, col2 = st.columns(2)
-    col1.metric("Bullish Wick Count", bull_count)
-    col2.metric("Bearish Wick Count", bear_count)
+   
 
      # 9:30 Bullish
     st.header("9:30 1hr Bullish Tail Candles")
@@ -347,6 +351,8 @@ with tab9:
        
         if first_date == today_date:
             bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
+            bull_count = len(bullish_df)
+            
             if not bullish_df.empty:
                 st.subheader("Bullish Wick Candles — Hourly")
                 st.dataframe(bullish_df.reset_index(drop=True), use_container_width=True)
@@ -370,6 +376,8 @@ with tab9:
        
         if first_date == today_date:
             bearish_df = df[df['Candle Signal'] == 'Bearish Wick']
+            bear_count = len(bearish_df)
+            
             if not bearish_df.empty:
                 st.subheader("Bearish Wick Candles — Hourly")
                 st.dataframe(bearish_df.reset_index(drop=True), use_container_width=True)
