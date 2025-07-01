@@ -310,7 +310,7 @@ with tab9:
        
         if first_date == today_date:
             bearish_df = df[df['Candle Signal'] == 'Bearish Wick']
-            if not beaerish_df.empty:
+            if not bearish_df.empty:
                 st.subheader("Bearish Wick Candles — Hourly")
                 st.dataframe(bearish_df.reset_index(drop=True), use_container_width=True)
             else:
