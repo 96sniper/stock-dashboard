@@ -4,6 +4,7 @@ import base64
 import pandas as pd
 import os
 from pdf2image import convert_from_path
+from datetime import date
 
 # Set to Wide Mode
 st.set_page_config(layout="wide")
