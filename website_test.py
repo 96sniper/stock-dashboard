@@ -320,9 +320,6 @@ with tab9:
     except Exception as e:
         st.error(f"Failed to process file: {e}")
 
-    st.write("----------------------------------------------------------------------------------------------------------------------------------------")
-
-    
      # 9:30 Bullish
     st.header("9:30 1hr Bullish Tail Candles")
     file_path = os.path.join(os.path.dirname(__file__), "9_30am_hourly_summary_data.csv")
