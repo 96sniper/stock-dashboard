@@ -41,10 +41,10 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(["Home Page", "Daily Tail Candles", "Daily Close Above/Below",
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs(["Home Page", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
-                                                          "Upcoming Earnings"])
+                                                          "Upcoming Earnings", "Hourly Candles"])
 
 # Home Page
 with tab1:
@@ -268,3 +268,29 @@ with tab8:
     st.dataframe(df, use_container_width=True)
 
 #######################################################################################################################################################################
+
+# Hourly Candles
+
+with tab9:
+    st.header("8:30 1hr Bullish Tail Candles")
+    file_path = os.path.join(os.path.dirname(__file__), "8_30am_hourly_summary_data.csv")
+
+    try:
+        df = pd.read_csv(file_path)
+
+        # Check if the first row's Date matches today's date in mm/dd/yyyy format
+        first_date = pd.to_datetime(df.loc[0, 'Date']).strftime('%-m/%-d/%Y')
+        today_str = pd.Timestamp.today().strftime('%-m/%-d/%Y')
+
+        if first_date == today_str:
+            bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
+            if not bullish_df.empty:
+                st.subheader("Bullish Wick Candles — Hourly")
+                st.dataframe(bullish_df.reset_index(drop=True), use_container_width=True)
+            else:
+                st.info("No 'Bullish Wick' signals found for today.")
+        else:
+            st.warning("There is no data for today yet.")
+    except Exception as e:
+        st.error(f"Failed to process file: {e}")
+
