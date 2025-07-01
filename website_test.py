@@ -276,11 +276,11 @@ with tab9:
     file_path = os.path.join(os.path.dirname(__file__), "8_30am_hourly_summary_data.csv")
 
     try:
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(file_path, parse_dates=["Date"])
 
         # Check if the first row's Date matches today's date in mm/dd/yyyy format
-        first_date = pd.to_datetime(df.loc[0, 'Date']).strftime('%-m/%-d/%Y')
-        today_str = pd.Timestamp.today().strftime('%-m/%-d/%Y')
+        first_date = df.loc[0, 'Date'].date()
+        today_date = date.today()
 
         if first_date == today_str:
             bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
