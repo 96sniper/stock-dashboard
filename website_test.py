@@ -366,3 +366,97 @@ with tab9:
     except Exception as e:
         st.error(f"Failed to process file: {e}")
 
+
+    # 10:30 Bullish
+    st.header("10:30 1hr Bullish Tail Candles")
+    file_path = os.path.join(os.path.dirname(__file__), "10_30am_hourly_summary_data.csv")
+
+    try:
+        df = pd.read_csv(file_path, parse_dates=["Date"])
+
+        # Check if the first row's Date matches today's date in mm/dd/yyyy format
+        first_date = df.loc[0, 'Date'].date()
+        today_date = date.today() - timedelta(days=1)
+       
+        if first_date == today_date:
+            bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
+            if not bullish_df.empty:
+                st.subheader("Bullish Wick Candles — Hourly")
+                st.dataframe(bullish_df.reset_index(drop=True), use_container_width=True)
+            else:
+                st.info("No 'Bullish Wick' signals found for today.")
+        else:
+            st.warning("There is no data for today yet.")
+    except Exception as e:
+        st.error(f"Failed to process file: {e}")
+
+    # 10:30 Bearish
+    st.header("10:30 1hr Bearish Tail Candles")
+    file_path = os.path.join(os.path.dirname(__file__), "10_30am_hourly_summary_data.csv")
+
+    try:
+        df = pd.read_csv(file_path, parse_dates=["Date"])
+
+        # Check if the first row's Date matches today's date in mm/dd/yyyy format
+        first_date = df.loc[0, 'Date'].date()
+        today_date = date.today() - timedelta(days=1)
+       
+        if first_date == today_date:
+            bearish_df = df[df['Candle Signal'] == 'Bearish Wick']
+            if not bearish_df.empty:
+                st.subheader("Bearish Wick Candles — Hourly")
+                st.dataframe(bearish_df.reset_index(drop=True), use_container_width=True)
+            else:
+                st.info("No 'Bearish Wick' signals found for today.")
+        else:
+            st.warning("There is no data for today yet.")
+    except Exception as e:
+        st.error(f"Failed to process file: {e}")
+
+
+     # 11:30 Bullish
+    st.header("11:30 1hr Bullish Tail Candles")
+    file_path = os.path.join(os.path.dirname(__file__), "11_30am_hourly_summary_data.csv")
+
+    try:
+        df = pd.read_csv(file_path, parse_dates=["Date"])
+
+        # Check if the first row's Date matches today's date in mm/dd/yyyy format
+        first_date = df.loc[0, 'Date'].date()
+        today_date = date.today() - timedelta(days=1)
+       
+        if first_date == today_date:
+            bullish_df = df[df['Candle Signal'] == 'Bullish Wick']
+            if not bullish_df.empty:
+                st.subheader("Bullish Wick Candles — Hourly")
+                st.dataframe(bullish_df.reset_index(drop=True), use_container_width=True)
+            else:
+                st.info("No 'Bullish Wick' signals found for today.")
+        else:
+            st.warning("There is no data for today yet.")
+    except Exception as e:
+        st.error(f"Failed to process file: {e}")
+
+    # 11:30 Bearish
+    st.header("11:30 1hr Bearish Tail Candles")
+    file_path = os.path.join(os.path.dirname(__file__), "11_30am_hourly_summary_data.csv")
+
+    try:
+        df = pd.read_csv(file_path, parse_dates=["Date"])
+
+        # Check if the first row's Date matches today's date in mm/dd/yyyy format
+        first_date = df.loc[0, 'Date'].date()
+        today_date = date.today() - timedelta(days=1)
+       
+        if first_date == today_date:
+            bearish_df = df[df['Candle Signal'] == 'Bearish Wick']
+            if not bearish_df.empty:
+                st.subheader("Bearish Wick Candles — Hourly")
+                st.dataframe(bearish_df.reset_index(drop=True), use_container_width=True)
+            else:
+                st.info("No 'Bearish Wick' signals found for today.")
+        else:
+            st.warning("There is no data for today yet.")
+    except Exception as e:
+        st.error(f"Failed to process file: {e}")
+
