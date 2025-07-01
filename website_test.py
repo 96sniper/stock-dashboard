@@ -279,6 +279,11 @@ with tab9:
     try:
         df = pd.read_csv(file_path, parse_dates=["Date"])
 
+        st.write("First row raw value:", df.loc[0, 'Date'])
+        st.write("Parsed date:", df.loc[0, 'Date'].date())
+        st.write("Today's date:", date.today())
+
+
         # Check if the first row's Date matches today's date in mm/dd/yyyy format
         first_date = df.loc[0, 'Date'].date()
         today_date = date.today()
