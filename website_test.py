@@ -5,6 +5,7 @@ import pandas as pd
 import os
 from pdf2image import convert_from_path
 from datetime import date, timedelta
+import glob
 
 # Set to Wide Mode
 st.set_page_config(layout="wide")
@@ -73,10 +74,16 @@ with tab1:
     # IWM Seasonality
     st.subheader("IWM Seasonality")
 
-    image_path = os.path.join(os.path.dirname(__file__), "iwm_seasonality.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "iwm_seasonality" and ending in .png
+    pattern = os.path.join(base_dir, "iwm_seasonality_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
         st.warning("IWM seasonality image not found.")
 
