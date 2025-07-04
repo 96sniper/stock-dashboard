@@ -415,6 +415,7 @@ with tab8:
 # MACD Overbought/Oversold
 with tab9:
     st.header("MACD Overbought/Oversold")
+    st.write("A reading of 100 on the overbought score tells you that the stocks MACD is the highest its ever been. These are often the strongest stocks in the market. It doesnt mean its time to short them right away though. You want to see price confirm with lower time frame topping tails.")
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
@@ -437,6 +438,7 @@ with tab9:
 # Mercury Retrograde Dates
 with tab10:
     st.header("Mercury Retrograde Dates")
+    st.write("Mercury Retrograde Dates are important dates to pay attention to. Often the stock market sees high volatility during this time.")
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
