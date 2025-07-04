@@ -283,11 +283,6 @@ with tab7:
 with tab8:
     st.header("Upcoming Earnings")
     
-    file_path = os.path.join(os.path.dirname(__file__), "earnings_calendar.csv")
-    df = pd.read_csv(file_path)
-    st.dataframe(df, use_container_width=True)
-
-
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     # Search for files starting with "earnings_calendar" and ending in .csv
@@ -297,7 +292,12 @@ with tab8:
     if matching_files:
         # Grab the most recently modified one
         latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
+        
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
     else:
         st.warning("earnings calendar file not found.")
 
