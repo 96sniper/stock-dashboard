@@ -54,20 +54,32 @@ with tab1:
     # SPY Seasonality
     st.header("SPY Seasonality")
 
-    image_path = os.path.join(os.path.dirname(__file__), "spy_seasonality.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "spy_seasonality" and ending in .png
+    pattern = os.path.join(base_dir, "spy_seasonality_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
         st.warning("SPY seasonality image not found.")
 
     # QQQ Seasonality
     st.subheader("QQQ Seasonality")
 
-    image_path = os.path.join(os.path.dirname(__file__), "qqq_seasonality.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "qqq_seasonality" and ending in .png
+    pattern = os.path.join(base_dir, "qqq_seasonality_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
         st.warning("QQQ seasonality image not found.")
 
