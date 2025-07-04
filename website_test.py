@@ -311,7 +311,7 @@ with tab6:
         st.warning("Monthly Close Above Below Count image not found.")
 
     # Display Bullish Tail Candles
-     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     # Search for files starting with "monthly_summary_data" and ending in .csv
     pattern = os.path.join(base_dir, "monthly_summary_data_*.csv")
