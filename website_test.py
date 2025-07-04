@@ -104,58 +104,95 @@ with tab2:
     st.header("Daily Tail Candles")
     st.write("Daily Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
-    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_tail_candle_count.pdf"
-    image_path = os.path.join(os.path.dirname(__file__), "daily_tail_candle_count.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "daily_tail_candle_count" and ending in .png
+    pattern = os.path.join(base_dir, "daily_tail_candle_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
         st.warning("Daily Tail Candle Count image not found.")
 
+    
     # Display Bullish Tail Candles
-    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_summary_data.xlsx"
-    excel_path = os.path.join(os.path.dirname(__file__), "daily_summary_data.xlsx")
-    try:
-        df = pd.read_excel(excel_path)
-        bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
-        bullish_wick_count = len(bullish_wicks)
-        
-        st.subheader(f"Daily Bullish Wick Candles — Count: {bullish_wick_count}")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-        if not bullish_wicks.empty:
-            st.dataframe(bullish_wicks.reset_index(drop=True))
-        else:
-            st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-    except Exception as e:
-        st.error(f"Error loading Excel file: {e}")
+    # Search for files starting with "daily_summary_data" and ending in .csv
+    pattern = os.path.join(base_dir, "daily_summary_data_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified file
+        latest_file = max(matching_files, key=os.path.getmtime)
+    
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
+        
+            # Filter for Bullish Wick candles
+            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
+            bullish_wick_count = len(bullish_wicks)
+
+            st.subheader(f"Daily Bullish Wick Candles — Count: {bullish_wick_count}")
+
+            if not bullish_wicks.empty:
+                st.dataframe(bullish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("Daily Summary Data file not found.")
 
     # Display Bearish Tail Candles
-    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_summary_data.xlsx"
-    excel_path = os.path.join(os.path.dirname(__file__), "daily_summary_data.xlsx")
-    try:
-        df = pd.read_excel(excel_path)
-        bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
-        bearish_wick_count = len(bearish_wicks)
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-        st.subheader(f"Daily Bearish Wick Candles — Count: {bearish_wick_count}")
+    # Search for files starting with "daily_summary_data" and ending in .csv
+    pattern = os.path.join(base_dir, "daily_summary_data_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified file
+        latest_file = max(matching_files, key=os.path.getmtime)
+    
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
         
-        if not bearish_wicks.empty:
-            st.dataframe(bearish_wicks.reset_index(drop=True))
-        else:
-            st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-    except Exception as e:
-        st.error(f"Error loading Excel file: {e}")
+            # Filter for Bearish Wick candles
+            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
+            bearish_wick_count = len(bearish_wicks)
+
+            st.subheader(f"Daily Bearish Wick Candles — Count: {bearish_wick_count}")
+
+            if not bearish_wicks.empty:
+                st.dataframe(bearish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("Daily Summary Data file not found.")
 
 # Daily Closes
 with tab3:
     st.header("Daily Close Above/Below")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
-    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\daily_close_above_below_count.pdf"
-    image_path = os.path.join(os.path.dirname(__file__), "daily_close_above_below_count.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "daily_close_above_below_count" and ending in .png
+    pattern = os.path.join(base_dir, "daily_close_above_below_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
         st.warning("Daily Close Above Below Count image not found.")
 
@@ -164,58 +201,94 @@ with tab4:
     st.header("Weekly Tail Candles")
     st.write("Weekly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
-    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_tail_candle_count.pdf"
-    image_path = os.path.join(os.path.dirname(__file__), "weekly_tail_candle_count.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "weekly_close_above_below_count" and ending in .png
+    pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
-        st.warning("Weekly Tail Candle Count image not found.")
+        st.warning("Weekly Close Above Below Count image not found.")
 
     # Display Bullish Tail Candles
-    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_summary_data.xlsx"
-    excel_path = os.path.join(os.path.dirname(__file__), "weekly_summary_data.xlsx")
-    try:
-        df = pd.read_excel(excel_path)
-        bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
-        bullish_wick_count = len(bullish_wicks)
-        
-        st.subheader(f"Weekly Bullish Wick Candles — Count: {bullish_wick_count}")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-        if not bullish_wicks.empty:
-            st.dataframe(bullish_wicks.reset_index(drop=True))
-        else:
-            st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-    except Exception as e:
-        st.error(f"Error loading Excel file: {e}")
+    # Search for files starting with "weekly_summary_data" and ending in .csv
+    pattern = os.path.join(base_dir, "weekly_summary_data_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified file
+        latest_file = max(matching_files, key=os.path.getmtime)
+    
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
+        
+            # Filter for Bullish Wick candles
+            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
+            bullish_wick_count = len(bullish_wicks)
+
+            st.subheader(f"Weekly Bullish Wick Candles — Count: {bullish_wick_count}")
+
+            if not bullish_wicks.empty:
+                st.dataframe(bullish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("Weekly Summary Data file not found.")
 
     # Display Bearish Tail Candles
-    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_summary_data.xlsx"
-    excel_path = os.path.join(os.path.dirname(__file__), "weekly_summary_data.xlsx")
-    try:
-        df = pd.read_excel(excel_path)
-        bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
-        bearish_wick_count = len(bearish_wicks)
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-        st.subheader(f"Weekly Bearish Wick Candles — Count: {bearish_wick_count}")
+    # Search for files starting with "weekly_summary_data" and ending in .csv
+    pattern = os.path.join(base_dir, "weekly_summary_data_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified file
+        latest_file = max(matching_files, key=os.path.getmtime)
+    
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
         
-        if not bearish_wicks.empty:
-            st.dataframe(bearish_wicks.reset_index(drop=True))
-        else:
-            st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-    except Exception as e:
-        st.error(f"Error loading Excel file: {e}")
+            # Filter for Bearish Wick candles
+            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
+            bearish_wick_count = len(bearish_wicks)
+
+            st.subheader(f"Weekly Bearish Wick Candles — Count: {bearish_wick_count}")
+
+            if not bearish_wicks.empty:
+                st.dataframe(bearish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("Weekly Summary Data file not found.")
 
 # Weekly Closes
 with tab5:
     st.header("Weekly Close Above/Below")
     st.write("Weekly Close Above Candles minus Weekly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
-    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\weekly_close_above_below_count.pdf"
-    image_path = os.path.join(os.path.dirname(__file__), "weekly_close_above_below_count.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "weekly_close_above_below_count" and ending in .png
+    pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
         st.warning("Weekly Close Above Below Count image not found.")
 
@@ -224,60 +297,98 @@ with tab6:
     st.header("Monthly Tail Candles")
     st.write("Monthly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
-    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_tail_candle_count.pdf"
-    image_path = os.path.join(os.path.dirname(__file__), "monthly_tail_candle_count.png")
+   base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "monthly_close_above_below_count" and ending in .png
+    pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
-        st.warning("Monthly Tail Candle Count image not found.")
+        st.warning("Monthly Close Above Below Count image not found.")
 
     # Display Bullish Tail Candles
-    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_summary_data.xlsx"
-    excel_path = os.path.join(os.path.dirname(__file__), "monthly_summary_data.xlsx")
-    try:
-        df = pd.read_excel(excel_path)
-        bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
-        bullish_wick_count = len(bullish_wicks)
-        
-        st.subheader(f"Monthly Bullish Wick Candles — Count: {bullish_wick_count}")
+     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-        if not bullish_wicks.empty:
-            st.dataframe(bullish_wicks.reset_index(drop=True))
-        else:
-            st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-    except Exception as e:
-        st.error(f"Error loading Excel file: {e}")
+    # Search for files starting with "monthly_summary_data" and ending in .csv
+    pattern = os.path.join(base_dir, "monthly_summary_data_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified file
+        latest_file = max(matching_files, key=os.path.getmtime)
+    
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
+        
+            # Filter for Bullish Wick candles
+            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
+            bullish_wick_count = len(bullish_wicks)
+
+            st.subheader(f"Monthly Bullish Wick Candles — Count: {bullish_wick_count}")
+
+            if not bullish_wicks.empty:
+                st.dataframe(bullish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("Monthly Summary Data file not found.")
 
     # Display Bearish Tail Candles
-    #excel_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_summary_data.xlsx"
-    excel_path = os.path.join(os.path.dirname(__file__), "monthly_summary_data.xlsx")
-    try:
-        df = pd.read_excel(excel_path)
-        bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
-        bearish_wick_count = len(bearish_wicks)
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-        st.subheader(f"Monthly Bearish Wick Candles — Count: {bearish_wick_count}")
+    # Search for files starting with "monthly_summary_data" and ending in .csv
+    pattern = os.path.join(base_dir, "monthly_summary_data_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified file
+        latest_file = max(matching_files, key=os.path.getmtime)
+    
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
         
-        if not bearish_wicks.empty:
-            st.dataframe(bearish_wicks.reset_index(drop=True))
-        else:
-            st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-    except Exception as e:
-        st.error(f"Error loading Excel file: {e}")
+            # Filter for Bearish Wick candles
+            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
+            bearish_wick_count = len(bearish_wicks)
+
+            st.subheader(f"Monthly Bearish Wick Candles — Count: {bearish_wick_count}")
+
+            if not bearish_wicks.empty:
+                st.dataframe(bearish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("Monthly Summary Data file not found.")
+
 
 # Monthly Closes
 with tab7:
     st.header("Monthly Close Above/Below")
     st.write("Monthly Close Above Candles minus Monthly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
-    #pdf_path = r"C:\Users\jrrub\OneDrive\Desktop\Stock Script Analysis Charts\monthly_close_above_below_count.pdf"
-    image_path = os.path.join(os.path.dirname(__file__), "monthly_close_above_below_count.png")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    if os.path.exists(image_path):
-        st.image(image_path, width=1500)
+    # Search for files starting with "monthly_close_above_below_count" and ending in .png
+    pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
     else:
         st.warning("Monthly Close Above Below Count image not found.")
+
 
 # Upcoming Earnings
 with tab8:
