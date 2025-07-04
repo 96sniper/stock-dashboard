@@ -42,10 +42,10 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs(["Home Page", "Daily Tail Candles", "Daily Close Above/Below",
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs(["Home Page", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
-                                                          "Upcoming Earnings", "Notes"])
+                                                          "Upcoming Earnings", "MACD - Overbought/Oversold", "Notes"])
 
 # Home Page
 with tab1:
