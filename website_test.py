@@ -130,7 +130,7 @@ with tab2:
     
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+            #st.dataframe(df, use_container_width=True)
         
             # Filter for Bullish Wick candles
             bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
@@ -160,7 +160,7 @@ with tab2:
     
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+            #st.dataframe(df, use_container_width=True)
         
             # Filter for Bearish Wick candles
             bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
@@ -226,7 +226,7 @@ with tab4:
     
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+            #st.dataframe(df, use_container_width=True)
         
             # Filter for Bullish Wick candles
             bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
@@ -256,7 +256,7 @@ with tab4:
     
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+            #st.dataframe(df, use_container_width=True)
         
             # Filter for Bearish Wick candles
             bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
@@ -322,7 +322,7 @@ with tab6:
     
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+            #st.dataframe(df, use_container_width=True)
         
             # Filter for Bullish Wick candles
             bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
@@ -352,7 +352,7 @@ with tab6:
     
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+            #st.dataframe(df, use_container_width=True)
         
             # Filter for Bearish Wick candles
             bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
