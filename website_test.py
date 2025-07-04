@@ -43,10 +43,11 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs(["Home Page", "Daily Tail Candles", "Daily Close Above/Below",
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs(["Home Page", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
-                                                          "Upcoming Earnings", "MACD - Overbought/Oversold", "Notes"])
+                                                          "Upcoming Earnings", "MACD - Overbought/Oversold", 
+                                                          "Mercury Retrograde Dates", "Notes"])
 
 # Home Page
 with tab1:
@@ -432,6 +433,28 @@ with tab9:
             st.error(f"⚠️ Failed to load CSV file: {e}")
     else:
         st.warning("macd values file not found.")
+
+# Mercury Retrograde Dates
+with tab10:
+    st.header("Mercury Retrograde Dates")
+    
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    # Search for files starting with "mercury_retrograde" and ending in .csv
+    pattern = os.path.join(base_dir, "mercury_retrograde_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("Mercury Retrograde Dates file not found.")
 
 #######################################################################################################################################################################
 
