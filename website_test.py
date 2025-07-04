@@ -117,12 +117,11 @@ with tab2:
     else:
         st.warning("Daily Tail Candle Count image not found.")
 
-    
     # Display Bullish Tail Candles
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "daily_summary_data" and ending in .csv
-    pattern = os.path.join(base_dir, "daily_summary_data_*.csv")
+    # Search for files starting with "daily_summary_data" and ending in .xlsx
+    pattern = os.path.join(base_dir, "daily_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -130,7 +129,7 @@ with tab2:
         latest_file = max(matching_files, key=os.path.getmtime)
     
         try:
-            df = pd.read_csv(latest_file)
+            df = pd.read_excel(latest_file)
             st.dataframe(df, use_container_width=True)
         
             # Filter for Bullish Wick candles
@@ -144,15 +143,15 @@ with tab2:
             else:
                 st.info("No rows found where Candle Signal is 'Bullish Wick'.")
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
         st.warning("Daily Summary Data file not found.")
 
     # Display Bearish Tail Candles
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "daily_summary_data" and ending in .csv
-    pattern = os.path.join(base_dir, "daily_summary_data_*.csv")
+    # Search for files starting with "daily_summary_data" and ending in .xlsx
+    pattern = os.path.join(base_dir, "daily_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -160,7 +159,7 @@ with tab2:
         latest_file = max(matching_files, key=os.path.getmtime)
     
         try:
-            df = pd.read_csv(latest_file)
+            df = pd.read_excel(latest_file)
             st.dataframe(df, use_container_width=True)
         
             # Filter for Bearish Wick candles
@@ -174,7 +173,7 @@ with tab2:
             else:
                 st.info("No rows found where Candle Signal is 'Bearish Wick'.")
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
         st.warning("Daily Summary Data file not found.")
 
@@ -203,8 +202,8 @@ with tab4:
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "weekly_close_above_below_count" and ending in .png
-    pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
+    # Search for files starting with "weekly_tail_candle_count" and ending in .png
+    pattern = os.path.join(base_dir, "weekly_tail_candle_count_*.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -212,13 +211,13 @@ with tab4:
         latest_file = max(matching_files, key=os.path.getmtime)
         st.image(latest_file, width=1500)
     else:
-        st.warning("Weekly Close Above Below Count image not found.")
+        st.warning("Weekly Tail Candle Count image not found.")
 
     # Display Bullish Tail Candles
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "weekly_summary_data" and ending in .csv
-    pattern = os.path.join(base_dir, "weekly_summary_data_*.csv")
+    # Search for files starting with "weekly_summary_data" and ending in .xlsx
+    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -226,7 +225,7 @@ with tab4:
         latest_file = max(matching_files, key=os.path.getmtime)
     
         try:
-            df = pd.read_csv(latest_file)
+            df = pd.read_excel(latest_file)
             st.dataframe(df, use_container_width=True)
         
             # Filter for Bullish Wick candles
@@ -247,8 +246,8 @@ with tab4:
     # Display Bearish Tail Candles
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "weekly_summary_data" and ending in .csv
-    pattern = os.path.join(base_dir, "weekly_summary_data_*.csv")
+    # Search for files starting with "weekly_summary_data" and ending in .xlsx
+    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -256,7 +255,7 @@ with tab4:
         latest_file = max(matching_files, key=os.path.getmtime)
     
         try:
-            df = pd.read_csv(latest_file)
+            df = pd.read_excel(latest_file)
             st.dataframe(df, use_container_width=True)
         
             # Filter for Bearish Wick candles
@@ -270,7 +269,7 @@ with tab4:
             else:
                 st.info("No rows found where Candle Signal is 'Bearish Wick'.")
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
         st.warning("Weekly Summary Data file not found.")
 
@@ -299,8 +298,8 @@ with tab6:
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "monthly_close_above_below_count" and ending in .png
-    pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
+    # Search for files starting with "monthly_tail_candle_count" and ending in .png
+    pattern = os.path.join(base_dir, "monthly_tail_candle_count_*.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -308,13 +307,13 @@ with tab6:
         latest_file = max(matching_files, key=os.path.getmtime)
         st.image(latest_file, width=1500)
     else:
-        st.warning("Monthly Close Above Below Count image not found.")
+        st.warning("Monthly Tail Candle Count image not found.")
 
     # Display Bullish Tail Candles
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "monthly_summary_data" and ending in .csv
-    pattern = os.path.join(base_dir, "monthly_summary_data_*.csv")
+    # Search for files starting with "monthly_summary_data" and ending in .xlsx
+    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -322,7 +321,7 @@ with tab6:
         latest_file = max(matching_files, key=os.path.getmtime)
     
         try:
-            df = pd.read_csv(latest_file)
+            df = pd.read_excel(latest_file)
             st.dataframe(df, use_container_width=True)
         
             # Filter for Bullish Wick candles
@@ -336,15 +335,15 @@ with tab6:
             else:
                 st.info("No rows found where Candle Signal is 'Bullish Wick'.")
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
         st.warning("Monthly Summary Data file not found.")
 
     # Display Bearish Tail Candles
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "monthly_summary_data" and ending in .csv
-    pattern = os.path.join(base_dir, "monthly_summary_data_*.csv")
+    # Search for files starting with "monthly_summary_data" and ending in .xlsx
+    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -352,7 +351,7 @@ with tab6:
         latest_file = max(matching_files, key=os.path.getmtime)
     
         try:
-            df = pd.read_csv(latest_file)
+            df = pd.read_excel(latest_file)
             st.dataframe(df, use_container_width=True)
         
             # Filter for Bearish Wick candles
@@ -366,7 +365,7 @@ with tab6:
             else:
                 st.info("No rows found where Candle Signal is 'Bearish Wick'.")
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
         st.warning("Monthly Summary Data file not found.")
 
