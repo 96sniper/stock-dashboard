@@ -297,7 +297,7 @@ with tab6:
     st.header("Monthly Tail Candles")
     st.write("Monthly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
-   base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     # Search for files starting with "monthly_close_above_below_count" and ending in .png
     pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
