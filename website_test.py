@@ -301,6 +301,28 @@ with tab8:
     else:
         st.warning("earnings calendar file not found.")
 
+# MACD Overbought/Oversold
+with tab9:
+    st.header("MACD Overbought/Oversold")
+    
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    # Search for files starting with "macd_values" and ending in .csv
+    pattern = os.path.join(base_dir, "macd_values_*.csv")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        
+        try:
+            df = pd.read_csv(latest_file)
+            st.dataframe(df, use_container_width=True)
+        except Exception as e:
+            st.error(f"⚠️ Failed to load CSV file: {e}")
+    else:
+        st.warning("macd values file not found.")
+
 #######################################################################################################################################################################
 
 
