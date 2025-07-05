@@ -43,11 +43,12 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs(["Home Page", "Daily Tail Candles", "Daily Close Above/Below",
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
+                                                          "Home Page", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "MACD - Overbought/Oversold", 
-                                                          "Mercury Retrograde Dates", "Notes"])
+                                                          "Mercury Retrograde Dates", "NAAIM Data", "Notes"])
 
 # Home Page
 with tab1:
@@ -457,6 +458,25 @@ with tab10:
             st.error(f"⚠️ Failed to load CSV file: {e}")
     else:
         st.warning("Mercury Retrograde Dates file not found.")
+
+
+# NAAIM Data
+with tab11:
+    st.header("NAAIM Data")
+    st.write("Above 90 seems to be an area where you should start to see a stock market pullback/selloff. Below 40 seems to be an area where you should start to see a stock market rally.")
+    
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    # Search for files starting with "naaim_plot" and ending in .png
+    pattern = os.path.join(base_dir, "naaim_plot_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
+    else:
+        st.warning("NAAIM Plot image not found.")
 
 #######################################################################################################################################################################
 
