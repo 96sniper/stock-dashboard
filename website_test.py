@@ -40,13 +40,6 @@ st.markdown("""
 # Title
 st.title("Stock Market Dashboard")
 
-
-# Layout
-with st.container():
-    col1, col2, col3 = st.columns([1, 3, 1])
-    with col2:
-        st.image("bull_vs_bear.png", use_column_width=True, caption="Battle of the Markets")
-
 ####################################################################################################################################################################
 
 # Tabs
