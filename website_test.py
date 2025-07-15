@@ -478,6 +478,21 @@ with tab11:
     else:
         st.warning("NAAIM Plot image not found.")
 
+# Notes
+with tab12:
+    st.write("Trading Psychology:")
+    st.write("FOMO:")
+    st.write("Afraid of watching the market move in a direction without me.")
+    st.write("Causes me to take stupid trades at the worst time because I’m afraid to watch the market keep moving while I’m on the sidelines.")
+    st.write("What I need to realize is that if I’m putting the time into reading charts consistently, then I will find unlimited trades.")
+    st.write("It is better for me to sit on the sidelines and wait for the charts to show a high reward/risk ratio setup than to force something just because I want action.") 
+    st.write("When I am patient for my trades, I will make plenty of money.")
+    st.write("Remember that my goal is to make 20% per week and compound that over time. This is ambitious but is totally doable if I am patient and am watching chart consistently.")
+
+    
+             
+
+
 #######################################################################################################################################################################
 
 
