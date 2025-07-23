@@ -488,6 +488,8 @@ with tab12:
     st.write("It is better for me to sit on the sidelines and wait for the charts to show a high reward/risk ratio setup than to force something just because I want action.") 
     st.write("When I am patient for my trades, I will make plenty of money.")
     st.write("Remember that my goal is to make 20% per week and compound that over time. This is ambitious but is totally doable if I am patient and am watching chart consistently.")
+    st.write("Be GRATEFULL. Dont get all emotional and upset for missing a trade or taking a small loss. There is a new trade always. I am very lucky to be in the position I am in.")
+    st.write("Just be patient and keep reading charts. The success will come.")
 
     
              
