@@ -490,11 +490,14 @@ with tab12:
     st.write("Remember that my goal is to make 20% per week and compound that over time. This is ambitious but is totally doable if I am patient and am watching chart consistently.")
     st.write("Be GRATEFULL. Dont get all emotional and upset for missing a trade or taking a small loss. There is a new trade always. I am very lucky to be in the position I am in.")
     st.write("Just be patient and keep reading charts. The success will come.")
+    st.write("Check intraday price changes. How do the top % gainers look and how do the bottom % losers look? That will determine market direction.")
+    st.write("Seeing the losers show bottoming tails is bullish. Seeing the winners show topping tails is bearish. Are the losers at support?")
 
     
              
 
 
 #######################################################################################################################################################################
+
 
 
