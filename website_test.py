@@ -436,8 +436,8 @@ with tab9:
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "macd_values" and ending in .csv
-    pattern = os.path.join(base_dir, "macd_values_*.csv")
+    # Search for files starting with "macd_values" and ending in .xlsx
+    pattern = os.path.join(base_dir, "macd_values_*.xlsx")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -445,10 +445,10 @@ with tab9:
         latest_file = max(matching_files, key=os.path.getmtime)
         
         try:
-            df = pd.read_csv(latest_file)
+            df = pd.read_excel(latest_file)
             st.dataframe(df, use_container_width=True)
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
         st.warning("macd values file not found.")
 
