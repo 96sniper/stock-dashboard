@@ -48,7 +48,9 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.t
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "MACD - Overbought/Oversold", 
-                                                          "Mercury Retrograde Dates", "NAAIM Data", "Notes"])
+                                                          "VIX Seasonality", "NAAIM Data", "Notes"])
+
+###############################################################################################################################################################
 
 # Home Page
 with tab1:
@@ -100,6 +102,8 @@ with tab1:
         st.image(latest_file, width=1500)
     else:
         st.warning("IWM seasonality image not found.")
+
+###############################################################################################################################################################
 
 # Daily Tails
 with tab2:
@@ -179,6 +183,8 @@ with tab2:
     else:
         st.warning("Daily Summary Data file not found.")
 
+###############################################################################################################################################################
+
 # Daily Closes
 with tab3:
     st.header("Daily Close Above/Below")
@@ -196,6 +202,8 @@ with tab3:
         st.image(latest_file, width=1500)
     else:
         st.warning("Daily Close Above Below Count image not found.")
+
+###############################################################################################################################################################
 
 # Weekly Tails
 with tab4:
@@ -275,6 +283,8 @@ with tab4:
     else:
         st.warning("Weekly Summary Data file not found.")
 
+###############################################################################################################################################################
+
 # Weekly Closes
 with tab5:
     st.header("Weekly Close Above/Below")
@@ -292,6 +302,8 @@ with tab5:
         st.image(latest_file, width=1500)
     else:
         st.warning("Weekly Close Above Below Count image not found.")
+
+###############################################################################################################################################################
 
 # Monthly Tails
 with tab6:
@@ -371,6 +383,7 @@ with tab6:
     else:
         st.warning("Monthly Summary Data file not found.")
 
+###############################################################################################################################################################
 
 # Monthly Closes
 with tab7:
@@ -390,6 +403,7 @@ with tab7:
     else:
         st.warning("Monthly Close Above Below Count image not found.")
 
+###############################################################################################################################################################
 
 # Upcoming Earnings
 with tab8:
@@ -412,6 +426,8 @@ with tab8:
             st.error(f"⚠️ Failed to load CSV file: {e}")
     else:
         st.warning("earnings calendar file not found.")
+
+###############################################################################################################################################################
 
 # MACD Overbought/Oversold
 with tab9:
@@ -436,28 +452,29 @@ with tab9:
     else:
         st.warning("macd values file not found.")
 
-# Mercury Retrograde Dates
+###############################################################################################################################################################
+
+# VIX Seasonality
 with tab10:
-    st.header("Mercury Retrograde Dates")
-    st.write("Mercury Retrograde Dates are important dates to pay attention to. Often the stock market sees high volatility during this time.")
+    st.header("VIX Seasonality")
+    st.write("VIX Seasonality refers to the historical patterns of the Volatility Index (VIX) throughout the year. Understanding these patterns can help anticipate periods of higher or lower market volatility.")
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "mercury_retrograde" and ending in .csv
-    pattern = os.path.join(base_dir, "mercury_retrograde_*.csv")
+    # Search for the most recent VIX seasonality PNG (date-stamped filename)
+    pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
         # Grab the most recently modified one
         latest_file = max(matching_files, key=os.path.getmtime)
-        
+
         try:
-            df = pd.read_csv(latest_file)
-            st.dataframe(df, use_container_width=True)
+            st.image(latest_file, use_column_width=True)
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
+            st.error(f"⚠️ Failed to load PNG file: {e}")
     else:
-        st.warning("Mercury Retrograde Dates file not found.")
+        st.warning("VIX seasonality PNG not found.")
 
 
 # NAAIM Data
@@ -498,6 +515,7 @@ with tab12:
 
 
 #######################################################################################################################################################################
+
 
 
 
