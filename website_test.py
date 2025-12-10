@@ -108,12 +108,10 @@ with tab1:
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "VIX_seasonality" and ending in .png
     pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
-        # Grab the most recently modified one
         latest_file = max(matching_files, key=os.path.getmtime)
         st.image(latest_file, width=1500)
     else:
@@ -462,7 +460,20 @@ with tab9:
         
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+
+            # Re-apply conditional coloring (Excel formatting isn't preserved when read by pandas)
+            def color_scores(val):
+                try:
+                    if val > 50:
+                        return 'background-color:#ffcccc'
+                    if val < -50:
+                        return 'background-color:#ccffcc'
+                except Exception:
+                    return ''
+                return ''
+
+            styled_df = df.style.applymap(color_scores)
+            st.dataframe(styled_df, use_container_width=True)
         except Exception as e:
             st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
