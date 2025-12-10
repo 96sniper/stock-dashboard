@@ -43,12 +43,12 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
                                                           "Home Page", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "MACD - Overbought/Oversold", 
-                                                          "VIX Seasonality", "NAAIM Data", "Notes"])
+                                                          "NAAIM Data", "Notes"])
 
 ###############################################################################################################################################################
 
@@ -102,6 +102,22 @@ with tab1:
         st.image(latest_file, width=1500)
     else:
         st.warning("IWM seasonality image not found.")
+
+    # VIX Seasonality (moved from its own tab)
+    st.subheader("VIX Seasonality")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    # Search for files starting with "VIX_seasonality" and ending in .png
+    pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        # Grab the most recently modified one
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
+    else:
+        st.warning("VIX seasonality image not found.")
 
 ###############################################################################################################################################################
 
@@ -454,31 +470,8 @@ with tab9:
 
 ###############################################################################################################################################################
 
-# VIX Seasonality
-with tab10:
-    st.header("VIX Seasonality")
-    st.write("VIX Seasonality refers to the historical patterns of the Volatility Index (VIX) throughout the year. Understanding these patterns can help anticipate periods of higher or lower market volatility.")
-    
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for the most recent VIX seasonality PNG (date-stamped filename)
-    pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-
-        try:
-            st.image(latest_file, use_column_width=True)
-        except Exception as e:
-            st.error(f"⚠️ Failed to load PNG file: {e}")
-    else:
-        st.warning("VIX seasonality PNG not found.")
-
-
 # NAAIM Data
-with tab11:
+with tab10:
     st.header("NAAIM Data")
     st.write("Above 90 seems to be an area where you should start to see a stock market pullback/selloff. Below 40 seems to be an area where you should start to see a stock market rally.")
     
@@ -496,7 +489,7 @@ with tab11:
         st.warning("NAAIM Plot image not found.")
 
 # Notes
-with tab12:
+with tab11:
     st.write("Trading Psychology:")
     st.write("FOMO:")
     st.write("Afraid of watching the market move in a direction without me.")
