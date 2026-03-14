@@ -425,6 +425,16 @@ with tab8:
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
+    # Display latest earnings calendar graph
+    graph_pattern = os.path.join(base_dir, "earnings_calendar_*_graph.png")
+    graph_files = glob.glob(graph_pattern)
+
+    if graph_files:
+        latest_graph = max(graph_files, key=os.path.getmtime)
+        st.image(latest_graph, width=1500)
+    else:
+        st.warning("earnings calendar graph image not found.")
+
     # Search for files starting with "earnings_calendar" and ending in .csv
     pattern = os.path.join(base_dir, "earnings_calendar_*.csv")
     matching_files = glob.glob(pattern)
