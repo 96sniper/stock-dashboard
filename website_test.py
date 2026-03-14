@@ -43,12 +43,19 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Home Page", "Daily Tail Candles", "Daily Close Above/Below",
+tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
+
+###############################################################################################################################################################
+
+# Mindset
+with tab0:
+    st.header("Psychology")
+    st.write("hello")
 
 ###############################################################################################################################################################
 
@@ -460,6 +467,8 @@ with tab9:
     st.write("Green Zones show where the 20MA flips above the 50MA. Red Zones show where the 20MA flips below the 50MA.")
     st.write("This chart shows that when a 20/50ma crossover, the odds of price action to a certain direction increases.")
     st.write("This should help me in my short term trading by knowing what price should do.")
+    st.write("The price action following a 20/50ma crossover is not guaranteed but the odds increase for a certain direction.")
+    st.write("The zones were calculated by looking for the maximum price gain or decline within the zone. This simply gives an idea to what direction price should be heading short term.")
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
