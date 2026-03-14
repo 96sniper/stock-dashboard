@@ -43,8 +43,8 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "Daily Tail Candles", "Daily Close Above/Below",
+tab0, tab1, tab_spy_vix, tab_mercury, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "Mercury Retrograde Analysis", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
@@ -566,6 +566,39 @@ with tab_spy_vix:
             st.image(latest, use_container_width=True)
         else:
             st.warning(f"{label} image not found.")
+
+#######################################################################################################################################################################
+
+# Mercury Retrograde Analysis
+with tab_mercury:
+    st.header("Mercury Retrograde Analysis")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    # Summary page first
+    summary_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_summary_*_graph.png"))
+    if summary_matches:
+        latest_summary = max(summary_matches, key=os.path.getmtime)
+        st.subheader("Summary Stats")
+        st.image(latest_summary, use_container_width=True)
+    else:
+        st.warning("Mercury retrograde summary image not found.")
+
+    # Then show SPY pages in reverse order (e.g., 7 -> 1)
+    page_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_spy_page_*_graph.png"))
+    if page_matches:
+        def extract_page_number(path: str) -> int:
+            name = os.path.basename(path)
+            try:
+                return int(name.split("_page_")[1].split("_")[0])
+            except Exception:
+                return -1
+
+        ordered_pages = sorted(page_matches, key=extract_page_number, reverse=True)
+        st.subheader("SPY Candlestick Pages (Newest Page Number First)")
+        st.image(ordered_pages, use_container_width=True)
+    else:
+        st.warning("Mercury retrograde SPY page images not found.")
 
     
              
