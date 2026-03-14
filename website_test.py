@@ -43,8 +43,8 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Daily Tail Candles", "Daily Close Above/Below",
+tab0, tab1, tab_spy_vix, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
@@ -55,8 +55,20 @@ tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.ta
 # Mindset
 with tab0:
     st.header("Psychology")
-    st.write("hello")
-
+    st.write("Psychology is the most important aspect of trading")
+    st.write(" ")
+    st.write("Mind like a quarterback.")
+    st.write("Tom Brady either throws the ball in a safe place for the receiver to catch or he throws it away. No home runs. He is happy with a short gain consistently.")
+    st.write(" ")
+    st.write("Remember that this trading account is my entire future. Smart trades at the right time will compound into a fortune. Dumb trades at the wrong time will compound into a disaster.")
+    st.write("Most days I will be best off by just watching charts and doing nothing.")
+    st.write(" ")
+    st.write("Being in a trade is one of the toughest places to be in because rational thinking goes away.")
+    st.write("What ive noticed is by being very-very patient, I am able to identify the best possible trade entries and get out quickly. Not being in a position gave me that ability to read markets correctly.")
+    st.write(" ")
+    st.write("Try to not hold over the weekend - Dont trade Friday unless there is a quick day trade.")
+    st.write("My mind will be too focussed on news and Bitcoin over the weekend if I enter a position on friday.")
+    st.write("Not to mention the 3 days you lose out on theta.")
 ###############################################################################################################################################################
 
 # Home Page
@@ -533,6 +545,27 @@ with tab11:
     st.write("Just be patient and keep reading charts. The success will come.")
     st.write("Check intraday price changes. How do the top % gainers look and how do the bottom % losers look? That will determine market direction.")
     st.write("Seeing the losers show bottoming tails is bullish. Seeing the winners show topping tails is bearish. Are the losers at support?")
+
+#######################################################################################################################################################################
+
+# SPY/VIX Analysis
+with tab_spy_vix:
+    st.header("SPY/VIX Analysis")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    for label, prefix in [
+        ("VIX Avg Price & STD Dev Bands", "vix_analysis"),
+        ("VIX Weekday Returns & Hit Rate", "vix_weekday"),
+        ("SPY Weekday Returns & Hit Rate", "spy_weekday"),
+    ]:
+        st.subheader(label)
+        matches = glob.glob(os.path.join(base_dir, f"{prefix}_*_graph.png"))
+        if matches:
+            latest = max(matches, key=os.path.getmtime)
+            st.image(latest, use_container_width=True)
+        else:
+            st.warning(f"{label} image not found.")
 
     
              
