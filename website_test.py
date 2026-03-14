@@ -47,7 +47,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
                                                           "Home Page", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
-                                                          "Upcoming Earnings", "MACD - Overbought/Oversold", 
+                                                          "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
 ###############################################################################################################################################################
@@ -431,7 +431,7 @@ with tab8:
 
     if graph_files:
         latest_graph = max(graph_files, key=os.path.getmtime)
-        st.image(latest_graph, width=1500)
+        st.image(latest_graph, use_container_width=True)
     else:
         st.warning("earnings calendar graph image not found.")
 
@@ -453,41 +453,39 @@ with tab8:
 
 ###############################################################################################################################################################
 
-# MACD Overbought/Oversold
+# 20/50ma Crossover
 with tab9:
-    st.header("MACD Overbought/Oversold")
-    st.write("A reading of 100 on the overbought score tells you that the stocks MACD is the highest its ever been. These are often the strongest stocks in the market. It doesnt mean its time to short them right away though. You want to see price confirm with lower time frame topping tails.")
+    st.header("20/50ma Crossover")
+    st.write("SPY daily candlestick pages with MA 20/50 crossover zones and summary stats.")
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "macd_values" and ending in .xlsx
-    pattern = os.path.join(base_dir, "macd_values_*.xlsx")
+    # Search for files starting with "spy_daily_data" and ending in "_graph.png"
+    pattern = os.path.join(base_dir, "spy_daily_data_*_page_*_graph.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
-        # Grab the most recently modified one
+        # Pick the latest date-run by using the newest modified file, then matching its date prefix
         latest_file = max(matching_files, key=os.path.getmtime)
-        
-        try:
-            df = pd.read_excel(latest_file)
+        latest_name = os.path.basename(latest_file)
+        latest_prefix = latest_name.split("_page_")[0]
 
-            # Re-apply conditional coloring (Excel formatting isn't preserved when read by pandas)
-            def color_scores(val):
-                try:
-                    if val > 50:
-                        return 'background-color:#ffcccc'
-                    if val < -50:
-                        return 'background-color:#ccffcc'
-                except Exception:
-                    return ''
-                return ''
+        latest_run_pages = [
+            file_path for file_path in matching_files
+            if os.path.basename(file_path).startswith(latest_prefix + "_page_")
+        ]
 
-            styled_df = df.style.applymap(color_scores)
-            st.dataframe(styled_df, use_container_width=True)
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
+        def extract_page_number(path: str) -> int:
+            name = os.path.basename(path)
+            try:
+                return int(name.split("_page_")[1].split("_graph.png")[0])
+            except Exception:
+                return 999999
+
+        latest_run_pages = sorted(latest_run_pages, key=extract_page_number)
+        st.image(latest_run_pages, use_container_width=True)
     else:
-        st.warning("macd values file not found.")
+        st.warning("20/50ma crossover graph images not found.")
 
 ###############################################################################################################################################################
 
