@@ -482,7 +482,7 @@ with tab9:
             except Exception:
                 return 999999
 
-        latest_run_pages = sorted(latest_run_pages, key=extract_page_number)
+        latest_run_pages = sorted(latest_run_pages, key=extract_page_number, reverse=True)
         st.image(latest_run_pages, use_container_width=True)
     else:
         st.warning("20/50ma crossover graph images not found.")
