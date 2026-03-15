@@ -595,15 +595,22 @@ with tab_ytd:
             df = pd.read_excel(latest_file)
             styled_df = (
                 df.style
+                .format(precision=2, na_rep="")
                 .set_properties(**{"text-align": "center"})
                 .set_table_styles([
                     {"selector": "th", "props": [("text-align", "center")]},
+                    {"selector": "th.col_heading", "props": [("text-align", "center")]},
+                    {"selector": "th.row_heading", "props": [("text-align", "center")]},
+                    {"selector": "th.blank", "props": [("text-align", "center")]},
                     {"selector": "td", "props": [("text-align", "center")]},
                 ])
             )
-            left_col, center_col, right_col = st.columns([1.2, 2.6, 1.2])
-            with center_col:
-                st.dataframe(styled_df, width=780, height=420)
+            left_col, spacer_col, right_col = st.columns([3.2, 1.1, 1.1])
+            with left_col:
+                st.markdown(
+                    f"<div style='width:780px'>{styled_df.to_html()}</div>",
+                    unsafe_allow_html=True,
+                )
         except Exception as e:
             st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
