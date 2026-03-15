@@ -587,38 +587,67 @@ with tab_ytd:
     st.header("YTD Analysis")
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-    matches = glob.glob(os.path.join(base_dir, "ytd_analysis_*.xlsx"))
+    sector_matches = glob.glob(os.path.join(base_dir, "ytd_analysis_*.xlsx"))
+    all_stocks_matches = glob.glob(os.path.join(base_dir, "all_stocks_ytd_analysis_*.xlsx"))
 
-    if matches:
-        latest_file = max(matches, key=os.path.getmtime)
-        try:
-            df = pd.read_excel(latest_file)
-            row_height = 24
-            table_height = min(900, max(360, row_height * (len(df) + 1) + 12))
-            st.markdown(
-                """
-                <style>
-                div[data-testid="stDataFrame"] div[role="columnheader"] {
-                    text-align: center !important;
-                    justify-content: center !important;
-                    font-size: 0.82rem !important;
-                }
-                div[data-testid="stDataFrame"] div[role="gridcell"] {
-                    text-align: center !important;
-                    justify-content: center !important;
-                    font-size: 0.82rem !important;
-                }
-                </style>
-                """,
-                unsafe_allow_html=True,
-            )
-            left_col, spacer_col, right_col = st.columns([3.2, 1.1, 1.1])
-            with left_col:
-                st.dataframe(df, width=720, height=table_height, hide_index=True, row_height=row_height)
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("YTD analysis file not found.")
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stDataFrame"] div[role="columnheader"] {
+            text-align: center !important;
+            justify-content: center !important;
+            font-size: 0.82rem !important;
+        }
+        div[data-testid="stDataFrame"] div[role="gridcell"] {
+            text-align: center !important;
+            justify-content: center !important;
+            font-size: 0.82rem !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    row_height = 24
+    left_col, right_col = st.columns(2)
+
+    with left_col:
+        st.subheader("Sector ETFs")
+        if sector_matches:
+            latest_sector_file = max(sector_matches, key=os.path.getmtime)
+            try:
+                sector_df = pd.read_excel(latest_sector_file)
+                sector_table_height = min(900, max(360, row_height * (len(sector_df) + 1) + 12))
+                st.dataframe(
+                    sector_df,
+                    width=720,
+                    height=sector_table_height,
+                    hide_index=True,
+                    row_height=row_height,
+                )
+            except Exception as e:
+                st.error(f"⚠️ Failed to load sector ETF XLSX file: {e}")
+        else:
+            st.warning("Sector ETF YTD analysis file not found.")
+
+    with right_col:
+        st.subheader("All Stocks")
+        if all_stocks_matches:
+            latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
+            try:
+                all_stocks_df = pd.read_excel(latest_all_stocks_file)
+                all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
+                st.dataframe(
+                    all_stocks_df,
+                    width=720,
+                    height=all_stocks_table_height,
+                    hide_index=True,
+                    row_height=row_height,
+                )
+            except Exception as e:
+                st.error(f"⚠️ Failed to load all-stocks XLSX file: {e}")
+        else:
+            st.warning("All stocks YTD analysis file not found.")
 
 #######################################################################################################################################################################
 
