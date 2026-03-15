@@ -593,7 +593,17 @@ with tab_ytd:
         latest_file = max(matches, key=os.path.getmtime)
         try:
             df = pd.read_excel(latest_file)
-            st.dataframe(df, use_container_width=True)
+            styled_df = (
+                df.style
+                .set_properties(**{"text-align": "center"})
+                .set_table_styles([
+                    {"selector": "th", "props": [("text-align", "center")]},
+                    {"selector": "td", "props": [("text-align", "center")]},
+                ])
+            )
+            left_col, center_col, right_col = st.columns([1.2, 2.6, 1.2])
+            with center_col:
+                st.dataframe(styled_df, width=780, height=420)
         except Exception as e:
             st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
