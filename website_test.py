@@ -531,6 +531,17 @@ with tab10:
     else:
         st.warning("NAAIM Plot image not found.")
 
+    st.subheader("NAAIM + SPY Overlay")
+
+    combined_pattern = os.path.join(base_dir, "naaim_spy_combined_*_graph.png")
+    combined_files = glob.glob(combined_pattern)
+
+    if combined_files:
+        latest_combined = max(combined_files, key=os.path.getmtime)
+        st.image(latest_combined, width=1500)
+    else:
+        st.warning("NAAIM + SPY combined graph image not found.")
+
 # Notes
 with tab11:
     st.write("Trading Psychology:")
