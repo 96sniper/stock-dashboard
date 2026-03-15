@@ -593,6 +593,7 @@ with tab_ytd:
         latest_file = max(matches, key=os.path.getmtime)
         try:
             df = pd.read_excel(latest_file)
+            table_height = min(1200, max(420, 35 * (len(df) + 1)))
             st.markdown(
                 """
                 <style>
@@ -610,7 +611,7 @@ with tab_ytd:
             )
             left_col, spacer_col, right_col = st.columns([3.2, 1.1, 1.1])
             with left_col:
-                st.dataframe(df, width=780, height=420, hide_index=True)
+                st.dataframe(df, width=780, height=table_height, hide_index=True)
         except Exception as e:
             st.error(f"⚠️ Failed to load XLSX file: {e}")
     else:
