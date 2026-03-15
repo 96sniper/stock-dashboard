@@ -558,12 +558,14 @@ with tab_spy_vix:
         ("VIX Avg Price & STD Dev Bands", "vix_analysis"),
         ("VIX Weekday Returns & Hit Rate", "vix_weekday"),
         ("SPY Weekday Returns & Hit Rate", "spy_weekday"),
+        ("SPY Candles with UVXY+SPY Positive Dates", "spy_uvxy_positive"),
+        ("SPY Candles with VIX+SPY Positive Dates", "spy_vix_positive"),
     ]:
         st.subheader(label)
         matches = glob.glob(os.path.join(base_dir, f"{prefix}_*_graph.png"))
         if matches:
             latest = max(matches, key=os.path.getmtime)
-            st.image(latest, use_container_width=True)
+            st.image(latest, width=1200)
         else:
             st.warning(f"{label} image not found.")
 
@@ -580,7 +582,7 @@ with tab_mercury:
     if summary_matches:
         latest_summary = max(summary_matches, key=os.path.getmtime)
         st.subheader("Summary Stats")
-        st.image(latest_summary, use_container_width=True)
+        st.image(latest_summary, width=1200)
     else:
         st.warning("Mercury retrograde summary image not found.")
 
@@ -596,7 +598,7 @@ with tab_mercury:
 
         ordered_pages = sorted(page_matches, key=extract_page_number, reverse=True)
         st.subheader("SPY Candlestick Pages (Newest Page Number First)")
-        st.image(ordered_pages, use_container_width=True)
+        st.image(ordered_pages, width=1200)
     else:
         st.warning("Mercury retrograde SPY page images not found.")
 
