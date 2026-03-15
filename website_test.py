@@ -43,8 +43,8 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab_mercury, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "Mercury Retrograde Analysis", "Daily Tail Candles", "Daily Close Above/Below",
+tab0, tab1, tab_spy_vix, tab_ytd, tab_mercury, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "YTD Analysis", "Mercury Retrograde Analysis", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
@@ -568,6 +568,25 @@ with tab_spy_vix:
             st.image(latest, width=1200)
         else:
             st.warning(f"{label} image not found.")
+
+#######################################################################################################################################################################
+
+# YTD Analysis
+with tab_ytd:
+    st.header("YTD Analysis")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    matches = glob.glob(os.path.join(base_dir, "ytd_analysis_*.xlsx"))
+
+    if matches:
+        latest_file = max(matches, key=os.path.getmtime)
+        try:
+            df = pd.read_excel(latest_file)
+            st.dataframe(df, use_container_width=True)
+        except Exception as e:
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
+    else:
+        st.warning("YTD analysis file not found.")
 
 #######################################################################################################################################################################
 
