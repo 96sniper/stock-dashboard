@@ -43,10 +43,9 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Daily Tail Candles", "Daily Close Above/Below",
-                                                          "Weekly Tail Candles", "Weekly Close Above/Below", 
-                                                          "Monthly Tail Candles", "Monthly Close Above/Below",
+tab0, tab1, tab_spy_vix, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab5, tab7, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Daily Close Above/Below",
+                                                          "Weekly Close Above/Below", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -142,16 +141,19 @@ with tab1:
 
 ###############################################################################################################################################################
 
-# Daily Tails
+# Tail Candles (Daily/Weekly/Monthly)
 with tab2:
-    st.header("Daily Tail Candles")
+    st.header("Tail Candles (D-W-M)")
     st.write("Daily Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     # Search for files starting with "daily_tail_candle_count" and ending in .png
     pattern = os.path.join(base_dir, "daily_tail_candle_count_*.png")
-    matching_files = glob.glob(pattern)
+    matching_files = [
+        path for path in glob.glob(pattern)
+        if "daily_tail_candle_count_separate_" not in os.path.basename(path)
+    ]
 
     if matching_files:
         # Grab the most recently modified one
@@ -159,6 +161,16 @@ with tab2:
         st.image(latest_file, width=1500)
     else:
         st.warning("Daily Tail Candle Count image not found.")
+
+    st.subheader("Daily Tail Candle Counts (Separate)")
+    separate_pattern = os.path.join(base_dir, "daily_tail_candle_count_separate_*.png")
+    separate_matches = glob.glob(separate_pattern)
+
+    if separate_matches:
+        latest_separate_file = max(separate_matches, key=os.path.getmtime)
+        st.image(latest_separate_file, width=1500)
+    else:
+        st.warning("Daily Tail Candle Count (Separate) image not found.")
 
     # Display Bullish Tail Candles
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
@@ -220,6 +232,128 @@ with tab2:
     else:
         st.warning("Daily Summary Data file not found.")
 
+    st.divider()
+    st.subheader("Weekly Tail Candles")
+    st.write("Weekly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    pattern = os.path.join(base_dir, "weekly_tail_candle_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
+    else:
+        st.warning("Weekly Tail Candle Count image not found.")
+
+    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        latest_file = max(matching_files, key=os.path.getmtime)
+
+        try:
+            df = pd.read_excel(latest_file)
+
+            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]
+            bullish_wick_count = len(bullish_wicks)
+
+            st.subheader(f"Weekly Bullish Wick Candles — Count: {bullish_wick_count}")
+
+            if not bullish_wicks.empty:
+                st.dataframe(bullish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
+    else:
+        st.warning("Weekly Summary Data file not found.")
+
+    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        latest_file = max(matching_files, key=os.path.getmtime)
+
+        try:
+            df = pd.read_excel(latest_file)
+
+            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
+            bearish_wick_count = len(bearish_wicks)
+
+            st.subheader(f"Weekly Bearish Wick Candles — Count: {bearish_wick_count}")
+
+            if not bearish_wicks.empty:
+                st.dataframe(bearish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
+    else:
+        st.warning("Weekly Summary Data file not found.")
+
+    st.divider()
+    st.subheader("Monthly Tail Candles")
+    st.write("Monthly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    pattern = os.path.join(base_dir, "monthly_tail_candle_count_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
+    else:
+        st.warning("Monthly Tail Candle Count image not found.")
+
+    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        latest_file = max(matching_files, key=os.path.getmtime)
+
+        try:
+            df = pd.read_excel(latest_file)
+
+            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]
+            bullish_wick_count = len(bullish_wicks)
+
+            st.subheader(f"Monthly Bullish Wick Candles — Count: {bullish_wick_count}")
+
+            if not bullish_wicks.empty:
+                st.dataframe(bullish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
+    else:
+        st.warning("Monthly Summary Data file not found.")
+
+    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        latest_file = max(matching_files, key=os.path.getmtime)
+
+        try:
+            df = pd.read_excel(latest_file)
+
+            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
+            bearish_wick_count = len(bearish_wicks)
+
+            st.subheader(f"Monthly Bearish Wick Candles — Count: {bearish_wick_count}")
+
+            if not bearish_wicks.empty:
+                st.dataframe(bearish_wicks.reset_index(drop=True))
+            else:
+                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
+        except Exception as e:
+            st.error(f"⚠️ Failed to load XLSX file: {e}")
+    else:
+        st.warning("Monthly Summary Data file not found.")
+
 ###############################################################################################################################################################
 
 # Daily Closes
@@ -242,86 +376,6 @@ with tab3:
 
 ###############################################################################################################################################################
 
-# Weekly Tails
-with tab4:
-    st.header("Weekly Tail Candles")
-    st.write("Weekly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
-    
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "weekly_tail_candle_count" and ending in .png
-    pattern = os.path.join(base_dir, "weekly_tail_candle_count_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Weekly Tail Candle Count image not found.")
-
-    # Display Bullish Tail Candles
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "weekly_summary_data" and ending in .xlsx
-    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified file
-        latest_file = max(matching_files, key=os.path.getmtime)
-    
-        try:
-            df = pd.read_excel(latest_file)
-            #st.dataframe(df, use_container_width=True)
-        
-            # Filter for Bullish Wick candles
-            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
-            bullish_wick_count = len(bullish_wicks)
-
-            st.subheader(f"Weekly Bullish Wick Candles — Count: {bullish_wick_count}")
-
-            if not bullish_wicks.empty:
-                st.dataframe(bullish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
-    else:
-        st.warning("Weekly Summary Data file not found.")
-
-    # Display Bearish Tail Candles
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "weekly_summary_data" and ending in .xlsx
-    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified file
-        latest_file = max(matching_files, key=os.path.getmtime)
-    
-        try:
-            df = pd.read_excel(latest_file)
-            #st.dataframe(df, use_container_width=True)
-        
-            # Filter for Bearish Wick candles
-            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
-            bearish_wick_count = len(bearish_wicks)
-
-            st.subheader(f"Weekly Bearish Wick Candles — Count: {bearish_wick_count}")
-
-            if not bearish_wicks.empty:
-                st.dataframe(bearish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Weekly Summary Data file not found.")
-
-###############################################################################################################################################################
-
 # Weekly Closes
 with tab5:
     st.header("Weekly Close Above/Below")
@@ -339,86 +393,6 @@ with tab5:
         st.image(latest_file, width=1500)
     else:
         st.warning("Weekly Close Above Below Count image not found.")
-
-###############################################################################################################################################################
-
-# Monthly Tails
-with tab6:
-    st.header("Monthly Tail Candles")
-    st.write("Monthly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
-    
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "monthly_tail_candle_count" and ending in .png
-    pattern = os.path.join(base_dir, "monthly_tail_candle_count_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Monthly Tail Candle Count image not found.")
-
-    # Display Bullish Tail Candles
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "monthly_summary_data" and ending in .xlsx
-    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified file
-        latest_file = max(matching_files, key=os.path.getmtime)
-    
-        try:
-            df = pd.read_excel(latest_file)
-            #st.dataframe(df, use_container_width=True)
-        
-            # Filter for Bullish Wick candles
-            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
-            bullish_wick_count = len(bullish_wicks)
-
-            st.subheader(f"Monthly Bullish Wick Candles — Count: {bullish_wick_count}")
-
-            if not bullish_wicks.empty:
-                st.dataframe(bullish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Monthly Summary Data file not found.")
-
-    # Display Bearish Tail Candles
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "monthly_summary_data" and ending in .xlsx
-    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified file
-        latest_file = max(matching_files, key=os.path.getmtime)
-    
-        try:
-            df = pd.read_excel(latest_file)
-            #st.dataframe(df, use_container_width=True)
-        
-            # Filter for Bearish Wick candles
-            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
-            bearish_wick_count = len(bearish_wicks)
-
-            st.subheader(f"Monthly Bearish Wick Candles — Count: {bearish_wick_count}")
-
-            if not bearish_wicks.empty:
-                st.dataframe(bearish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Monthly Summary Data file not found.")
 
 ###############################################################################################################################################################
 
@@ -689,7 +663,7 @@ with tab_fed_funds_spy:
                 return -1
 
         ordered_pages = sorted(fed_page_matches, key=extract_fed_page_number, reverse=True)
-        st.image(ordered_pages, width=1200)
+        st.image(ordered_pages, use_container_width=True)
     else:
         st.warning("Fed Funds Rate - SPY graph images not found.")
 
@@ -706,7 +680,9 @@ with tab_mercury:
     if summary_matches:
         latest_summary = max(summary_matches, key=os.path.getmtime)
         st.subheader("Summary Stats")
-        st.image(latest_summary, width=1200)
+        summary_col, _ = st.columns(2)
+        with summary_col:
+            st.image(latest_summary, use_container_width=True)
     else:
         st.warning("Mercury retrograde summary image not found.")
 
@@ -722,7 +698,7 @@ with tab_mercury:
 
         ordered_pages = sorted(page_matches, key=extract_page_number, reverse=True)
         st.subheader("SPY Candlestick Pages (Newest Page Number First)")
-        st.image(ordered_pages, width=1200)
+        st.image(ordered_pages, use_container_width=True)
     else:
         st.warning("Mercury retrograde SPY page images not found.")
 
