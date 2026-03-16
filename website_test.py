@@ -43,8 +43,8 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab_ytd, tab_mercury, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "YTD Analysis", "Mercury Retrograde Analysis", "Daily Tail Candles", "Daily Close Above/Below",
+tab0, tab1, tab_spy_vix, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Daily Tail Candles", "Daily Close Above/Below",
                                                           "Weekly Tail Candles", "Weekly Close Above/Below", 
                                                           "Monthly Tail Candles", "Monthly Close Above/Below",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
@@ -648,6 +648,28 @@ with tab_ytd:
                 st.error(f"⚠️ Failed to load all-stocks XLSX file: {e}")
         else:
             st.warning("All stocks YTD analysis file not found.")
+
+#######################################################################################################################################################################
+
+# Fed Funds Rate - SPY
+with tab_fed_funds_spy:
+    st.header("Fed Funds Rate - SPY")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    fed_page_matches = glob.glob(os.path.join(base_dir, "fed_rates_spy_page_*_graph.png"))
+
+    if fed_page_matches:
+        def extract_fed_page_number(path: str) -> int:
+            name = os.path.basename(path)
+            try:
+                return int(name.split("_page_")[1].split("_")[0])
+            except Exception:
+                return -1
+
+        ordered_pages = sorted(fed_page_matches, key=extract_fed_page_number)
+        st.image(ordered_pages, width=1200)
+    else:
+        st.warning("Fed Funds Rate - SPY graph images not found.")
 
 #######################################################################################################################################################################
 
