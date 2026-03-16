@@ -69,6 +69,10 @@ with tab0:
     st.write("Try to not hold over the weekend - Dont trade Friday unless there is a quick day trade.")
     st.write("My mind will be too focussed on news and Bitcoin over the weekend if I enter a position on friday.")
     st.write("Not to mention the 3 days you lose out on theta.")
+    st.write(" ")
+    st.write("The hardest thing is not trading at all. Most of the time staying away is the best decision.")
+    st.write(" ")
+    st.write("Its not about finding the perfect trade that will double your money. Its about finding opportunities where reward outweighs the risk and taking a shot.")
 ###############################################################################################################################################################
 
 # Home Page
@@ -666,7 +670,7 @@ with tab_fed_funds_spy:
             except Exception:
                 return -1
 
-        ordered_pages = sorted(fed_page_matches, key=extract_fed_page_number)
+        ordered_pages = sorted(fed_page_matches, key=extract_fed_page_number, reverse=True)
         st.image(ordered_pages, width=1200)
     else:
         st.warning("Fed Funds Rate - SPY graph images not found.")
