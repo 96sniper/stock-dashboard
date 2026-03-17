@@ -43,9 +43,8 @@ st.title("Stock Market Dashboard")
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab5, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Daily Close Above/Below",
-                                                          "Weekly Close Above/Below", "Monthly Close Above/Below",
+tab0, tab1, tab_spy_vix, tab_spy_day_of_week, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "SPY Day of Week", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below (D-W-M)",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -382,9 +381,9 @@ with tab2:
 
 ###############################################################################################################################################################
 
-# Daily Closes
+# Close Above/Below (Daily/Weekly/Monthly)
 with tab3:
-    st.header("Daily Close Above/Below")
+    st.header("Close Above/Below (D-W-M)")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
     
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
@@ -400,41 +399,31 @@ with tab3:
     else:
         st.warning("Daily Close Above Below Count image not found.")
 
-###############################################################################################################################################################
-
-# Weekly Closes
-with tab5:
-    st.header("Weekly Close Above/Below")
+    st.divider()
+    st.subheader("Weekly Close Above/Below")
     st.write("Weekly Close Above Candles minus Weekly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
-    
+
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "weekly_close_above_below_count" and ending in .png
     pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
-        # Grab the most recently modified one
         latest_file = max(matching_files, key=os.path.getmtime)
         st.image(latest_file, width=1500)
     else:
         st.warning("Weekly Close Above Below Count image not found.")
 
-###############################################################################################################################################################
-
-# Monthly Closes
-with tab7:
-    st.header("Monthly Close Above/Below")
+    st.divider()
+    st.subheader("Monthly Close Above/Below")
     st.write("Monthly Close Above Candles minus Monthly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
-    
+
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "monthly_close_above_below_count" and ending in .png
     pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
-        # Grab the most recently modified one
         latest_file = max(matching_files, key=os.path.getmtime)
         st.image(latest_file, width=1500)
     else:
@@ -601,6 +590,28 @@ with tab_spy_vix:
             st.image(latest, width=1200)
         else:
             st.warning(f"{label} image not found.")
+
+#######################################################################################################################################################################
+
+# SPY Day of Week
+with tab_spy_day_of_week:
+    st.header("SPY Day of Week")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+
+    st.subheader("Daily SPY Gain Chart")
+    gain_chart_path = os.path.join(base_dir, "Daily_SPY_Gain_Chart.png")
+    if os.path.exists(gain_chart_path):
+        st.image(gain_chart_path, use_container_width=True)
+    else:
+        st.warning("Daily SPY Gain Chart image not found.")
+
+    st.subheader("SPY Daily Positive Count Ghart")
+    positive_count_path = os.path.join(base_dir, "SPY_Daily_Positive_Count_Ghart.png")
+    if os.path.exists(positive_count_path):
+        st.image(positive_count_path, use_container_width=True)
+    else:
+        st.warning("SPY Daily Positive Count Ghart image not found.")
 
 #######################################################################################################################################################################
 
