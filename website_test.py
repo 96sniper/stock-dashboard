@@ -239,13 +239,26 @@ with tab2:
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     pattern = os.path.join(base_dir, "weekly_tail_candle_count_*.png")
-    matching_files = glob.glob(pattern)
+    matching_files = [
+        path for path in glob.glob(pattern)
+        if "weekly_tail_candle_count_separate_" not in os.path.basename(path)
+    ]
 
     if matching_files:
         latest_file = max(matching_files, key=os.path.getmtime)
         st.image(latest_file, width=1500)
     else:
         st.warning("Weekly Tail Candle Count image not found.")
+
+    st.subheader("Weekly Tail Candle Counts (Separate)")
+    separate_pattern = os.path.join(base_dir, "weekly_tail_candle_count_separate_*.png")
+    separate_matches = glob.glob(separate_pattern)
+
+    if separate_matches:
+        latest_separate_file = max(separate_matches, key=os.path.getmtime)
+        st.image(latest_separate_file, width=1500)
+    else:
+        st.warning("Weekly Tail Candle Count (Separate) image not found.")
 
     pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
@@ -300,13 +313,26 @@ with tab2:
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     pattern = os.path.join(base_dir, "monthly_tail_candle_count_*.png")
-    matching_files = glob.glob(pattern)
+    matching_files = [
+        path for path in glob.glob(pattern)
+        if "monthly_tail_candle_count_separate_" not in os.path.basename(path)
+    ]
 
     if matching_files:
         latest_file = max(matching_files, key=os.path.getmtime)
         st.image(latest_file, width=1500)
     else:
         st.warning("Monthly Tail Candle Count image not found.")
+
+    st.subheader("Monthly Tail Candle Counts (Separate)")
+    separate_pattern = os.path.join(base_dir, "monthly_tail_candle_count_separate_*.png")
+    separate_matches = glob.glob(separate_pattern)
+
+    if separate_matches:
+        latest_separate_file = max(separate_matches, key=os.path.getmtime)
+        st.image(latest_separate_file, width=1500)
+    else:
+        st.warning("Monthly Tail Candle Count (Separate) image not found.")
 
     pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
     matching_files = glob.glob(pattern)
