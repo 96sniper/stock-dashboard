@@ -40,6 +40,27 @@ st.markdown("""
 # Title
 st.title("Stock Market Dashboard")
 
+# Password protection for viewership
+import streamlit as st
+
+def check_password():
+    def password_entered():
+        if st.session_state["password"] == "Hockey1996$":
+            st.session_state["password_correct"] = True
+        else:
+            st.session_state["password_correct"] = False
+
+    if "password_correct" not in st.session_state:
+        st.session_state["password_correct"] = False
+
+    if not st.session_state["password_correct"]:
+        st.text_input("Enter password", type="password", on_change=password_entered, key="password")
+        if "password" in st.session_state and not st.session_state["password_correct"]:
+            st.error("Password incorrect")
+        st.stop()
+
+check_password()
+
 ####################################################################################################################################################################
 
 # Tabs
