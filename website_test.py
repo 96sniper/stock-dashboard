@@ -686,7 +686,7 @@ with tab_ytd:
                 sector_table_height = min(900, max(360, row_height * (len(sector_df) + 1) + 12))
                 st.dataframe(
                     sector_df,
-                    width=720,
+                    use_container_width=True,
                     height=sector_table_height,
                     hide_index=True,
                     row_height=row_height,
@@ -705,7 +705,7 @@ with tab_ytd:
                 all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
                 st.dataframe(
                     all_stocks_df,
-                    width=720,
+                    use_container_width=True,
                     height=all_stocks_table_height,
                     hide_index=True,
                     row_height=row_height,
