@@ -11,6 +11,8 @@ import glob
 st.set_page_config(layout="wide")
 
 # Inject light gray theme with markdown
+
+# Inject light gray theme and compact table style with markdown
 st.markdown("""
     <style>
     .stApp {
@@ -33,6 +35,16 @@ st.markdown("""
 
     h1, h2, h3, h4 {
         color: #1a1a1a;
+    }
+
+    /* Compact table style for all tables */
+    div[data-testid="stDataFrame"] table {
+        font-size: 0.85em !important;
+    }
+    div[data-testid="stDataFrame"] th, 
+    div[data-testid="stDataFrame"] td {
+        padding: 2px 4px !important;
+        word-break: break-word;
     }
     </style>
 """, unsafe_allow_html=True)
