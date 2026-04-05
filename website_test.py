@@ -73,6 +73,18 @@ def check_password():
 
 check_password()
 
+
+def find_matching_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
+    normalized_map = {
+        str(col).strip().lower().replace(" ", "").replace("_", ""): col
+        for col in df.columns
+    }
+    for candidate in candidates:
+        key = candidate.strip().lower().replace(" ", "").replace("_", "")
+        if key in normalized_map:
+            return normalized_map[key]
+    return None
+
 ####################################################################################################################################################################
 
 # Tabs
@@ -702,9 +714,59 @@ with tab_ytd:
             latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
             try:
                 all_stocks_df = pd.read_excel(latest_all_stocks_file)
-                all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
+
+                sector_col = find_matching_column(all_stocks_df, ["Sector"])
+                industry_col = find_matching_column(all_stocks_df, ["Industry"])
+                filtered_df = all_stocks_df.copy()
+
+                if sector_col or industry_col:
+                    filter_container = getattr(st, "popover", None)
+                    if callable(filter_container):
+                        filter_context = filter_container("🔎 Filter Table")
+                    else:
+                        filter_context = st.expander("🔎 Filter Table", expanded=False)
+
+                    with filter_context:
+                        selected_sectors = []
+                        selected_industries = []
+                        filter_col1, filter_col2 = st.columns(2)
+
+                        if sector_col:
+                            sector_options = sorted(
+                                value for value in all_stocks_df[sector_col].dropna().astype(str).unique() if value.strip()
+                            )
+                            selected_sectors = filter_col1.multiselect(
+                                "Sector",
+                                sector_options,
+                                key="ytd_all_stocks_sector_filter",
+                            )
+                            if selected_sectors:
+                                filtered_df = filtered_df[filtered_df[sector_col].astype(str).isin(selected_sectors)]
+                        else:
+                            filter_col1.caption("No `Sector` column found")
+
+                        if industry_col:
+                            industry_source_df = filtered_df if sector_col and selected_sectors else all_stocks_df
+                            industry_options = sorted(
+                                value for value in industry_source_df[industry_col].dropna().astype(str).unique() if value.strip()
+                            )
+                            selected_industries = filter_col2.multiselect(
+                                "Industry",
+                                industry_options,
+                                key="ytd_all_stocks_industry_filter",
+                            )
+                            if selected_industries:
+                                filtered_df = filtered_df[filtered_df[industry_col].astype(str).isin(selected_industries)]
+                        else:
+                            filter_col2.caption("No `Industry` column found")
+
+                    st.caption(f"Showing {len(filtered_df):,} of {len(all_stocks_df):,} rows")
+                else:
+                    st.caption("No `Sector` or `Industry` columns were found in this file.")
+
+                all_stocks_table_height = min(900, max(360, row_height * (len(filtered_df) + 1) + 12))
                 st.dataframe(
-                    all_stocks_df,
+                    filtered_df,
                     use_container_width=True,
                     height=all_stocks_table_height,
                     hide_index=True,
