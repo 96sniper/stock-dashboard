@@ -667,19 +667,32 @@ with tab_spy_day_of_week:
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    st.subheader("Daily SPY Gain Chart")
-    gain_chart_path = os.path.join(base_dir, "Daily_SPY_Gain_Chart.png")
-    if os.path.exists(gain_chart_path):
-        st.image(gain_chart_path, use_container_width=True)
-    else:
-        st.warning("Daily SPY Gain Chart image not found.")
+    day_tab1, day_tab2, day_tab3 = st.tabs([
+        "Daily SPY Gain Chart",
+        "SPY Daily Positive Count Ghart",
+        "Monthly SPY Gain Chart",
+    ])
 
-    st.subheader("SPY Daily Positive Count Ghart")
-    positive_count_path = os.path.join(base_dir, "SPY_Daily_Positive_Count_Ghart.png")
-    if os.path.exists(positive_count_path):
-        st.image(positive_count_path, use_container_width=True)
-    else:
-        st.warning("SPY Daily Positive Count Ghart image not found.")
+    with day_tab1:
+        gain_chart_path = os.path.join(base_dir, "Daily_SPY_Gain_Chart.png")
+        if os.path.exists(gain_chart_path):
+            st.image(gain_chart_path, use_container_width=True)
+        else:
+            st.warning("Daily SPY Gain Chart image not found.")
+
+    with day_tab2:
+        positive_count_path = os.path.join(base_dir, "SPY_Daily_Positive_Count_Ghart.png")
+        if os.path.exists(positive_count_path):
+            st.image(positive_count_path, use_container_width=True)
+        else:
+            st.warning("SPY Daily Positive Count Ghart image not found.")
+
+    with day_tab3:
+        monthly_gain_path = os.path.join(base_dir, "MONTHLY_SPY_Gain_Chart.png")
+        if os.path.exists(monthly_gain_path):
+            st.image(monthly_gain_path, use_container_width=True)
+        else:
+            st.warning("Monthly SPY Gain Chart image not found.")
 
 #######################################################################################################################################################################
 
