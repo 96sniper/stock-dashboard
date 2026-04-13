@@ -618,7 +618,7 @@ with tab_spy_vix:
         vix_weekday_matches = glob.glob(os.path.join(base_dir, "vix_weekday_*_graph.png"))
         if vix_weekday_matches:
             latest_vix_weekday = max(vix_weekday_matches, key=os.path.getmtime)
-            st.image(latest_vix_weekday, use_container_width=True)
+            st.image(latest_vix_weekday, width=800)
         else:
             st.warning("VIX Weekday Returns & Hit Rate image not found.")
 
@@ -626,7 +626,7 @@ with tab_spy_vix:
         spy_weekday_matches = glob.glob(os.path.join(base_dir, "spy_weekday_*_graph.png"))
         if spy_weekday_matches:
             latest_spy_weekday = max(spy_weekday_matches, key=os.path.getmtime)
-            st.image(latest_spy_weekday, use_container_width=True)
+            st.image(latest_spy_weekday, width=800)
         else:
             st.warning("SPY Daily Returns & % Positive Rate image not found.")
 
@@ -634,7 +634,7 @@ with tab_spy_vix:
         spy_10wk_matches = glob.glob(os.path.join(base_dir, "spy_last_10_weeks_*_graph.png"))
         if spy_10wk_matches:
             latest_spy_10wk = max(spy_10wk_matches, key=os.path.getmtime)
-            st.image(latest_spy_10wk, use_container_width=True)
+            st.image(latest_spy_10wk, width=800)
         else:
             st.warning("SPY Last 10 Weeks image not found.")
 
