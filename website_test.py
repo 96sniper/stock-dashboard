@@ -316,10 +316,13 @@ with tab3:
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-    cab_tab1, cab_tab2, cab_tab3 = st.tabs([
+    cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6 = st.tabs([
         "Daily",
         "Weekly",
         "Monthly",
+        "Daily Close Trend",
+        "Weekly Close Trend",
+        "Monthly Close Trend",
     ])
 
     with cab_tab1:
@@ -351,6 +354,27 @@ with tab3:
             st.image(latest_file, width=1500)
         else:
             st.warning("Monthly Close Above Below Count image not found.")
+
+    with cab_tab4:
+        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), use_container_width=True)
+        else:
+            st.warning("Daily Close Trend image not found.")
+
+    with cab_tab5:
+        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), use_container_width=True)
+        else:
+            st.warning("Weekly Close Trend image not found.")
+
+    with cab_tab6:
+        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), use_container_width=True)
+        else:
+            st.warning("Monthly Close Trend image not found.")
 
 ###############################################################################################################################################################
 
