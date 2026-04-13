@@ -423,7 +423,11 @@ with tab9:
                 return 999999
 
         latest_run_pages = sorted(latest_run_pages, key=extract_page_number, reverse=True)
-        st.image(latest_run_pages, use_container_width=True)
+        ma_tab_labels = [f"Page {extract_page_number(p)}" for p in latest_run_pages]
+        ma_tabs = st.tabs(ma_tab_labels)
+        for tab, page_path in zip(ma_tabs, latest_run_pages):
+            with tab:
+                st.image(page_path, use_container_width=True)
     else:
         st.warning("20/50ma crossover graph images not found.")
 
@@ -482,11 +486,10 @@ with tab_spy_vix:
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     (
-        svix_tab1, svix_tab2, svix_tab3, svix_tab4, svix_tab5, svix_tab6
+        svix_tab1, svix_tab2, svix_tab3, svix_tab4, svix_tab5
     ) = st.tabs([
         "VIX Daily Returns & % Positive Rate",
         "SPY Daily Returns & % Positive Rate",
-        "SPY Last 10 Weeks",
         "VIX Avg Price & STD Dev Bands",
         "SPY Candles with UVXY+SPY Positive Dates",
         "SPY Candles with VIX+SPY Positive Dates",
@@ -509,28 +512,20 @@ with tab_spy_vix:
             st.warning("SPY Daily Returns & % Positive Rate image not found.")
 
     with svix_tab3:
-        spy_10wk_matches = glob.glob(os.path.join(base_dir, "spy_last_10_weeks_*_graph.png"))
-        if spy_10wk_matches:
-            latest_spy_10wk = max(spy_10wk_matches, key=os.path.getmtime)
-            st.image(latest_spy_10wk, width=800)
-        else:
-            st.warning("SPY Last 10 Weeks image not found.")
-
-    with svix_tab4:
         matches = glob.glob(os.path.join(base_dir, "vix_analysis_*_graph.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=1200)
         else:
             st.warning("VIX Avg Price & STD Dev Bands image not found.")
 
-    with svix_tab5:
+    with svix_tab4:
         matches = glob.glob(os.path.join(base_dir, "spy_uvxy_positive_*_graph.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=1200)
         else:
             st.warning("SPY Candles with UVXY+SPY Positive Dates image not found.")
 
-    with svix_tab6:
+    with svix_tab5:
         matches = glob.glob(os.path.join(base_dir, "spy_vix_positive_*_graph.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=1200)
@@ -718,7 +713,11 @@ with tab_fed_funds_spy:
                 return -1
 
         ordered_pages = sorted(fed_page_matches, key=extract_fed_page_number, reverse=True)
-        st.image(ordered_pages, use_container_width=True)
+        fed_tab_labels = [f"Page {extract_fed_page_number(p)}" for p in ordered_pages]
+        fed_tabs = st.tabs(fed_tab_labels)
+        for tab, page_path in zip(fed_tabs, ordered_pages):
+            with tab:
+                st.image(page_path, use_container_width=True)
     else:
         st.warning("Fed Funds Rate - SPY graph images not found.")
 
@@ -730,32 +729,31 @@ with tab_mercury:
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Summary page first
+    def extract_mercury_page_number(path: str) -> int:
+        name = os.path.basename(path)
+        try:
+            return int(name.split("_page_")[1].split("_")[0])
+        except Exception:
+            return -1
+
     summary_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_summary_*_graph.png"))
-    if summary_matches:
-        latest_summary = max(summary_matches, key=os.path.getmtime)
-        st.subheader("Summary Stats")
-        summary_col, _ = st.columns(2)
-        with summary_col:
-            st.image(latest_summary, use_container_width=True)
-    else:
-        st.warning("Mercury retrograde summary image not found.")
-
-    # Then show SPY pages in reverse order (e.g., 7 -> 1)
     page_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_spy_page_*_graph.png"))
-    if page_matches:
-        def extract_page_number(path: str) -> int:
-            name = os.path.basename(path)
-            try:
-                return int(name.split("_page_")[1].split("_")[0])
-            except Exception:
-                return -1
+    ordered_pages = sorted(page_matches, key=extract_mercury_page_number, reverse=True)
 
-        ordered_pages = sorted(page_matches, key=extract_page_number, reverse=True)
-        st.subheader("SPY Candlestick Pages (Newest Page Number First)")
-        st.image(ordered_pages, use_container_width=True)
-    else:
-        st.warning("Mercury retrograde SPY page images not found.")
+    merc_tab_labels = ["Summary Stats"] + [f"Page {extract_mercury_page_number(p)}" for p in ordered_pages]
+    merc_tab_items = [None] + ordered_pages  # None placeholder for summary tab
+    merc_tabs = st.tabs(merc_tab_labels)
+
+    with merc_tabs[0]:
+        if summary_matches:
+            latest_summary = max(summary_matches, key=os.path.getmtime)
+            st.image(latest_summary, use_container_width=True)
+        else:
+            st.warning("Mercury retrograde summary image not found.")
+
+    for tab, page_path in zip(merc_tabs[1:], ordered_pages):
+        with tab:
+            st.image(page_path, use_container_width=True)
 
     
              
