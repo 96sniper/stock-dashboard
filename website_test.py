@@ -88,8 +88,8 @@ def find_matching_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab_spy_day_of_week, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "SPY Day of Week", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below (D-W-M)",
+tab0, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below (D-W-M)",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -120,68 +120,51 @@ with tab0:
 
 # Home Page
 with tab1:
-
-    # SPY Seasonality
-    st.header("SPY Seasonality")
+    st.header("Seasonality")
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    season_tab1, season_tab2, season_tab3, season_tab4 = st.tabs([
+        "SPY",
+        "QQQ",
+        "IWM",
+        "VIX",
+    ])
 
-    # Search for files starting with "spy_seasonality" and ending in .png
-    pattern = os.path.join(base_dir, "spy_seasonality_*.png")
-    matching_files = glob.glob(pattern)
+    with season_tab1:
+        pattern = os.path.join(base_dir, "spy_seasonality_*.png")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            st.image(latest_file, width=1500)
+        else:
+            st.warning("SPY seasonality image not found.")
 
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("SPY seasonality image not found.")
+    with season_tab2:
+        pattern = os.path.join(base_dir, "qqq_seasonality_*.png")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            st.image(latest_file, width=1500)
+        else:
+            st.warning("QQQ seasonality image not found.")
 
-    # QQQ Seasonality
-    st.subheader("QQQ Seasonality")
+    with season_tab3:
+        pattern = os.path.join(base_dir, "iwm_seasonality_*.png")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            st.image(latest_file, width=1500)
+        else:
+            st.warning("IWM seasonality image not found.")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "qqq_seasonality" and ending in .png
-    pattern = os.path.join(base_dir, "qqq_seasonality_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("QQQ seasonality image not found.")
-
-    # IWM Seasonality
-    st.subheader("IWM Seasonality")
-
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "iwm_seasonality" and ending in .png
-    pattern = os.path.join(base_dir, "iwm_seasonality_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("IWM seasonality image not found.")
-
-    # VIX Seasonality (moved from its own tab)
-    st.subheader("VIX Seasonality")
-
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("VIX seasonality image not found.")
+    with season_tab4:
+        pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            st.image(latest_file, width=1500)
+        else:
+            st.warning("VIX seasonality image not found.")
 
 ###############################################################################################################################################################
 
@@ -189,240 +172,141 @@ with tab1:
 with tab2:
     st.header("Tail Candles (D-W-M)")
     st.write("Daily Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
-    
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    # Search for files starting with "daily_tail_candle_count" and ending in .png
-    pattern = os.path.join(base_dir, "daily_tail_candle_count_*.png")
-    matching_files = [
-        path for path in glob.glob(pattern)
-        if "daily_tail_candle_count_separate_" not in os.path.basename(path)
-    ]
+    def show_latest_png(file_pattern: str, not_found_message: str, width: int = 1500, exclude_substring: str | None = None) -> None:
+        matches = glob.glob(os.path.join(base_dir, file_pattern))
+        if exclude_substring:
+            matches = [path for path in matches if exclude_substring not in os.path.basename(path)]
 
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Daily Tail Candle Count image not found.")
+        if matches:
+            latest_file = max(matches, key=os.path.getmtime)
+            st.image(latest_file, width=width)
+        else:
+            st.warning(not_found_message)
 
-    st.subheader("Daily Tail Candle Counts (Separate)")
-    separate_pattern = os.path.join(base_dir, "daily_tail_candle_count_separate_*.png")
-    separate_matches = glob.glob(separate_pattern)
+    def show_wick_table(file_pattern: str, signal: str, heading: str, not_found_message: str) -> None:
+        matches = glob.glob(os.path.join(base_dir, file_pattern))
+        if matches:
+            latest_file = max(matches, key=os.path.getmtime)
+            try:
+                df = pd.read_excel(latest_file)
+                filtered = df[df["Candle Signal"] == signal]
+                st.subheader(f"{heading} — Count: {len(filtered)}")
+                if not filtered.empty:
+                    st.dataframe(filtered.reset_index(drop=True))
+                else:
+                    st.info(f"No rows found where Candle Signal is '{signal}'.")
+            except Exception as e:
+                st.error(f"⚠️ Failed to load XLSX file: {e}")
+        else:
+            st.warning(not_found_message)
 
-    if separate_matches:
-        latest_separate_file = max(separate_matches, key=os.path.getmtime)
-        st.image(latest_separate_file, width=1500)
-    else:
-        st.warning("Daily Tail Candle Count (Separate) image not found.")
+    (
+        tc_tab1, tc_tab2, tc_tab3, tc_tab4,
+        tc_tab5, tc_tab6, tc_tab7, tc_tab8,
+        tc_tab9, tc_tab10, tc_tab11, tc_tab12,
+    ) = st.tabs([
+        "Daily Count",
+        "Daily Count (Separate)",
+        "Daily Bullish Wick",
+        "Daily Bearish Wick",
+        "Weekly Count",
+        "Weekly Count (Separate)",
+        "Weekly Bullish Wick",
+        "Weekly Bearish Wick",
+        "Monthly Count",
+        "Monthly Count (Separate)",
+        "Monthly Bullish Wick",
+        "Monthly Bearish Wick",
+    ])
 
-    # Display Bullish Tail Candles
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    with tc_tab1:
+        show_latest_png(
+            "daily_tail_candle_count_*.png",
+            "Daily Tail Candle Count image not found.",
+            exclude_substring="daily_tail_candle_count_separate_",
+        )
 
-    # Search for files starting with "daily_summary_data" and ending in .xlsx
-    pattern = os.path.join(base_dir, "daily_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
+    with tc_tab2:
+        show_latest_png(
+            "daily_tail_candle_count_separate_*.png",
+            "Daily Tail Candle Count (Separate) image not found.",
+        )
 
-    if matching_files:
-        # Grab the most recently modified file
-        latest_file = max(matching_files, key=os.path.getmtime)
-    
-        try:
-            df = pd.read_excel(latest_file)
-            #st.dataframe(df, use_container_width=True)
-        
-            # Filter for Bullish Wick candles
-            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]  
-            bullish_wick_count = len(bullish_wicks)
+    with tc_tab3:
+        show_wick_table(
+            "daily_summary_data_*.xlsx",
+            "Bullish Wick",
+            "Daily Bullish Wick Candles",
+            "Daily Summary Data file not found.",
+        )
 
-            st.subheader(f"Daily Bullish Wick Candles — Count: {bullish_wick_count}")
+    with tc_tab4:
+        show_wick_table(
+            "daily_summary_data_*.xlsx",
+            "Bearish Wick",
+            "Daily Bearish Wick Candles",
+            "Daily Summary Data file not found.",
+        )
 
-            if not bullish_wicks.empty:
-                st.dataframe(bullish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Daily Summary Data file not found.")
+    with tc_tab5:
+        show_latest_png(
+            "weekly_tail_candle_count_*.png",
+            "Weekly Tail Candle Count image not found.",
+            exclude_substring="weekly_tail_candle_count_separate_",
+        )
 
-    # Display Bearish Tail Candles
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    with tc_tab6:
+        show_latest_png(
+            "weekly_tail_candle_count_separate_*.png",
+            "Weekly Tail Candle Count (Separate) image not found.",
+        )
 
-    # Search for files starting with "daily_summary_data" and ending in .xlsx
-    pattern = os.path.join(base_dir, "daily_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
+    with tc_tab7:
+        show_wick_table(
+            "weekly_summary_data_*.xlsx",
+            "Bullish Wick",
+            "Weekly Bullish Wick Candles",
+            "Weekly Summary Data file not found.",
+        )
 
-    if matching_files:
-        # Grab the most recently modified file
-        latest_file = max(matching_files, key=os.path.getmtime)
-    
-        try:
-            df = pd.read_excel(latest_file)
-            #st.dataframe(df, use_container_width=True)
-        
-            # Filter for Bearish Wick candles
-            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]  
-            bearish_wick_count = len(bearish_wicks)
+    with tc_tab8:
+        show_wick_table(
+            "weekly_summary_data_*.xlsx",
+            "Bearish Wick",
+            "Weekly Bearish Wick Candles",
+            "Weekly Summary Data file not found.",
+        )
 
-            st.subheader(f"Daily Bearish Wick Candles — Count: {bearish_wick_count}")
+    with tc_tab9:
+        show_latest_png(
+            "monthly_tail_candle_count_*.png",
+            "Monthly Tail Candle Count image not found.",
+            exclude_substring="monthly_tail_candle_count_separate_",
+        )
 
-            if not bearish_wicks.empty:
-                st.dataframe(bearish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Daily Summary Data file not found.")
+    with tc_tab10:
+        show_latest_png(
+            "monthly_tail_candle_count_separate_*.png",
+            "Monthly Tail Candle Count (Separate) image not found.",
+        )
 
-    st.divider()
-    st.subheader("Weekly Tail Candles")
-    st.write("Weekly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
+    with tc_tab11:
+        show_wick_table(
+            "monthly_summary_data_*.xlsx",
+            "Bullish Wick",
+            "Monthly Bullish Wick Candles",
+            "Monthly Summary Data file not found.",
+        )
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    pattern = os.path.join(base_dir, "weekly_tail_candle_count_*.png")
-    matching_files = [
-        path for path in glob.glob(pattern)
-        if "weekly_tail_candle_count_separate_" not in os.path.basename(path)
-    ]
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Weekly Tail Candle Count image not found.")
-
-    st.subheader("Weekly Tail Candle Counts (Separate)")
-    separate_pattern = os.path.join(base_dir, "weekly_tail_candle_count_separate_*.png")
-    separate_matches = glob.glob(separate_pattern)
-
-    if separate_matches:
-        latest_separate_file = max(separate_matches, key=os.path.getmtime)
-        st.image(latest_separate_file, width=1500)
-    else:
-        st.warning("Weekly Tail Candle Count (Separate) image not found.")
-
-    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-
-        try:
-            df = pd.read_excel(latest_file)
-
-            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]
-            bullish_wick_count = len(bullish_wicks)
-
-            st.subheader(f"Weekly Bullish Wick Candles — Count: {bullish_wick_count}")
-
-            if not bullish_wicks.empty:
-                st.dataframe(bullish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Weekly Summary Data file not found.")
-
-    pattern = os.path.join(base_dir, "weekly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-
-        try:
-            df = pd.read_excel(latest_file)
-
-            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
-            bearish_wick_count = len(bearish_wicks)
-
-            st.subheader(f"Weekly Bearish Wick Candles — Count: {bearish_wick_count}")
-
-            if not bearish_wicks.empty:
-                st.dataframe(bearish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Weekly Summary Data file not found.")
-
-    st.divider()
-    st.subheader("Monthly Tail Candles")
-    st.write("Monthly Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
-
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    pattern = os.path.join(base_dir, "monthly_tail_candle_count_*.png")
-    matching_files = [
-        path for path in glob.glob(pattern)
-        if "monthly_tail_candle_count_separate_" not in os.path.basename(path)
-    ]
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Monthly Tail Candle Count image not found.")
-
-    st.subheader("Monthly Tail Candle Counts (Separate)")
-    separate_pattern = os.path.join(base_dir, "monthly_tail_candle_count_separate_*.png")
-    separate_matches = glob.glob(separate_pattern)
-
-    if separate_matches:
-        latest_separate_file = max(separate_matches, key=os.path.getmtime)
-        st.image(latest_separate_file, width=1500)
-    else:
-        st.warning("Monthly Tail Candle Count (Separate) image not found.")
-
-    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-
-        try:
-            df = pd.read_excel(latest_file)
-
-            bullish_wicks = df[df["Candle Signal"] == "Bullish Wick"]
-            bullish_wick_count = len(bullish_wicks)
-
-            st.subheader(f"Monthly Bullish Wick Candles — Count: {bullish_wick_count}")
-
-            if not bullish_wicks.empty:
-                st.dataframe(bullish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bullish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Monthly Summary Data file not found.")
-
-    pattern = os.path.join(base_dir, "monthly_summary_data_*.xlsx")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-
-        try:
-            df = pd.read_excel(latest_file)
-
-            bearish_wicks = df[df["Candle Signal"] == "Bearish Wick"]
-            bearish_wick_count = len(bearish_wicks)
-
-            st.subheader(f"Monthly Bearish Wick Candles — Count: {bearish_wick_count}")
-
-            if not bearish_wicks.empty:
-                st.dataframe(bearish_wicks.reset_index(drop=True))
-            else:
-                st.info("No rows found where Candle Signal is 'Bearish Wick'.")
-        except Exception as e:
-            st.error(f"⚠️ Failed to load XLSX file: {e}")
-    else:
-        st.warning("Monthly Summary Data file not found.")
+    with tc_tab12:
+        show_wick_table(
+            "monthly_summary_data_*.xlsx",
+            "Bearish Wick",
+            "Monthly Bearish Wick Candles",
+            "Monthly Summary Data file not found.",
+        )
 
 ###############################################################################################################################################################
 
@@ -430,49 +314,43 @@ with tab2:
 with tab3:
     st.header("Close Above/Below (D-W-M)")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
-    
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    # Search for files starting with "daily_close_above_below_count" and ending in .png
-    pattern = os.path.join(base_dir, "daily_close_above_below_count_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Daily Close Above Below Count image not found.")
-
-    st.divider()
-    st.subheader("Weekly Close Above/Below")
-    st.write("Weekly Close Above Candles minus Weekly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    cab_tab1, cab_tab2, cab_tab3 = st.tabs([
+        "Daily",
+        "Weekly",
+        "Monthly",
+    ])
 
-    pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
-    matching_files = glob.glob(pattern)
+    with cab_tab1:
+        st.subheader("Daily Close Above/Below")
+        pattern = os.path.join(base_dir, "daily_close_above_below_count_*.png")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            st.image(latest_file, width=1500)
+        else:
+            st.warning("Daily Close Above Below Count image not found.")
 
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Weekly Close Above Below Count image not found.")
+    with cab_tab2:
+        st.subheader("Weekly Close Above/Below")
+        pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            st.image(latest_file, width=1500)
+        else:
+            st.warning("Weekly Close Above Below Count image not found.")
 
-    st.divider()
-    st.subheader("Monthly Close Above/Below")
-    st.write("Monthly Close Above Candles minus Monthly Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
-
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-
-    pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("Monthly Close Above Below Count image not found.")
+    with cab_tab3:
+        st.subheader("Monthly Close Above/Below")
+        pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            st.image(latest_file, width=1500)
+        else:
+            st.warning("Monthly Close Above Below Count image not found.")
 
 ###############################################################################################################################################################
 
@@ -661,16 +539,17 @@ with tab_spy_vix:
 
 #######################################################################################################################################################################
 
-# SPY Day of Week
-with tab_spy_day_of_week:
-    st.header("SPY Day of Week")
+# SPY Analysis
+with tab_spy_analysis:
+    st.header("SPY Analysis")
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    day_tab1, day_tab2, day_tab3 = st.tabs([
+    day_tab1, day_tab2, day_tab3, day_tab4 = st.tabs([
         "Daily SPY Gain Chart",
         "SPY Daily Positive Count Ghart",
         "Monthly SPY Gain Chart",
+        "SPY Last 10 Weeks",
     ])
 
     with day_tab1:
@@ -690,9 +569,17 @@ with tab_spy_day_of_week:
     with day_tab3:
         monthly_gain_path = os.path.join(base_dir, "MONTHLY_SPY_Gain_Chart.png")
         if os.path.exists(monthly_gain_path):
-            st.image(monthly_gain_path, use_container_width=True)
+            st.image(monthly_gain_path, width=700)
         else:
             st.warning("Monthly SPY Gain Chart image not found.")
+
+    with day_tab4:
+        spy_10wk_matches = glob.glob(os.path.join(base_dir, "spy_last_10_weeks_*_graph.png"))
+        if spy_10wk_matches:
+            latest_spy_10wk = max(spy_10wk_matches, key=os.path.getmtime)
+            st.image(latest_spy_10wk, width=800)
+        else:
+            st.warning("SPY Last 10 Weeks image not found.")
 
 #######################################################################################################################################################################
 
