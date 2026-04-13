@@ -603,10 +603,18 @@ with tab_spy_vix:
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    left_col, right_col = st.columns(2)
+    (
+        svix_tab1, svix_tab2, svix_tab3, svix_tab4, svix_tab5, svix_tab6
+    ) = st.tabs([
+        "VIX Daily Returns & % Positive Rate",
+        "SPY Daily Returns & % Positive Rate",
+        "SPY Last 10 Weeks",
+        "VIX Avg Price & STD Dev Bands",
+        "SPY Candles with UVXY+SPY Positive Dates",
+        "SPY Candles with VIX+SPY Positive Dates",
+    ])
 
-    with left_col:
-        st.subheader("VIX Daily Returns & % Positive Rate")
+    with svix_tab1:
         vix_weekday_matches = glob.glob(os.path.join(base_dir, "vix_weekday_*_graph.png"))
         if vix_weekday_matches:
             latest_vix_weekday = max(vix_weekday_matches, key=os.path.getmtime)
@@ -614,8 +622,7 @@ with tab_spy_vix:
         else:
             st.warning("VIX Weekday Returns & Hit Rate image not found.")
 
-    with right_col:
-        st.subheader("SPY Daily Returns & % Positive Rate")
+    with svix_tab2:
         spy_weekday_matches = glob.glob(os.path.join(base_dir, "spy_weekday_*_graph.png"))
         if spy_weekday_matches:
             latest_spy_weekday = max(spy_weekday_matches, key=os.path.getmtime)
@@ -623,18 +630,34 @@ with tab_spy_vix:
         else:
             st.warning("SPY Daily Returns & % Positive Rate image not found.")
 
-    for label, prefix in [
-        ("VIX Avg Price & STD Dev Bands", "vix_analysis"),
-        ("SPY Candles with UVXY+SPY Positive Dates", "spy_uvxy_positive"),
-        ("SPY Candles with VIX+SPY Positive Dates", "spy_vix_positive"),
-    ]:
-        st.subheader(label)
-        matches = glob.glob(os.path.join(base_dir, f"{prefix}_*_graph.png"))
-        if matches:
-            latest = max(matches, key=os.path.getmtime)
-            st.image(latest, width=1200)
+    with svix_tab3:
+        spy_10wk_matches = glob.glob(os.path.join(base_dir, "spy_last_10_weeks_*_graph.png"))
+        if spy_10wk_matches:
+            latest_spy_10wk = max(spy_10wk_matches, key=os.path.getmtime)
+            st.image(latest_spy_10wk, use_container_width=True)
         else:
-            st.warning(f"{label} image not found.")
+            st.warning("SPY Last 10 Weeks image not found.")
+
+    with svix_tab4:
+        matches = glob.glob(os.path.join(base_dir, "vix_analysis_*_graph.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=1200)
+        else:
+            st.warning("VIX Avg Price & STD Dev Bands image not found.")
+
+    with svix_tab5:
+        matches = glob.glob(os.path.join(base_dir, "spy_uvxy_positive_*_graph.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=1200)
+        else:
+            st.warning("SPY Candles with UVXY+SPY Positive Dates image not found.")
+
+    with svix_tab6:
+        matches = glob.glob(os.path.join(base_dir, "spy_vix_positive_*_graph.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=1200)
+        else:
+            st.warning("SPY Candles with VIX+SPY Positive Dates image not found.")
 
 #######################################################################################################################################################################
 
