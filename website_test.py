@@ -359,21 +359,30 @@ with tab3:
             st.warning("Monthly Close Above Below Count image not found.")
 
     with cab_tab4:
-        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_*.png"))
+        matches = [
+            p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_*.png"))
+            if "_ALL_STOCKS_" not in os.path.basename(p)
+        ]
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Daily Close Trend image not found.")
 
     with cab_tab5:
-        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_*.png"))
+        matches = [
+            p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_*.png"))
+            if "_ALL_STOCKS_" not in os.path.basename(p)
+        ]
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Weekly Close Trend image not found.")
 
     with cab_tab6:
-        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_*.png"))
+        matches = [
+            p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_*.png"))
+            if "_ALL_STOCKS_" not in os.path.basename(p)
+        ]
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
