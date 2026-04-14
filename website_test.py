@@ -310,19 +310,22 @@ with tab2:
 
 ###############################################################################################################################################################
 
-# Close Above/Below (Daily/Weekly/Monthly)
+# Close Above/Below
 with tab3:
-    st.header("Close Above/Below (D-W-M)")
+    st.header("Close Above/Below")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-    cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6 = st.tabs([
+    cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6, cab_tab7, cab_tab8, cab_tab9 = st.tabs([
         "Daily",
         "Weekly",
         "Monthly",
         "Daily Close Trend",
         "Weekly Close Trend",
         "Monthly Close Trend",
+        "Daily Close Trend - All Stocks",
+        "Weekly Close Trend - All Stocks",
+        "Monthly Close Trend - All Stocks",
     ])
 
     with cab_tab1:
@@ -358,23 +361,44 @@ with tab3:
     with cab_tab4:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_*.png"))
         if matches:
-            st.image(max(matches, key=os.path.getmtime), use_container_width=True)
+            st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Daily Close Trend image not found.")
 
     with cab_tab5:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_*.png"))
         if matches:
-            st.image(max(matches, key=os.path.getmtime), use_container_width=True)
+            st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Weekly Close Trend image not found.")
 
     with cab_tab6:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_*.png"))
         if matches:
-            st.image(max(matches, key=os.path.getmtime), use_container_width=True)
+            st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Monthly Close Trend image not found.")
+
+    with cab_tab7:
+        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_ALL_STOCKS_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=850)
+        else:
+            st.warning("Daily Close Trend - All Stocks image not found.")
+
+    with cab_tab8:
+        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_ALL_STOCKS_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=850)
+        else:
+            st.warning("Weekly Close Trend - All Stocks image not found.")
+
+    with cab_tab9:
+        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_ALL_STOCKS_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=850)
+        else:
+            st.warning("Monthly Close Trend - All Stocks image not found.")
 
 ###############################################################################################################################################################
 
