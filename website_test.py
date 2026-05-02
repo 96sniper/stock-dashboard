@@ -543,13 +543,14 @@ with tab_spy_vix:
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
     (
-        svix_tab1, svix_tab2, svix_tab3, svix_tab4, svix_tab5
+        svix_tab1, svix_tab2, svix_tab3, svix_tab4, svix_tab5, svix_tab6
     ) = st.tabs([
         "VIX Daily Returns & % Positive Rate",
         "SPY Daily Returns & % Positive Rate",
         "VIX Avg Price & STD Dev Bands",
         "SPY Candles with UVXY+SPY Positive Dates",
         "SPY Candles with VIX+SPY Positive Dates",
+        "SPY Combined Positive Signals",
     ])
 
     with svix_tab1:
@@ -589,6 +590,18 @@ with tab_spy_vix:
         else:
             st.warning("SPY Candles with VIX+SPY Positive Dates image not found.")
 
+    with svix_tab6:
+        matches = glob.glob(os.path.join(base_dir, "spy_combined_positive_signals_*.xlsx"))
+        if matches:
+            latest_file = max(matches, key=os.path.getmtime)
+            try:
+                combined_df = pd.read_excel(latest_file)
+                st.dataframe(combined_df, use_container_width=True, hide_index=True)
+            except Exception as e:
+                st.error(f"⚠️ Failed to load combined signal XLSX file: {e}")
+        else:
+            st.warning("SPY combined positive signals file not found.")
+
 #######################################################################################################################################################################
 
 # SPY Analysis
@@ -597,10 +610,11 @@ with tab_spy_analysis:
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
 
-    day_tab1, day_tab2, day_tab3, day_tab4 = st.tabs([
+    day_tab1, day_tab2, day_tab3, day_tab4, day_tab5 = st.tabs([
         "Daily SPY Gain Chart",
         "SPY Daily Positive Count Ghart",
         "Monthly SPY Gain Chart",
+        "Yearly SPY Gain Chart",
         "SPY Last 10 Weeks",
     ])
 
@@ -626,6 +640,13 @@ with tab_spy_analysis:
             st.warning("Monthly SPY Gain Chart image not found.")
 
     with day_tab4:
+        yearly_gain_path = os.path.join(base_dir, "YEARLY_SPY_Gain_Chart.png")
+        if os.path.exists(yearly_gain_path):
+            st.image(yearly_gain_path, width=700)
+        else:
+            st.warning("Yearly SPY Gain Chart image not found.")
+
+    with day_tab5:
         spy_10wk_matches = glob.glob(os.path.join(base_dir, "spy_last_10_weeks_*_graph.png"))
         if spy_10wk_matches:
             latest_spy_10wk = max(spy_10wk_matches, key=os.path.getmtime)
