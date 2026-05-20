@@ -88,8 +88,8 @@ def find_matching_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below (D-W-M)",
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below (D-W-M)",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -165,6 +165,22 @@ with tab1:
             st.image(latest_file, width=1500)
         else:
             st.warning("VIX seasonality image not found.")
+
+###############################################################################################################################################################
+
+# Sector Analysis
+with tab_sector_analysis:
+    st.header("Sector Analysis")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    pattern = os.path.join(base_dir, "sector_etf_yearly_gain_table_*.png")
+    matching_files = glob.glob(pattern)
+
+    if matching_files:
+        latest_file = max(matching_files, key=os.path.getmtime)
+        st.image(latest_file, width=1500)
+    else:
+        st.warning("Sector analysis image not found.")
 
 ###############################################################################################################################################################
 
@@ -533,6 +549,9 @@ with tab11:
     st.write("Just be patient and keep reading charts. The success will come.")
     st.write("Check intraday price changes. How do the top % gainers look and how do the bottom % losers look? That will determine market direction.")
     st.write("Seeing the losers show bottoming tails is bullish. Seeing the winners show topping tails is bearish. Are the losers at support?")
+    st.write("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
+    st.write("A 1$ move in the SPY creates about a 20% option move gain on 1 week out expiration at the money options.")
+    st.write("Its a quick move that i dont hold overnight. I need to be quick with a stop loss and make sure all indicators are in my favor.")
 
 #######################################################################################################################################################################
 
