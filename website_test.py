@@ -349,33 +349,6 @@ with tab2:
 
 # Close Above/Below Summary
 with tab3:
-    st.header("Close Above/Below Summary")
-    st.write("Current trend summary tables for ETFs/indices and the all-stocks universe.")
-
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-    cab_summary_tab1, cab_summary_tab2 = st.tabs([
-        "Summary",
-        "Summary - All Stocks",
-    ])
-
-    with cab_summary_tab1:
-        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
-        if matches:
-            st.image(max(matches, key=os.path.getmtime), width=1500)
-        else:
-            st.warning("Close Above/Below Summary image not found.")
-
-    with cab_summary_tab2:
-        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
-        if matches:
-            st.image(max(matches, key=os.path.getmtime), width=1500)
-        else:
-            st.warning("Close Above/Below Summary - All Stocks image not found.")
-
-###############################################################################################################################################################
-
-# Close Above/Below Tickers
-with tab3b:
     st.header("Close Above/Below Tickers")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
@@ -503,6 +476,33 @@ with tab3b:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Monthly Close Trend - All Stocks image not found.")
+
+###############################################################################################################################################################
+
+# Close Above/Below Summary
+with tab3b:
+    st.header("Close Above/Below Summary")
+    st.write("Current trend summary tables and percentage trend analysis for ETFs/indices and the all-stocks universe.")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    cab_summary_tab1, cab_summary_tab2 = st.tabs([
+        "Summary",
+        "Summary - All Stocks",
+    ])
+
+    with cab_summary_tab1:
+        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("Close Above/Below Summary image not found.")
+
+    with cab_summary_tab2:
+        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("Close Above/Below Summary - All Stocks image not found.")
 
 ###############################################################################################################################################################
 
