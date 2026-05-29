@@ -88,8 +88,8 @@ def find_matching_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below (D-W-M)",
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Summary", "Close Above/Below Tickers",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -347,13 +347,42 @@ with tab2:
 
 ###############################################################################################################################################################
 
-# Close Above/Below
+# Close Above/Below Summary
 with tab3:
-    st.header("Close Above/Below")
+    st.header("Close Above/Below Summary")
+    st.write("Current trend summary tables for ETFs/indices and the all-stocks universe.")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    cab_summary_tab1, cab_summary_tab2 = st.tabs([
+        "Summary",
+        "Summary - All Stocks",
+    ])
+
+    with cab_summary_tab1:
+        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("Close Above/Below Summary image not found.")
+
+    with cab_summary_tab2:
+        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
+        if matches:
+            st.image(max(matches, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("Close Above/Below Summary - All Stocks image not found.")
+
+###############################################################################################################################################################
+
+# Close Above/Below Tickers
+with tab3b:
+    st.header("Close Above/Below Tickers")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
     base_dir = os.path.join(os.path.dirname(__file__), "uploads")
-    cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6, cab_tab7, cab_tab8, cab_tab9 = st.tabs([
+    cab_tab0, cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6, cab_tab7, cab_tab8, cab_tab9, cab_tab10 = st.tabs([
+        "CURRENT_TREND_SUMMARY",
+        "CURRENT_TREND_SUMMARY_ALL_STOCKS",
         "Daily",
         "Weekly",
         "Monthly",
@@ -364,6 +393,35 @@ with tab3:
         "Weekly Close Trend - All Stocks",
         "Monthly Close Trend - All Stocks",
     ])
+
+    with cab_tab0:
+        pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_*.xlsx")
+        matching_files = [
+            p for p in glob.glob(pattern)
+            if "CURRENT_TREND_SUMMARY_ALL_STOCKS_" not in os.path.basename(p)
+        ]
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            try:
+                df = pd.read_excel(latest_file)
+                st.dataframe(df, use_container_width=True)
+            except Exception as e:
+                st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY XLSX file: {e}")
+        else:
+            st.warning("CURRENT_TREND_SUMMARY XLSX file not found.")
+
+    with cab_tab10:
+        pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx")
+        matching_files = glob.glob(pattern)
+        if matching_files:
+            latest_file = max(matching_files, key=os.path.getmtime)
+            try:
+                df = pd.read_excel(latest_file)
+                st.dataframe(df, use_container_width=True)
+            except Exception as e:
+                st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file: {e}")
+        else:
+            st.warning("CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file not found.")
 
     with cab_tab1:
         st.subheader("Daily Close Above/Below")
