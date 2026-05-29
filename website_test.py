@@ -89,7 +89,7 @@ def find_matching_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
 
 # Tabs
 tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Summary", "Close Above/Below Tickers",
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
