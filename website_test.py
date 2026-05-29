@@ -383,7 +383,7 @@ with tab3:
         else:
             st.warning("CURRENT_TREND_SUMMARY XLSX file not found.")
 
-    with cab_tab10:
+    with cab_tab1:
         pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx")
         matching_files = glob.glob(pattern)
         if matching_files:
@@ -396,7 +396,7 @@ with tab3:
         else:
             st.warning("CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file not found.")
 
-    with cab_tab1:
+    with cab_tab2:
         st.subheader("Daily Close Above/Below")
         pattern = os.path.join(base_dir, "daily_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
@@ -406,7 +406,7 @@ with tab3:
         else:
             st.warning("Daily Close Above Below Count image not found.")
 
-    with cab_tab2:
+    with cab_tab3:
         st.subheader("Weekly Close Above/Below")
         pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
@@ -416,7 +416,7 @@ with tab3:
         else:
             st.warning("Weekly Close Above Below Count image not found.")
 
-    with cab_tab3:
+    with cab_tab4:
         st.subheader("Monthly Close Above/Below")
         pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
@@ -426,7 +426,7 @@ with tab3:
         else:
             st.warning("Monthly Close Above Below Count image not found.")
 
-    with cab_tab4:
+    with cab_tab5:
         matches = [
             p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_*.png"))
             if "_ALL_STOCKS_" not in os.path.basename(p)
@@ -436,7 +436,7 @@ with tab3:
         else:
             st.warning("Daily Close Trend image not found.")
 
-    with cab_tab5:
+    with cab_tab6:
         matches = [
             p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_*.png"))
             if "_ALL_STOCKS_" not in os.path.basename(p)
@@ -446,7 +446,7 @@ with tab3:
         else:
             st.warning("Weekly Close Trend image not found.")
 
-    with cab_tab6:
+    with cab_tab7:
         matches = [
             p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_*.png"))
             if "_ALL_STOCKS_" not in os.path.basename(p)
@@ -456,21 +456,21 @@ with tab3:
         else:
             st.warning("Monthly Close Trend image not found.")
 
-    with cab_tab7:
+    with cab_tab8:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_ALL_STOCKS_*.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Daily Close Trend - All Stocks image not found.")
 
-    with cab_tab8:
+    with cab_tab9:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_ALL_STOCKS_*.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Weekly Close Trend - All Stocks image not found.")
 
-    with cab_tab9:
+    with cab_tab10:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_ALL_STOCKS_*.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
