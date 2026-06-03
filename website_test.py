@@ -88,8 +88,8 @@ def find_matching_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary",
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -491,7 +491,10 @@ with tab3b:
     ])
 
     with cab_summary_tab1:
-        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
+        matches = [
+            p for p in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
+            if "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_" not in os.path.basename(p)
+        ]
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=1500)
         else:
@@ -503,6 +506,46 @@ with tab3b:
             st.image(max(matches, key=os.path.getmtime), width=1500)
         else:
             st.warning("Close Above/Below Summary - All Stocks image not found.")
+
+###############################################################################################################################################################
+
+# Close Above/Below Sector Summary
+with tab_sector_summary:
+    st.header("Close Above/Below Sector Summary")
+    st.write("Sector-specific trend summaries with detailed tables.")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    
+    # Define sectors and their names
+    sectors = ['MAG7', 'Semiconductors', 'Software', 'All_Other_Technology', 'Basic Material', 'Communication', 'Energy', 'Healthcare', 'Industrial', 'Consumer', 'Financial', 'Utility']
+    
+    sector_tabs = st.tabs(sectors)
+    
+    for sector_tab, sector_name in zip(sector_tabs, sectors):
+        with sector_tab:
+            # Display PNG first
+            png_pattern = os.path.join(base_dir, f'CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_{sector_name}_*.png')
+            png_matches = glob.glob(png_pattern)
+            
+            if png_matches:
+                latest_png = max(png_matches, key=os.path.getmtime)
+                st.image(latest_png, width=1500)
+            else:
+                st.warning(f"{sector_name} summary PNG not found.")
+            
+            # Display XLSX as table
+            xlsx_pattern = os.path.join(base_dir, f'CURRENT_TREND_SUMMARY_ALL_STOCKS_{sector_name}_*.xlsx')
+            xlsx_matches = glob.glob(xlsx_pattern)
+            
+            if xlsx_matches:
+                latest_xlsx = max(xlsx_matches, key=os.path.getmtime)
+                try:
+                    df = pd.read_excel(latest_xlsx)
+                    st.dataframe(df, use_container_width=True)
+                except Exception as e:
+                    st.error(f"Failed to load {sector_name} XLSX file: {e}")
+            else:
+                st.warning(f"{sector_name} summary XLSX not found.")
 
 ###############################################################################################################################################################
 
