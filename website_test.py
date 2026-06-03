@@ -521,11 +521,36 @@ with tab_sector_summary:
     
     sector_tabs = st.tabs(sectors)
     
+    def build_sector_variants(name: str) -> set[str]:
+        space_name = name.replace("_", " ")
+        underscore_name = name.replace(" ", "_")
+        variants = {
+            name,
+            space_name,
+            underscore_name,
+            space_name.title(),
+            underscore_name.title(),
+            space_name.upper(),
+            underscore_name.upper(),
+            space_name.lower(),
+            underscore_name.lower(),
+        }
+        return variants
+
     for sector_tab, sector_name in zip(sector_tabs, sectors):
         with sector_tab:
             # Display PNG first
-            png_pattern = os.path.join(base_dir, f'CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_{sector_name}_*.png')
-            png_matches = glob.glob(png_pattern)
+            png_matches = []
+            for sector_variant in build_sector_variants(sector_name):
+                png_matches.extend(
+                    glob.glob(
+                        os.path.join(
+                            base_dir,
+                            f"CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_{sector_variant}_*.png",
+                        )
+                    )
+                )
+            png_matches = list(set(png_matches))
             
             if png_matches:
                 latest_png = max(png_matches, key=os.path.getmtime)
@@ -534,8 +559,17 @@ with tab_sector_summary:
                 st.warning(f"{sector_name} summary PNG not found.")
             
             # Display XLSX as table
-            xlsx_pattern = os.path.join(base_dir, f'CURRENT_TREND_SUMMARY_ALL_STOCKS_{sector_name}_*.xlsx')
-            xlsx_matches = glob.glob(xlsx_pattern)
+            xlsx_matches = []
+            for sector_variant in build_sector_variants(sector_name):
+                xlsx_matches.extend(
+                    glob.glob(
+                        os.path.join(
+                            base_dir,
+                            f"CURRENT_TREND_SUMMARY_ALL_STOCKS_{sector_variant}_*.xlsx",
+                        )
+                    )
+                )
+            xlsx_matches = list(set(xlsx_matches))
             
             if xlsx_matches:
                 latest_xlsx = max(xlsx_matches, key=os.path.getmtime)
