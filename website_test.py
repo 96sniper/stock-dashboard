@@ -85,6 +85,52 @@ def find_matching_column(df: pd.DataFrame, candidates: list[str]) -> str | None:
             return normalized_map[key]
     return None
 
+
+def _directory_asset_score(path: str) -> int:
+    return (
+        len(glob.glob(os.path.join(path, "*.png")))
+        + len(glob.glob(os.path.join(path, "*.xlsx")))
+    )
+
+
+def resolve_data_dir() -> str:
+    script_dir = os.path.dirname(__file__)
+    parent_dir = os.path.dirname(script_dir)
+    candidates = [
+        os.path.join(script_dir, "uploads"),
+        os.path.join(script_dir, "uplaods"),
+        os.path.join(script_dir, "stock-dashboard", "uploads"),
+        os.path.join(parent_dir, "uploads"),
+        os.path.join(parent_dir, "stock-dashboard", "uploads"),
+    ]
+    existing = [path for path in candidates if os.path.isdir(path)]
+    if existing:
+        return max(existing, key=_directory_asset_score)
+    return script_dir
+
+
+def is_valid_png(file_path: str) -> bool:
+    try:
+        if os.path.getsize(file_path) <= 8:
+            return False
+        with open(file_path, "rb") as image_file:
+            return image_file.read(8) == b"\x89PNG\r\n\x1a\n"
+    except OSError:
+        return False
+
+
+def latest_valid_png(pattern: str, exclude_substring: str | None = None) -> str | None:
+    matches = glob.glob(pattern)
+    if exclude_substring:
+        matches = [path for path in matches if exclude_substring not in os.path.basename(path)]
+    valid_matches = [path for path in matches if is_valid_png(path)]
+    if valid_matches:
+        return max(valid_matches, key=os.path.getmtime)
+    return None
+
+
+DATA_DIR = resolve_data_dir()
+
 ####################################################################################################################################################################
 
 # Tabs
@@ -122,7 +168,7 @@ with tab0:
 with tab1:
     st.header("Seasonality")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
     season_tab1, season_tab2, season_tab3, season_tab4 = st.tabs([
         "SPY",
         "QQQ",
@@ -132,36 +178,32 @@ with tab1:
 
     with season_tab1:
         pattern = os.path.join(base_dir, "spy_seasonality_*.png")
-        matching_files = glob.glob(pattern)
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
+        latest_file = latest_valid_png(pattern)
+        if latest_file:
             st.image(latest_file, width=1500)
         else:
             st.warning("SPY seasonality image not found.")
 
     with season_tab2:
         pattern = os.path.join(base_dir, "qqq_seasonality_*.png")
-        matching_files = glob.glob(pattern)
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
+        latest_file = latest_valid_png(pattern)
+        if latest_file:
             st.image(latest_file, width=1500)
         else:
             st.warning("QQQ seasonality image not found.")
 
     with season_tab3:
         pattern = os.path.join(base_dir, "iwm_seasonality_*.png")
-        matching_files = glob.glob(pattern)
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
+        latest_file = latest_valid_png(pattern)
+        if latest_file:
             st.image(latest_file, width=1500)
         else:
             st.warning("IWM seasonality image not found.")
 
     with season_tab4:
         pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
-        matching_files = glob.glob(pattern)
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
+        latest_file = latest_valid_png(pattern)
+        if latest_file:
             st.image(latest_file, width=1500)
         else:
             st.warning("VIX seasonality image not found.")
@@ -172,7 +214,7 @@ with tab1:
 with tab_sector_analysis:
     st.header("Sector Analysis")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     sub_tab_yearly, sub_tab_ytd, sub_tab_qtd = st.tabs(["Yearly Table", "Year-to-Date", "Quarter-to-Date"])
 
@@ -209,7 +251,7 @@ with tab_sector_analysis:
 with tab2:
     st.header("Tail Candles (D-W-M)")
     st.write("Daily Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     def show_latest_png(file_pattern: str, not_found_message: str, width: int = 1500, exclude_substring: str | None = None) -> None:
         matches = glob.glob(os.path.join(base_dir, file_pattern))
@@ -352,7 +394,7 @@ with tab3:
     st.header("Close Above/Below Tickers")
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
     cab_tab0, cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6, cab_tab7, cab_tab8, cab_tab9, cab_tab10 = st.tabs([
         "CURRENT_TREND_SUMMARY",
         "CURRENT_TREND_SUMMARY_ALL_STOCKS",
@@ -484,7 +526,23 @@ with tab3b:
     st.header("Close Above/Below Summary")
     st.write("Current trend summary tables and percentage trend analysis for ETFs/indices and the all-stocks universe.")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
+    sector_name_tokens = [
+        "MAG7",
+        "SEMICONDUCTORS",
+        "SOFTWARE",
+        "ALL_OTHER_TECHNOLOGY",
+        "ALL OTHER TECHNOLOGY",
+        "BASIC MATERIAL",
+        "BASIC_MATERIAL",
+        "COMMUNICATION",
+        "ENERGY",
+        "HEALTHCARE",
+        "INDUSTRIAL",
+        "CONSUMER",
+        "FINANCIAL",
+        "UTILITY",
+    ]
     cab_summary_tab1, cab_summary_tab2 = st.tabs([
         "Summary",
         "Summary - All Stocks",
@@ -495,15 +553,21 @@ with tab3b:
             p for p in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
             if "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_" not in os.path.basename(p)
         ]
-        if matches:
-            st.image(max(matches, key=os.path.getmtime), width=1500)
+        valid_matches = [path for path in matches if is_valid_png(path)]
+        if valid_matches:
+            st.image(max(valid_matches, key=os.path.getmtime), width=1500)
         else:
             st.warning("Close Above/Below Summary image not found.")
 
     with cab_summary_tab2:
-        matches = glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
-        if matches:
-            st.image(max(matches, key=os.path.getmtime), width=1500)
+        matches = [
+            path
+            for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
+            if not any(token in os.path.basename(path).upper() for token in sector_name_tokens)
+        ]
+        valid_matches = [path for path in matches if is_valid_png(path)]
+        if valid_matches:
+            st.image(max(valid_matches, key=os.path.getmtime), width=1500)
         else:
             st.warning("Close Above/Below Summary - All Stocks image not found.")
 
@@ -514,7 +578,7 @@ with tab_sector_summary:
     st.header("Close Above/Below Sector Summary")
     st.write("Sector-specific trend summaries with detailed tables.")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
     
     # Define sectors and their names
     sectors = ['MAG7', 'Semiconductors', 'Software', 'All_Other_Technology', 'Basic Material', 'Communication', 'Energy', 'Healthcare', 'Industrial', 'Consumer', 'Financial', 'Utility']
@@ -587,7 +651,7 @@ with tab_sector_summary:
 with tab8:
     st.header("Upcoming Earnings")
     
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     # Display latest earnings calendar graph
     graph_pattern = os.path.join(base_dir, "earnings_calendar_*_graph.png")
@@ -627,7 +691,7 @@ with tab9:
     st.write("The price action following a 20/50ma crossover is not guaranteed but the odds increase for a certain direction.")
     st.write("The zones were calculated by looking for the maximum price gain or decline within the zone. This simply gives an idea to what direction price should be heading short term.")
     
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     # Search for files starting with "spy_daily_data" and ending in "_graph.png"
     pattern = os.path.join(base_dir, "spy_daily_data_*_page_*_graph.png")
@@ -667,7 +731,7 @@ with tab10:
     st.header("NAAIM Data")
     st.write("Above 90 seems to be an area where you should start to see a stock market pullback/selloff. Below 40 seems to be an area where you should start to see a stock market rally.")
     
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     # Search for files starting with "naaim_plot" and ending in .png
     pattern = os.path.join(base_dir, "naaim_plot_*.png")
@@ -715,7 +779,7 @@ with tab11:
 with tab_spy_vix:
     st.header("SPY/VIX Analysis")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     (
         svix_tab1, svix_tab2, svix_tab3, svix_tab4, svix_tab5, svix_tab6
@@ -783,7 +847,7 @@ with tab_spy_vix:
 with tab_spy_analysis:
     st.header("SPY Analysis")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     day_tab1, day_tab2, day_tab3, day_tab4, day_tab5 = st.tabs([
         "Daily SPY Gain Chart",
@@ -835,7 +899,7 @@ with tab_spy_analysis:
 with tab_ytd:
     st.header("YTD Analysis")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
     sector_matches = glob.glob(os.path.join(base_dir, "ytd_analysis_*.xlsx"))
     all_stocks_matches = glob.glob(os.path.join(base_dir, "all_stocks_ytd_analysis_*.xlsx"))
 
@@ -954,7 +1018,7 @@ with tab_ytd:
 with tab_fed_funds_spy:
     st.header("Fed Funds Rate - SPY")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
     fed_page_matches = glob.glob(os.path.join(base_dir, "fed_rates_spy_page_*_graph.png"))
 
     if fed_page_matches:
@@ -980,7 +1044,7 @@ with tab_fed_funds_spy:
 with tab_mercury:
     st.header("Mercury Retrograde Analysis")
 
-    base_dir = os.path.join(os.path.dirname(__file__), "uploads")
+    base_dir = DATA_DIR
 
     def extract_mercury_page_number(path: str) -> int:
         name = os.path.basename(path)
