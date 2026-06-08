@@ -3,8 +3,6 @@ import streamlit.components.v1 as components
 import base64
 import pandas as pd
 import os
-import matplotlib.pyplot as plt
-from pdf2image import convert_from_path
 from datetime import date, timedelta
 import glob
 
@@ -131,6 +129,24 @@ def latest_valid_png(pattern: str, exclude_substring: str | None = None) -> str 
 
 
 def render_bull_pct_donut(df: pd.DataFrame) -> None:
+    def polar_to_cartesian(center_x: float, center_y: float, radius: float, angle_in_degrees: float) -> tuple[float, float]:
+        angle_in_radians = (angle_in_degrees - 90.0) * 3.141592653589793 / 180.0
+        return (
+            center_x + radius * float(__import__("math").cos(angle_in_radians)),
+            center_y + radius * float(__import__("math").sin(angle_in_radians)),
+        )
+
+    def describe_arc(center_x: float, center_y: float, radius: float, start_angle: float, end_angle: float) -> str:
+        start_x, start_y = polar_to_cartesian(center_x, center_y, radius, end_angle)
+        end_x, end_y = polar_to_cartesian(center_x, center_y, radius, start_angle)
+        large_arc_flag = "1" if end_angle - start_angle > 180 else "0"
+        return (
+            f"M {center_x} {center_y} "
+            f"L {start_x:.2f} {start_y:.2f} "
+            f"A {radius} {radius} 0 {large_arc_flag} 0 {end_x:.2f} {end_y:.2f} "
+            "Z"
+        )
+
     bull_pct_column = None
     for column in df.columns:
         normalized = str(column).strip().upper().replace(" ", "_")
@@ -151,24 +167,45 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
         return
 
     colors = ["#F04444", "#FFFFFF", "#FFFFFF", "#2ECC71"]
-    explode = [0.02 if count > 0 else 0.0 for count in counts]
     labels = ["0", "33.33", "66.67", "100"]
 
-    fig, ax = plt.subplots(figsize=(3.0, 3.0))
-    ax.pie(
-        counts,
-        colors=colors,
-        startangle=90,
-        counterclock=False,
-        explode=explode,
-        wedgeprops={"width": 0.35, "edgecolor": "#666666", "linewidth": 1.0},
-        labels=None,
-    )
-    ax.set_aspect("equal")
     total = sum(counts)
+    center_x = 90.0
+    center_y = 90.0
+    radius = 72.0
+    stroke_width = 28.0
+    current_angle = 0.0
+    svg_paths = []
+
+    for count, color in zip(counts, colors):
+        if count <= 0:
+            continue
+        sweep_angle = 360.0 * (count / total)
+        start_angle = current_angle
+        end_angle = current_angle + sweep_angle
+        path = describe_arc(center_x, center_y, radius, start_angle, end_angle)
+        svg_paths.append(
+            f'<path d="{path}" fill="{color}" stroke="#666666" stroke-width="1.5" />'
+        )
+        current_angle = end_angle
+
     legend_text = " | ".join(f"{label}: {count}" for label, count in zip(labels, counts))
-    ax.set_title(f"BULL_PCT\n{legend_text}\nTotal rows: {total}", fontsize=10, pad=8)
-    st.pyplot(fig, clear_figure=True)
+    svg = f'''
+    <div style="display:flex; justify-content:center; margin:0.35rem 0 0.75rem 0;">
+      <svg width="220" height="220" viewBox="0 0 180 180" role="img" aria-label="BULL_PCT donut chart">
+        <circle cx="90" cy="90" r="{radius}" fill="#FFFFFF" stroke="#D0D0D0" stroke-width="1" />
+        {''.join(svg_paths)}
+        <circle cx="90" cy="90" r="{radius - stroke_width}" fill="#FFFFFF" stroke="#D0D0D0" stroke-width="1" />
+        <text x="90" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#111111">BULL_PCT</text>
+        <text x="90" y="104" text-anchor="middle" font-size="10" fill="#444444">{total} rows</text>
+      </svg>
+    </div>
+    <div style="text-align:center; font-size:0.8rem; color:#444444; margin-top:-0.35rem; margin-bottom:0.75rem;">
+      {legend_text}
+    </div>
+    '''
+
+    st.markdown(svg, unsafe_allow_html=True)
 
 
 DATA_DIR = resolve_data_dir()
