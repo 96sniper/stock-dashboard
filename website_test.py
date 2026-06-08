@@ -129,6 +129,57 @@ def latest_valid_png(pattern: str, exclude_substring: str | None = None) -> str 
     return None
 
 
+def render_bull_pct_badges(df: pd.DataFrame) -> None:
+    bull_pct_column = None
+    for column in df.columns:
+        normalized = str(column).strip().upper().replace(" ", "_")
+        if normalized == "BULL_PCT":
+            bull_pct_column = column
+            break
+
+    if bull_pct_column is None:
+        return
+
+    numeric_values = pd.to_numeric(df[bull_pct_column], errors="coerce").dropna()
+    if numeric_values.empty:
+        return
+
+    present_values = {round(float(value), 2) for value in numeric_values.unique()}
+    target_values = [0.0, 33.33, 66.67, 100.0]
+    badge_colors = {
+        0.0: "#F9DFDF",
+        33.33: "#FFFFFF",
+        66.67: "#FFFFFF",
+        100.0: "#DFF5E3",
+    }
+
+    st.markdown("**BULL_PCT**")
+    badge_columns = st.columns(len(target_values))
+    for badge_column, value in zip(badge_columns, target_values):
+        is_present = value in present_values
+        background_color = badge_colors[value]
+        border_color = "#666666" if is_present else "#C8C8C8"
+        text_color = "#111111"
+        opacity = 1.0 if is_present else 0.45
+
+        badge_column.markdown(
+            f"""
+            <div style="
+                background-color:{background_color};
+                border:1px solid {border_color};
+                border-radius:999px;
+                padding:0.4rem 0.65rem;
+                text-align:center;
+                font-size:0.82rem;
+                font-weight:700;
+                color:{text_color};
+                opacity:{opacity};
+            ">{value:g}</div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
 DATA_DIR = resolve_data_dir()
 
 ####################################################################################################################################################################
@@ -639,6 +690,7 @@ with tab_sector_summary:
                 latest_xlsx = max(xlsx_matches, key=os.path.getmtime)
                 try:
                     df = pd.read_excel(latest_xlsx)
+                    render_bull_pct_badges(df)
                     st.dataframe(df, use_container_width=True)
                 except Exception as e:
                     st.error(f"Failed to load {sector_name} XLSX file: {e}")
