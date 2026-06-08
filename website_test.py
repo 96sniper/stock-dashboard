@@ -3,6 +3,7 @@ import streamlit.components.v1 as components
 import base64
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 from pdf2image import convert_from_path
 from datetime import date, timedelta
 import glob
@@ -129,7 +130,7 @@ def latest_valid_png(pattern: str, exclude_substring: str | None = None) -> str 
     return None
 
 
-def render_bull_pct_badges(df: pd.DataFrame) -> None:
+def render_bull_pct_donut(df: pd.DataFrame) -> None:
     bull_pct_column = None
     for column in df.columns:
         normalized = str(column).strip().upper().replace(" ", "_")
@@ -140,44 +141,34 @@ def render_bull_pct_badges(df: pd.DataFrame) -> None:
     if bull_pct_column is None:
         return
 
-    numeric_values = pd.to_numeric(df[bull_pct_column], errors="coerce").dropna()
+    numeric_values = pd.to_numeric(df[bull_pct_column], errors="coerce").dropna().round(2)
     if numeric_values.empty:
         return
 
-    present_values = {round(float(value), 2) for value in numeric_values.unique()}
     target_values = [0.0, 33.33, 66.67, 100.0]
-    badge_colors = {
-        0.0: "#F9DFDF",
-        33.33: "#FFFFFF",
-        66.67: "#FFFFFF",
-        100.0: "#DFF5E3",
-    }
+    counts = [int((numeric_values == value).sum()) for value in target_values]
+    if sum(counts) == 0:
+        return
 
-    st.markdown("**BULL_PCT**")
-    badge_columns = st.columns(len(target_values))
-    for badge_column, value in zip(badge_columns, target_values):
-        is_present = value in present_values
-        background_color = badge_colors[value]
-        border_color = "#666666" if is_present else "#C8C8C8"
-        text_color = "#111111"
-        opacity = 1.0 if is_present else 0.45
+    colors = ["#F04444", "#FFFFFF", "#FFFFFF", "#2ECC71"]
+    explode = [0.02 if count > 0 else 0.0 for count in counts]
+    labels = ["0", "33.33", "66.67", "100"]
 
-        badge_column.markdown(
-            f"""
-            <div style="
-                background-color:{background_color};
-                border:1px solid {border_color};
-                border-radius:999px;
-                padding:0.4rem 0.65rem;
-                text-align:center;
-                font-size:0.82rem;
-                font-weight:700;
-                color:{text_color};
-                opacity:{opacity};
-            ">{value:g}</div>
-            """,
-            unsafe_allow_html=True,
-        )
+    fig, ax = plt.subplots(figsize=(3.0, 3.0))
+    ax.pie(
+        counts,
+        colors=colors,
+        startangle=90,
+        counterclock=False,
+        explode=explode,
+        wedgeprops={"width": 0.35, "edgecolor": "#666666", "linewidth": 1.0},
+        labels=None,
+    )
+    ax.set_aspect("equal")
+    total = sum(counts)
+    legend_text = " | ".join(f"{label}: {count}" for label, count in zip(labels, counts))
+    ax.set_title(f"BULL_PCT\n{legend_text}\nTotal rows: {total}", fontsize=10, pad=8)
+    st.pyplot(fig, clear_figure=True)
 
 
 DATA_DIR = resolve_data_dir()
@@ -690,7 +681,7 @@ with tab_sector_summary:
                 latest_xlsx = max(xlsx_matches, key=os.path.getmtime)
                 try:
                     df = pd.read_excel(latest_xlsx)
-                    render_bull_pct_badges(df)
+                    render_bull_pct_donut(df)
                     st.dataframe(df, use_container_width=True)
                 except Exception as e:
                     st.error(f"Failed to load {sector_name} XLSX file: {e}")
