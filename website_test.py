@@ -334,16 +334,16 @@ with tab_sector_analysis:
         matching_files = glob.glob(pattern)
         if matching_files:
             latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, width=1500)
+            st.image(latest_file, use_container_width=True)
         else:
-            st.warning("Yearly gain table image not found.")
+            st.warning("Yearly gain table image not found.)")
 
     with sub_tab_ytd:
         pattern = os.path.join(base_dir, "etf_ytd_bar_chart_*.png")
         matching_files = glob.glob(pattern)
         if matching_files:
             latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, width=1200)
+            st.image(latest_file, use_container_width=True)
         else:
             st.warning("YTD bar chart image not found.")
 
@@ -352,7 +352,7 @@ with tab_sector_analysis:
         matching_files = glob.glob(pattern)
         if matching_files:
             latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, width=1200)
+            st.image(latest_file, use_container_width=True)
         else:
             st.warning("QTD bar chart image not found.")
 
@@ -537,8 +537,17 @@ with tab3:
             st.warning("CURRENT_TREND_SUMMARY XLSX file not found.")
 
     with cab_tab1:
+        sector_name_tokens = [
+            "MAG7", "SEMICONDUCTORS", "SOFTWARE", "ALL_OTHER_TECHNOLOGY",
+            "ALL OTHER TECHNOLOGY", "BASIC MATERIAL", "BASIC_MATERIAL",
+            "COMMUNICATION", "ENERGY", "HEALTHCARE", "INDUSTRIAL",
+            "CONSUMER_DISCRETIONARY", "CONSUMER_DEFENSIVE", "FINANCIAL", "UTILITY",
+        ]
         pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx")
-        matching_files = glob.glob(pattern)
+        matching_files = [
+            p for p in glob.glob(pattern)
+            if not any(token in os.path.basename(p).upper() for token in sector_name_tokens)
+        ]
         if matching_files:
             latest_file = max(matching_files, key=os.path.getmtime)
             try:
@@ -650,7 +659,8 @@ with tab3b:
         "ENERGY",
         "HEALTHCARE",
         "INDUSTRIAL",
-        "CONSUMER",
+        "CONSUMER_DISCRETIONARY",
+        "CONSUMER_DEFENSIVE",
         "FINANCIAL",
         "UTILITY",
     ]
@@ -692,7 +702,7 @@ with tab_sector_summary:
     base_dir = DATA_DIR
     
     # Define sectors and their names
-    sectors = ['MAG7', 'Semiconductors', 'Software', 'All_Other_Technology', 'Basic Material', 'Communication', 'Energy', 'Healthcare', 'Industrial', 'Consumer', 'Financial', 'Utility']
+    sectors = ['MAG7', 'Semiconductors', 'Software', 'All_Other_Technology', 'Basic Material', 'Communication', 'Energy', 'Healthcare', 'Industrial', 'Consumer_Discretionary', 'Consumer_Defensive', 'Financial', 'Utility']
     inner_tabs = ["BULL_PCT_per_SECTOR"] + sectors
     sector_tabs = st.tabs(inner_tabs)
     
@@ -717,7 +727,10 @@ with tab_sector_summary:
         donut_columns = st.columns(4)
         for index, sector_name in enumerate(sectors):
             with donut_columns[index % 4]:
-                st.caption(sector_name)
+                st.markdown(
+                    f'<div style="text-align:center; font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">{sector_name}</div>',
+                    unsafe_allow_html=True,
+                )
                 latest_xlsx = get_latest_sector_xlsx(base_dir, sector_name)
                 if latest_xlsx:
                     try:
