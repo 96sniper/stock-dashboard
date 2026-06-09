@@ -208,6 +208,38 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
     st.markdown(svg, unsafe_allow_html=True)
 
 
+def get_latest_sector_xlsx(base_dir: str, sector_name: str) -> str | None:
+    def build_sector_variants(name: str) -> set[str]:
+        space_name = name.replace("_", " ")
+        underscore_name = name.replace(" ", "_")
+        return {
+            name,
+            space_name,
+            underscore_name,
+            space_name.title(),
+            underscore_name.title(),
+            space_name.upper(),
+            underscore_name.upper(),
+            space_name.lower(),
+            underscore_name.lower(),
+        }
+
+    xlsx_matches = []
+    for sector_variant in build_sector_variants(sector_name):
+        xlsx_matches.extend(
+            glob.glob(
+                os.path.join(
+                    base_dir,
+                    f"CURRENT_TREND_SUMMARY_ALL_STOCKS_{sector_variant}_*.xlsx",
+                )
+            )
+        )
+    xlsx_matches = list(set(xlsx_matches))
+    if not xlsx_matches:
+        return None
+    return max(xlsx_matches, key=os.path.getmtime)
+
+
 DATA_DIR = resolve_data_dir()
 
 ####################################################################################################################################################################
@@ -661,8 +693,8 @@ with tab_sector_summary:
     
     # Define sectors and their names
     sectors = ['MAG7', 'Semiconductors', 'Software', 'All_Other_Technology', 'Basic Material', 'Communication', 'Energy', 'Healthcare', 'Industrial', 'Consumer', 'Financial', 'Utility']
-    
-    sector_tabs = st.tabs(sectors)
+    inner_tabs = ["BULL_PCT_per_SECTOR"] + sectors
+    sector_tabs = st.tabs(inner_tabs)
     
     def build_sector_variants(name: str) -> set[str]:
         space_name = name.replace("_", " ")
@@ -680,7 +712,23 @@ with tab_sector_summary:
         }
         return variants
 
-    for sector_tab, sector_name in zip(sector_tabs, sectors):
+    with sector_tabs[0]:
+        st.subheader("BULL_PCT per Sector")
+        donut_columns = st.columns(4)
+        for index, sector_name in enumerate(sectors):
+            with donut_columns[index % 4]:
+                st.caption(sector_name)
+                latest_xlsx = get_latest_sector_xlsx(base_dir, sector_name)
+                if latest_xlsx:
+                    try:
+                        df = pd.read_excel(latest_xlsx)
+                        render_bull_pct_donut(df)
+                    except Exception:
+                        st.warning(f"{sector_name} data unreadable.")
+                else:
+                    st.warning(f"{sector_name} XLSX not found.")
+
+    for sector_tab, sector_name in zip(sector_tabs[1:], sectors):
         with sector_tab:
             # Display PNG first
             png_matches = []
@@ -718,7 +766,6 @@ with tab_sector_summary:
                 latest_xlsx = max(xlsx_matches, key=os.path.getmtime)
                 try:
                     df = pd.read_excel(latest_xlsx)
-                    render_bull_pct_donut(df)
                     st.dataframe(df, use_container_width=True)
                 except Exception as e:
                     st.error(f"Failed to load {sector_name} XLSX file: {e}")
