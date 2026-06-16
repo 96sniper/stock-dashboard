@@ -326,33 +326,47 @@ with tab_sector_analysis:
     st.header("Sector Analysis")
 
     base_dir = DATA_DIR
+    sector_chart_width = 1200
+
+    def latest_sector_chart(*filename_patterns: str) -> str | None:
+        matches: list[str] = []
+        for filename_pattern in filename_patterns:
+            matches.extend(glob.glob(os.path.join(base_dir, filename_pattern)))
+        unique_matches = list(set(matches))
+        valid_matches = [path for path in unique_matches if is_valid_png(path)]
+        if not valid_matches:
+            return None
+        return max(valid_matches, key=os.path.getmtime)
 
     sub_tab_yearly, sub_tab_ytd, sub_tab_qtd = st.tabs(["Yearly Table", "Year-to-Date", "Quarter-to-Date"])
 
     with sub_tab_yearly:
-        pattern = os.path.join(base_dir, "sector_etf_yearly_gain_table_*.png")
-        matching_files = glob.glob(pattern)
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, use_container_width=True)
+        latest_file = latest_sector_chart(
+            "sector_etf_yearly_gain_table_*.png",
+            "sector_etf_yearly_gain_table.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=sector_chart_width)
         else:
-            st.warning("Yearly gain table image not found.)")
+            st.warning("Yearly gain table image not found.")
 
     with sub_tab_ytd:
-        pattern = os.path.join(base_dir, "etf_ytd_bar_chart_*.png")
-        matching_files = glob.glob(pattern)
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, use_container_width=True)
+        latest_file = latest_sector_chart(
+            "etf_ytd_bar_chart_*.png",
+            "etf_ytd_bar_chart.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=sector_chart_width)
         else:
             st.warning("YTD bar chart image not found.")
 
     with sub_tab_qtd:
-        pattern = os.path.join(base_dir, "etf_qtd_bar_chart_*.png")
-        matching_files = glob.glob(pattern)
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, use_container_width=True)
+        latest_file = latest_sector_chart(
+            "etf_qtd_bar_chart_*.png",
+            "etf_qtd_bar_chart.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=sector_chart_width)
         else:
             st.warning("QTD bar chart image not found.")
 
