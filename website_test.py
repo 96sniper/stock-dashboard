@@ -5,6 +5,7 @@ import pandas as pd
 import os
 from datetime import date, timedelta
 import glob
+import re
 
 # Set to Wide Mode
 st.set_page_config(layout="wide")
@@ -240,13 +241,58 @@ def get_latest_sector_xlsx(base_dir: str, sector_name: str) -> str | None:
     return max(xlsx_matches, key=os.path.getmtime)
 
 
+def discover_industry_tokens(base_dir: str) -> list[str]:
+    tokens: set[str] = set()
+    xlsx_pattern = re.compile(
+        r"^CURRENT_TREND_SUMMARY_ALL_STOCKS_INDUSTRIES_(.+)_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.xlsx$"
+    )
+    png_pattern = re.compile(
+        r"^CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_INDUSTRIES_(.+)_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.png$"
+    )
+
+    for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_INDUSTRIES_*.xlsx")):
+        match = xlsx_pattern.match(os.path.basename(path))
+        if match:
+            tokens.add(match.group(1))
+
+    for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_INDUSTRIES_*.png")):
+        match = png_pattern.match(os.path.basename(path))
+        if match:
+            tokens.add(match.group(1))
+
+    return sorted(tokens)
+
+
+def industry_label_from_token(token: str) -> str:
+    return token.replace("_", " ").title()
+
+
+def get_latest_industry_xlsx(base_dir: str, industry_token: str) -> str | None:
+    matches = glob.glob(
+        os.path.join(base_dir, f"CURRENT_TREND_SUMMARY_ALL_STOCKS_INDUSTRIES_{industry_token}_*.xlsx")
+    )
+    if not matches:
+        return None
+    return max(matches, key=os.path.getmtime)
+
+
+def get_latest_industry_png(base_dir: str, industry_token: str) -> str | None:
+    matches = glob.glob(
+        os.path.join(base_dir, f"CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_INDUSTRIES_{industry_token}_*.png")
+    )
+    valid_matches = [path for path in matches if is_valid_png(path)]
+    if not valid_matches:
+        return None
+    return max(valid_matches, key=os.path.getmtime)
+
+
 DATA_DIR = resolve_data_dir()
 
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary",
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -698,7 +744,10 @@ with tab3b:
         matches = [
             path
             for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
-            if not any(token in os.path.basename(path).upper() for token in sector_name_tokens)
+            if re.match(
+                r"^CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.png$",
+                os.path.basename(path),
+            )
         ]
         valid_matches = [path for path in matches if is_valid_png(path)]
         if valid_matches:
@@ -798,6 +847,63 @@ with tab_sector_summary:
                     st.error(f"Failed to load {sector_name} XLSX file: {e}")
             else:
                 st.warning(f"{sector_name} summary XLSX not found.")
+
+###############################################################################################################################################################
+
+# Close Above/Below Industry Summary
+with tab_industry_summary:
+    st.header("Close Above/Below Industry Summary")
+    st.write("Industry-specific trend summaries with detailed tables.")
+
+    base_dir = DATA_DIR
+    industry_tokens = discover_industry_tokens(base_dir)
+
+    if not industry_tokens:
+        st.warning("No industry summary files found yet.")
+    else:
+        industry_labels = [industry_label_from_token(token) for token in industry_tokens]
+        inner_tabs = ["BULL_PCT_per_INDUSTRY"] + industry_labels
+        industry_tabs = st.tabs(inner_tabs)
+
+        with industry_tabs[0]:
+            st.subheader("BULL_PCT per Industry")
+            donut_columns = st.columns(4)
+            for index, token in enumerate(industry_tokens):
+                with donut_columns[index % 4]:
+                    label = industry_label_from_token(token)
+                    st.markdown(
+                        f'<div style="text-align:center; font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">{label}</div>',
+                        unsafe_allow_html=True,
+                    )
+                    latest_xlsx = get_latest_industry_xlsx(base_dir, token)
+                    if latest_xlsx:
+                        try:
+                            df = pd.read_excel(latest_xlsx)
+                            render_bull_pct_donut(df)
+                        except Exception:
+                            st.warning(f"{label} data unreadable.")
+                    else:
+                        st.warning(f"{label} XLSX not found.")
+
+        for industry_tab, token in zip(industry_tabs[1:], industry_tokens):
+            with industry_tab:
+                label = industry_label_from_token(token)
+
+                latest_png = get_latest_industry_png(base_dir, token)
+                if latest_png:
+                    st.image(latest_png, width=1500)
+                else:
+                    st.warning(f"{label} summary PNG not found.")
+
+                latest_xlsx = get_latest_industry_xlsx(base_dir, token)
+                if latest_xlsx:
+                    try:
+                        df = pd.read_excel(latest_xlsx)
+                        st.dataframe(df, use_container_width=True)
+                    except Exception as e:
+                        st.error(f"Failed to load {label} XLSX file: {e}")
+                else:
+                    st.warning(f"{label} summary XLSX not found.")
 
 ###############################################################################################################################################################
 
