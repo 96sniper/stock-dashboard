@@ -189,10 +189,18 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
         sweep_angle = 360.0 * (count / total)
         start_angle = current_angle
         end_angle = current_angle + sweep_angle
-        path = describe_arc(center_x, center_y, radius, start_angle, end_angle)
-        svg_paths.append(
-            f'<path d="{path}" fill="{color}" stroke="#666666" stroke-width="1.5" />'
-        )
+        
+        # Handle full 360° arc by splitting into two 180° arcs
+        if sweep_angle >= 359.99:
+            path1 = describe_arc(center_x, center_y, radius, start_angle, start_angle + 180.0)
+            path2 = describe_arc(center_x, center_y, radius, start_angle + 180.0, start_angle + 360.0)
+            svg_paths.append(f'<path d="{path1}" fill="{color}" stroke="#666666" stroke-width="1.5" />')
+            svg_paths.append(f'<path d="{path2}" fill="{color}" stroke="#666666" stroke-width="1.5" />')
+        else:
+            path = describe_arc(center_x, center_y, radius, start_angle, end_angle)
+            svg_paths.append(
+                f'<path d="{path}" fill="{color}" stroke="#666666" stroke-width="1.5" />'
+            )
         current_angle = end_angle
 
     legend_text = " | ".join(f"{label}: {count}" for label, count in zip(labels, counts))
