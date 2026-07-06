@@ -209,6 +209,34 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
     st.markdown(svg, unsafe_allow_html=True)
 
 
+def get_bull_minus_bear_score_from_xlsx(xlsx_path: str | None) -> int:
+    if not xlsx_path:
+        return -10**9
+
+    try:
+        df = pd.read_excel(xlsx_path)
+    except Exception:
+        return -10**9
+
+    bull_pct_column = None
+    for column in df.columns:
+        normalized = str(column).strip().upper().replace(" ", "_")
+        if normalized == "BULL_PCT":
+            bull_pct_column = column
+            break
+
+    if bull_pct_column is None:
+        return -10**9
+
+    numeric_values = pd.to_numeric(df[bull_pct_column], errors="coerce").dropna().round(2)
+    if numeric_values.empty:
+        return -10**9
+
+    green_count = int((numeric_values == 100.0).sum())
+    red_count = int((numeric_values == 0.0).sum())
+    return green_count - red_count
+
+
 def get_latest_sector_xlsx(base_dir: str, sector_name: str) -> str | None:
     def build_sector_variants(name: str) -> set[str]:
         space_name = name.replace("_", " ")
@@ -766,7 +794,27 @@ with tab_sector_summary:
     
     # Define sectors and their names
     sectors = ['MAG7', 'Semiconductors', 'Software', 'All_Other_Technology', 'Basic Material', 'Communication', 'Energy', 'Healthcare', 'Industrial', 'Consumer_Discretionary', 'Consumer_Defensive', 'Financial', 'Utility']
-    inner_tabs = ["BULL_PCT_per_SECTOR"] + sectors
+
+    sector_entries = []
+    for sector_name in sectors:
+        latest_xlsx = get_latest_sector_xlsx(base_dir, sector_name)
+        score = get_bull_minus_bear_score_from_xlsx(latest_xlsx)
+        sector_entries.append(
+            {
+                "name": sector_name,
+                "xlsx": latest_xlsx,
+                "score": score,
+            }
+        )
+
+    sector_entries = sorted(
+        sector_entries,
+        key=lambda item: (item["score"], item["name"]),
+        reverse=True,
+    )
+
+    sorted_sectors = [entry["name"] for entry in sector_entries]
+    inner_tabs = ["BULL_PCT_per_SECTOR"] + sorted_sectors
     sector_tabs = st.tabs(inner_tabs)
     
     def build_sector_variants(name: str) -> set[str]:
@@ -788,13 +836,14 @@ with tab_sector_summary:
     with sector_tabs[0]:
         st.subheader("BULL_PCT per Sector")
         donut_columns = st.columns(4)
-        for index, sector_name in enumerate(sectors):
+        for index, entry in enumerate(sector_entries):
             with donut_columns[index % 4]:
+                sector_name = entry["name"]
                 st.markdown(
                     f'<div style="text-align:center; font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">{sector_name}</div>',
                     unsafe_allow_html=True,
                 )
-                latest_xlsx = get_latest_sector_xlsx(base_dir, sector_name)
+                latest_xlsx = entry["xlsx"]
                 if latest_xlsx:
                     try:
                         df = pd.read_excel(latest_xlsx)
@@ -804,7 +853,7 @@ with tab_sector_summary:
                 else:
                     st.warning(f"{sector_name} XLSX not found.")
 
-    for sector_tab, sector_name in zip(sector_tabs[1:], sectors):
+    for sector_tab, sector_name in zip(sector_tabs[1:], sorted_sectors):
         with sector_tab:
             # Display PNG first
             png_matches = []
@@ -861,21 +910,41 @@ with tab_industry_summary:
     if not industry_tokens:
         st.warning("No industry summary files found yet.")
     else:
-        industry_labels = [industry_label_from_token(token) for token in industry_tokens]
+        industry_entries = []
+        for token in industry_tokens:
+            label = industry_label_from_token(token)
+            latest_xlsx = get_latest_industry_xlsx(base_dir, token)
+            score = get_bull_minus_bear_score_from_xlsx(latest_xlsx)
+            industry_entries.append(
+                {
+                    "token": token,
+                    "label": label,
+                    "xlsx": latest_xlsx,
+                    "score": score,
+                }
+            )
+
+        industry_entries = sorted(
+            industry_entries,
+            key=lambda item: (item["score"], item["label"]),
+            reverse=True,
+        )
+
+        industry_labels = [entry["label"] for entry in industry_entries]
         inner_tabs = ["BULL_PCT_per_INDUSTRY"] + industry_labels
         industry_tabs = st.tabs(inner_tabs)
 
         with industry_tabs[0]:
             st.subheader("BULL_PCT per Industry")
             donut_columns = st.columns(4)
-            for index, token in enumerate(industry_tokens):
+            for index, entry in enumerate(industry_entries):
                 with donut_columns[index % 4]:
-                    label = industry_label_from_token(token)
+                    label = entry["label"]
                     st.markdown(
                         f'<div style="text-align:center; font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">{label}</div>',
                         unsafe_allow_html=True,
                     )
-                    latest_xlsx = get_latest_industry_xlsx(base_dir, token)
+                    latest_xlsx = entry["xlsx"]
                     if latest_xlsx:
                         try:
                             df = pd.read_excel(latest_xlsx)
@@ -885,9 +954,10 @@ with tab_industry_summary:
                     else:
                         st.warning(f"{label} XLSX not found.")
 
-        for industry_tab, token in zip(industry_tabs[1:], industry_tokens):
+        for industry_tab, entry in zip(industry_tabs[1:], industry_entries):
             with industry_tab:
-                label = industry_label_from_token(token)
+                token = entry["token"]
+                label = entry["label"]
 
                 latest_png = get_latest_industry_png(base_dir, token)
                 if latest_png:
