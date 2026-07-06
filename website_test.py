@@ -163,7 +163,12 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
         return
 
     target_values = [0.0, 33.33, 66.67, 100.0]
-    counts = [int((numeric_values == value).sum()) for value in target_values]
+    counts = [
+        int(((numeric_values == 0.0) | (numeric_values == 0)).sum()) if target_values[0] == 0.0 else 0,
+        int(((numeric_values >= 32.99) & (numeric_values <= 33.67)).sum()) if target_values[1] == 33.33 else 0,
+        int(((numeric_values >= 66.0) & (numeric_values <= 67.34)).sum()) if target_values[2] == 66.67 else 0,
+        int(((numeric_values == 100.0) | (numeric_values == 100)).sum()) if target_values[3] == 100.0 else 0,
+    ]
     if sum(counts) == 0:
         return
 
