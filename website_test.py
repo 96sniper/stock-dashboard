@@ -607,9 +607,7 @@ with tab3:
     st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
     base_dir = DATA_DIR
-    cab_tab0, cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6, cab_tab7, cab_tab8, cab_tab9, cab_tab10 = st.tabs([
-        "CURRENT_TREND_SUMMARY",
-        "CURRENT_TREND_SUMMARY_ALL_STOCKS",
+    cab_tab0, cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6, cab_tab7, cab_tab8 = st.tabs([
         "Daily",
         "Weekly",
         "Monthly",
@@ -622,44 +620,6 @@ with tab3:
     ])
 
     with cab_tab0:
-        pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_*.xlsx")
-        matching_files = [
-            p for p in glob.glob(pattern)
-            if "CURRENT_TREND_SUMMARY_ALL_STOCKS_" not in os.path.basename(p)
-        ]
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
-            try:
-                df = pd.read_excel(latest_file)
-                st.dataframe(df, use_container_width=True)
-            except Exception as e:
-                st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY XLSX file: {e}")
-        else:
-            st.warning("CURRENT_TREND_SUMMARY XLSX file not found.")
-
-    with cab_tab1:
-        sector_name_tokens = [
-            "MAG7", "SEMICONDUCTORS", "SOFTWARE", "ALL_OTHER_TECHNOLOGY",
-            "ALL OTHER TECHNOLOGY", "BASIC MATERIAL", "BASIC_MATERIAL",
-            "COMMUNICATION", "ENERGY", "HEALTHCARE", "INDUSTRIAL",
-            "CONSUMER_DISCRETIONARY", "CONSUMER_DEFENSIVE", "FINANCIAL", "UTILITY",
-        ]
-        pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx")
-        matching_files = [
-            p for p in glob.glob(pattern)
-            if not any(token in os.path.basename(p).upper() for token in sector_name_tokens)
-        ]
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
-            try:
-                df = pd.read_excel(latest_file)
-                st.dataframe(df, use_container_width=True)
-            except Exception as e:
-                st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file: {e}")
-        else:
-            st.warning("CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file not found.")
-
-    with cab_tab2:
         st.subheader("Daily Close Above/Below")
         pattern = os.path.join(base_dir, "daily_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
@@ -669,7 +629,7 @@ with tab3:
         else:
             st.warning("Daily Close Above Below Count image not found.")
 
-    with cab_tab3:
+    with cab_tab1:
         st.subheader("Weekly Close Above/Below")
         pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
@@ -679,7 +639,7 @@ with tab3:
         else:
             st.warning("Weekly Close Above Below Count image not found.")
 
-    with cab_tab4:
+    with cab_tab2:
         st.subheader("Monthly Close Above/Below")
         pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
@@ -689,7 +649,7 @@ with tab3:
         else:
             st.warning("Monthly Close Above Below Count image not found.")
 
-    with cab_tab5:
+    with cab_tab3:
         matches = [
             p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_*.png"))
             if "_ALL_STOCKS_" not in os.path.basename(p)
@@ -699,7 +659,7 @@ with tab3:
         else:
             st.warning("Daily Close Trend image not found.")
 
-    with cab_tab6:
+    with cab_tab4:
         matches = [
             p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_*.png"))
             if "_ALL_STOCKS_" not in os.path.basename(p)
@@ -709,7 +669,7 @@ with tab3:
         else:
             st.warning("Weekly Close Trend image not found.")
 
-    with cab_tab7:
+    with cab_tab5:
         matches = [
             p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_*.png"))
             if "_ALL_STOCKS_" not in os.path.basename(p)
@@ -719,21 +679,21 @@ with tab3:
         else:
             st.warning("Monthly Close Trend image not found.")
 
-    with cab_tab8:
+    with cab_tab6:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_ALL_STOCKS_*.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Daily Close Trend - All Stocks image not found.")
 
-    with cab_tab9:
+    with cab_tab7:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_ALL_STOCKS_*.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Weekly Close Trend - All Stocks image not found.")
 
-    with cab_tab10:
+    with cab_tab8:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_ALL_STOCKS_*.png"))
         if matches:
             st.image(max(matches, key=os.path.getmtime), width=850)
@@ -797,30 +757,16 @@ with tab3b:
             st.warning("Close Above/Below Summary image not found.")
 
     with cab_summary_tab2:
-        sector_name_tokens = [
-            "MAG7",
-            "SEMICONDUCTORS",
-            "SOFTWARE",
-            "ALL_OTHER_TECHNOLOGY",
-            "ALL OTHER TECHNOLOGY",
-            "BASIC MATERIAL",
-            "BASIC_MATERIAL",
-            "COMMUNICATION",
-            "ENERGY",
-            "HEALTHCARE",
-            "INDUSTRIAL",
-            "CONSUMER_DISCRETIONARY",
-            "CONSUMER_DEFENSIVE",
-            "FINANCIAL",
-            "UTILITY",
+        matches = [
+            path
+            for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx"))
+            if re.match(
+                r"^CURRENT_TREND_SUMMARY_ALL_STOCKS_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.xlsx$",
+                os.path.basename(path),
+            )
         ]
-        pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx")
-        matching_files = [
-            p for p in glob.glob(pattern)
-            if not any(token in os.path.basename(p).upper() for token in sector_name_tokens)
-        ]
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
+        if matches:
+            latest_file = max(matches, key=os.path.getmtime)
             try:
                 df = pd.read_excel(latest_file)
                 st.dataframe(df, use_container_width=True)
