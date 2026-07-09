@@ -740,6 +740,7 @@ with tab3b:
             latest_file = max(matching_files, key=os.path.getmtime)
             try:
                 df = pd.read_excel(latest_file)
+                render_bull_pct_donut(df)
                 st.dataframe(df, use_container_width=True)
             except Exception as e:
                 st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY XLSX file: {e}")
@@ -769,6 +770,7 @@ with tab3b:
             latest_file = max(matches, key=os.path.getmtime)
             try:
                 df = pd.read_excel(latest_file)
+                render_bull_pct_donut(df)
                 st.dataframe(df, use_container_width=True)
             except Exception as e:
                 st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file: {e}")
