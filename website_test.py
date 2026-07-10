@@ -222,6 +222,111 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
     st.markdown(svg, unsafe_allow_html=True)
 
 
+def render_trend_pie_charts(df: pd.DataFrame) -> None:
+    """Render pie charts for DAILY, WEEKLY, and MONTHLY BULL vs BEAR counts."""
+    def polar_to_cartesian(center_x: float, center_y: float, radius: float, angle_in_degrees: float) -> tuple[float, float]:
+        angle_in_radians = (angle_in_degrees - 90.0) * 3.141592653589793 / 180.0
+        return (
+            center_x + radius * float(__import__("math").cos(angle_in_radians)),
+            center_y + radius * float(__import__("math").sin(angle_in_radians)),
+        )
+
+    def describe_arc(center_x: float, center_y: float, radius: float, start_angle: float, end_angle: float) -> str:
+        start_x, start_y = polar_to_cartesian(center_x, center_y, radius, end_angle)
+        end_x, end_y = polar_to_cartesian(center_x, center_y, radius, start_angle)
+        large_arc_flag = "1" if end_angle - start_angle > 180 else "0"
+        return (
+            f"M {center_x} {center_y} "
+            f"L {start_x:.2f} {start_y:.2f} "
+            f"A {radius} {radius} 0 {large_arc_flag} 0 {end_x:.2f} {end_y:.2f} "
+            "Z"
+        )
+
+    def create_pie_svg(bull_count: int, bear_count: int, title: str) -> str:
+        total = bull_count + bear_count
+        if total == 0:
+            return f'<div style="text-align:center;"><p>{title}: No data</p></div>'
+
+        bull_percentage = (bull_count / total) * 100
+        bear_percentage = (bear_count / total) * 100
+
+        center_x = 90.0
+        center_y = 90.0
+        radius = 65.0
+        current_angle = 0.0
+        svg_paths = []
+
+        # Red arc for BEAR
+        if bear_count > 0:
+            sweep_angle = 360.0 * (bear_count / total)
+            start_angle = current_angle
+            end_angle = current_angle + sweep_angle
+            if sweep_angle >= 359.99:
+                path1 = describe_arc(center_x, center_y, radius, start_angle, start_angle + 180.0)
+                path2 = describe_arc(center_x, center_y, radius, start_angle + 180.0, start_angle + 360.0)
+                svg_paths.append(f'<path d="{path1}" fill="#E74C3C" stroke="#FFFFFF" stroke-width="2" />')
+                svg_paths.append(f'<path d="{path2}" fill="#E74C3C" stroke="#FFFFFF" stroke-width="2" />')
+            else:
+                path = describe_arc(center_x, center_y, radius, start_angle, end_angle)
+                svg_paths.append(f'<path d="{path}" fill="#E74C3C" stroke="#FFFFFF" stroke-width="2" />')
+            current_angle = end_angle
+
+        # Green arc for BULL
+        if bull_count > 0:
+            sweep_angle = 360.0 * (bull_count / total)
+            start_angle = current_angle
+            end_angle = current_angle + sweep_angle
+            if sweep_angle >= 359.99:
+                path1 = describe_arc(center_x, center_y, radius, start_angle, start_angle + 180.0)
+                path2 = describe_arc(center_x, center_y, radius, start_angle + 180.0, start_angle + 360.0)
+                svg_paths.append(f'<path d="{path1}" fill="#27AE60" stroke="#FFFFFF" stroke-width="2" />')
+                svg_paths.append(f'<path d="{path2}" fill="#27AE60" stroke="#FFFFFF" stroke-width="2" />')
+            else:
+                path = describe_arc(center_x, center_y, radius, start_angle, end_angle)
+                svg_paths.append(f'<path d="{path}" fill="#27AE60" stroke="#FFFFFF" stroke-width="2" />')
+
+        svg = f'''
+        <div style="display:flex; flex-direction:column; align-items:center; margin:0.5rem 0;">
+          <svg width="180" height="180" viewBox="0 0 180 180" role="img" aria-label="{title} pie chart">
+            {''.join(svg_paths)}
+            <text x="90" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#111111">{title}</text>
+          </svg>
+          <div style="text-align:center; font-size:0.75rem; color:#444444; margin-top:0.35rem;">
+            <span style="color:#27AE60; font-weight:bold;">BULL: {bull_count}</span> | <span style="color:#E74C3C; font-weight:bold;">BEAR: {bear_count}</span>
+          </div>
+        </div>
+        '''
+        return svg
+
+    timeframe_columns = [
+        ('DAILY_CURRENT_TREND', 'DAILY'),
+        ('WEEKLY_CURRENT_TREND', 'WEEKLY'),
+        ('MONTHLY_CURRENT_TREND', 'MONTHLY'),
+    ]
+
+    pie_charts_html = '<div style="display:flex; justify-content:center; gap:1.5rem; margin:1rem 0; flex-wrap:wrap;">'
+    
+    for col_name, display_name in timeframe_columns:
+        trend_column = None
+        for column in df.columns:
+            normalized = str(column).strip().upper().replace(" ", "_")
+            if normalized == col_name:
+                trend_column = column
+                break
+
+        if trend_column is None:
+            continue
+
+        trend_values = df[trend_column].dropna()
+        bull_count = int((trend_values.str.upper() == 'BULL').sum())
+        bear_count = int((trend_values.str.upper() == 'BEAR').sum())
+
+        pie_charts_html += create_pie_svg(bull_count, bear_count, display_name)
+
+    pie_charts_html += '</div>'
+    st.markdown(pie_charts_html, unsafe_allow_html=True)
+
+
 def get_bull_minus_bear_score_from_xlsx(xlsx_path: str | None) -> int:
     if not xlsx_path:
         return -10**9
@@ -740,7 +845,11 @@ with tab3b:
             latest_file = max(matching_files, key=os.path.getmtime)
             try:
                 df = pd.read_excel(latest_file)
+                st.subheader("Trend Distribution by Timeframe")
+                render_trend_pie_charts(df)
+                st.subheader("BULL Percentage Distribution")
                 render_bull_pct_donut(df)
+                st.subheader("Detailed Summary")
                 st.dataframe(df, use_container_width=True)
             except Exception as e:
                 st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY XLSX file: {e}")
@@ -770,7 +879,11 @@ with tab3b:
             latest_file = max(matches, key=os.path.getmtime)
             try:
                 df = pd.read_excel(latest_file)
+                st.subheader("Trend Distribution by Timeframe")
+                render_trend_pie_charts(df)
+                st.subheader("BULL Percentage Distribution")
                 render_bull_pct_donut(df)
+                st.subheader("Detailed Summary")
                 st.dataframe(df, use_container_width=True)
             except Exception as e:
                 st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file: {e}")
@@ -899,6 +1012,11 @@ with tab_sector_summary:
                 latest_xlsx = max(xlsx_matches, key=os.path.getmtime)
                 try:
                     df = pd.read_excel(latest_xlsx)
+                    st.markdown("---")
+                    st.subheader("Trend Distribution")
+                    render_trend_pie_charts(df)
+                    st.markdown("---")
+                    st.subheader("Detailed Table")
                     st.dataframe(df, use_container_width=True)
                 except Exception as e:
                     st.error(f"Failed to load {sector_name} XLSX file: {e}")
@@ -977,6 +1095,11 @@ with tab_industry_summary:
                 if latest_xlsx:
                     try:
                         df = pd.read_excel(latest_xlsx)
+                        st.markdown("---")
+                        st.subheader("Trend Distribution")
+                        render_trend_pie_charts(df)
+                        st.markdown("---")
+                        st.subheader("Detailed Table")
                         st.dataframe(df, use_container_width=True)
                     except Exception as e:
                         st.error(f"Failed to load {label} XLSX file: {e}")
