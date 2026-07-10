@@ -219,7 +219,7 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
     </div>
     '''
 
-    st.markdown(svg, unsafe_allow_html=True)
+    components.html(svg, height=320, scrolling=False)
 
 
 def render_trend_pie_charts(df: pd.DataFrame) -> None:
@@ -324,7 +324,7 @@ def render_trend_pie_charts(df: pd.DataFrame) -> None:
         pie_charts_html += create_pie_svg(bull_count, bear_count, display_name)
 
     pie_charts_html += '</div>'
-    st.markdown(pie_charts_html, unsafe_allow_html=True)
+    components.html(pie_charts_html, height=360, scrolling=False)
 
 
 def get_bull_minus_bear_score_from_xlsx(xlsx_path: str | None) -> int:
