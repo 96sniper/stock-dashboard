@@ -519,6 +519,7 @@ with tab_sector_analysis:
 
     base_dir = DATA_DIR
     sector_chart_width = 1200
+    yearly_chart_width = 1600
 
     def latest_sector_chart(*filename_patterns: str) -> str | None:
         matches: list[str] = []
@@ -538,7 +539,7 @@ with tab_sector_analysis:
             "sector_etf_yearly_gain_table.png",
         )
         if latest_file:
-            st.image(latest_file, width=sector_chart_width)
+            st.image(latest_file, width=yearly_chart_width)
         else:
             st.warning("Yearly gain table image not found.")
 
@@ -1383,9 +1384,9 @@ with tab_ytd:
     )
 
     row_height = 24
-    left_col, right_col = st.columns(2)
+    ytd_sub_sector, ytd_sub_all = st.tabs(["Sector ETFs", "All Stocks"])
 
-    with left_col:
+    with ytd_sub_sector:
         st.subheader("Sector ETFs")
         if sector_matches:
             latest_sector_file = max(sector_matches, key=os.path.getmtime)
@@ -1399,12 +1400,50 @@ with tab_ytd:
                     hide_index=True,
                     row_height=row_height,
                 )
+
+                # --- %_FROM_ATH chart ---
+                ath_col = find_matching_column(sector_df, ["%_FROM_ATH", "PCT_FROM_ATH", "% From ATH", "pct_from_ath"])
+                ticker_col = find_matching_column(sector_df, ["Ticker", "TICKER", "Symbol", "SYMBOL"])
+                if ath_col and ticker_col:
+                    ath_df = sector_df[[ticker_col, ath_col]].dropna().copy()
+                    ath_df[ath_col] = pd.to_numeric(ath_df[ath_col], errors="coerce")
+                    ath_df = ath_df.dropna(subset=[ath_col])
+                    ath_df = ath_df.sort_values(by=ath_col, ascending=True)  # worst on left
+                    colors = ["#e74c3c" if v <= -20 else "#2ecc71" for v in ath_df[ath_col]]
+
+                    import matplotlib.pyplot as plt
+                    import matplotlib.ticker as mticker
+                    fig, ax = plt.subplots(figsize=(max(10, len(ath_df) * 0.7), 6))
+                    ax.bar(ath_df[ticker_col], ath_df[ath_col], color=colors, edgecolor="black", linewidth=0.5)
+                    ax.set_ylim(-100, 0)
+                    ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{x:.0f}%"))
+                    ax.axhline(-20, color="#e74c3c", linestyle="--", linewidth=1, label="-20% threshold")
+                    ax.set_title("Sector ETFs — % From ATH", fontsize=14, fontweight="bold")
+                    ax.set_xlabel("Ticker")
+                    ax.set_ylabel("% From ATH")
+                    ax.legend(fontsize=9)
+                    ax.tick_params(axis="x", rotation=45)
+                    fig.patch.set_facecolor("#0e1117")
+                    ax.set_facecolor("#0e1117")
+                    ax.title.set_color("white")
+                    ax.xaxis.label.set_color("white")
+                    ax.yaxis.label.set_color("white")
+                    ax.tick_params(colors="white")
+                    for spine in ax.spines.values():
+                        spine.set_edgecolor("#444")
+                    ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{x:.0f}%"))
+                    plt.tight_layout()
+                    st.pyplot(fig)
+                    plt.close(fig)
+                else:
+                    st.info("No `%_FROM_ATH` or `Ticker` column found in Sector ETF file for chart.")
+
             except Exception as e:
                 st.error(f"⚠️ Failed to load sector ETF XLSX file: {e}")
         else:
             st.warning("Sector ETF YTD analysis file not found.")
 
-    with right_col:
+    with ytd_sub_all:
         st.subheader("All Stocks")
         if all_stocks_matches:
             latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
