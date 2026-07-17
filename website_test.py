@@ -437,8 +437,8 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Candle Strength", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -1511,6 +1511,75 @@ with tab_ytd:
                 st.error(f"⚠️ Failed to load all-stocks XLSX file: {e}")
         else:
             st.warning("All stocks YTD analysis file not found.")
+
+#######################################################################################################################################################################
+
+# Candle Strength
+with tab_candle_strength:
+    st.header("Candle Strength")
+
+    base_dir = DATA_DIR
+    etf_matches = glob.glob(os.path.join(base_dir, "ETF_CANDLE_STRENGTH*.xlsx"))
+    all_stocks_matches = glob.glob(os.path.join(base_dir, "ALL_STOCKS_CANDLE_STRENGTH*.xlsx"))
+
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stDataFrame"] div[role="columnheader"] {
+            text-align: center !important;
+            justify-content: center !important;
+            font-size: 0.82rem !important;
+        }
+        div[data-testid="stDataFrame"] div[role="gridcell"] {
+            text-align: center !important;
+            justify-content: center !important;
+            font-size: 0.82rem !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    row_height = 24
+    candle_sub_etf, candle_sub_all = st.tabs(["ETF Candle Strength", "All Stocks Candle Strength"])
+
+    with candle_sub_etf:
+        st.subheader("ETF Candle Strength")
+        if etf_matches:
+            latest_etf_file = max(etf_matches, key=os.path.getmtime)
+            try:
+                etf_df = pd.read_excel(latest_etf_file)
+                etf_table_height = min(900, max(360, row_height * (len(etf_df) + 1) + 12))
+                st.dataframe(
+                    etf_df,
+                    use_container_width=True,
+                    height=etf_table_height,
+                    hide_index=True,
+                    row_height=row_height,
+                )
+            except Exception as e:
+                st.error(f"⚠️ Failed to load ETF candle strength XLSX file: {e}")
+        else:
+            st.warning("ETF candle strength file not found.")
+
+    with candle_sub_all:
+        st.subheader("All Stocks Candle Strength")
+        if all_stocks_matches:
+            latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
+            try:
+                all_stocks_df = pd.read_excel(latest_all_stocks_file)
+                all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
+                st.dataframe(
+                    all_stocks_df,
+                    use_container_width=True,
+                    height=all_stocks_table_height,
+                    hide_index=True,
+                    row_height=row_height,
+                )
+            except Exception as e:
+                st.error(f"⚠️ Failed to load all-stocks candle strength XLSX file: {e}")
+        else:
+            st.warning("All stocks candle strength file not found.")
 
 #######################################################################################################################################################################
 
