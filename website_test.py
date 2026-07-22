@@ -437,8 +437,8 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Candle Strength", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Candle Strength", "Beta", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -1557,6 +1557,49 @@ with tab_candle_strength:
                     hide_index=True,
                     row_height=row_height,
                 )
+
+                # --- CLOSE_SCORE bar chart ---
+                if 'CLOSE_SCORE' in etf_df.columns and 'TICKER' in etf_df.columns:
+                    import matplotlib.pyplot as plt
+                    
+                    chart_df = etf_df[['TICKER', 'CLOSE_SCORE']].dropna().copy()
+                    if len(chart_df) > 0:
+                        chart_df['CLOSE_SCORE'] = pd.to_numeric(chart_df['CLOSE_SCORE'], errors='coerce')
+                        chart_df = chart_df.dropna(subset=['CLOSE_SCORE'])
+                        
+                        if len(chart_df) > 0:
+                            # Color bars based on score
+                            colors = []
+                            for score in chart_df['CLOSE_SCORE']:
+                                if score >= 75:
+                                    colors.append('#2ecc71')  # Green
+                                elif score <= 25:
+                                    colors.append('#e74c3c')  # Red
+                                else:
+                                    colors.append('#95a5a6')  # Gray
+                            
+                            fig, ax = plt.subplots(figsize=(max(10, len(chart_df) * 0.6), 6))
+                            ax.bar(chart_df['TICKER'], chart_df['CLOSE_SCORE'], color=colors, edgecolor='black', linewidth=0.5)
+                            ax.set_ylim(0, 100)
+                            ax.axhline(50, color='white', linestyle='--', linewidth=1.5, label='50 (Neutral)')
+                            ax.set_title('ETF Candle Strength - Close Score', fontsize=14, fontweight='bold')
+                            ax.set_xlabel('Ticker')
+                            ax.set_ylabel('Close Score (0-100)')
+                            ax.legend(fontsize=9)
+                            ax.tick_params(axis='x', rotation=45)
+                            
+                            fig.patch.set_facecolor('#0e1117')
+                            ax.set_facecolor('#0e1117')
+                            ax.title.set_color('white')
+                            ax.xaxis.label.set_color('white')
+                            ax.yaxis.label.set_color('white')
+                            ax.tick_params(colors='white')
+                            for spine in ax.spines.values():
+                                spine.set_edgecolor('#444')
+                            
+                            plt.tight_layout()
+                            st.pyplot(fig)
+                            plt.close(fig)
             except Exception as e:
                 st.error(f"⚠️ Failed to load ETF candle strength XLSX file: {e}")
         else:
@@ -1580,6 +1623,52 @@ with tab_candle_strength:
                 st.error(f"⚠️ Failed to load all-stocks candle strength XLSX file: {e}")
         else:
             st.warning("All stocks candle strength file not found.")
+
+#######################################################################################################################################################################
+
+# Beta (Average Percent Moves)
+with tab_beta:
+    st.header("Beta - Average Daily % Moves")
+
+    base_dir = DATA_DIR
+    beta_matches = glob.glob(os.path.join(base_dir, "AVERAGE_PCT_MOVES_*.xlsx"))
+
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stDataFrame"] div[role="columnheader"] {
+            text-align: center !important;
+            justify-content: center !important;
+            font-size: 0.82rem !important;
+        }
+        div[data-testid="stDataFrame"] div[role="gridcell"] {
+            text-align: center !important;
+            justify-content: center !important;
+            font-size: 0.82rem !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.write("Average absolute daily % moves over the past year, sorted from highest to lowest.")
+
+    if beta_matches:
+        latest_beta_file = max(beta_matches, key=os.path.getmtime)
+        try:
+            beta_df = pd.read_excel(latest_beta_file)
+            beta_table_height = min(900, max(360, 24 * (len(beta_df) + 1) + 12))
+            st.dataframe(
+                beta_df,
+                use_container_width=True,
+                height=beta_table_height,
+                hide_index=True,
+                row_height=24,
+            )
+        except Exception as e:
+            st.error(f"⚠️ Failed to load beta (average % moves) XLSX file: {e}")
+    else:
+        st.warning("Average % moves XLSX file not found.")
 
 #######################################################################################################################################################################
 
