@@ -505,7 +505,7 @@ with tab_trade_tracker:
     buy_amounts = pd.to_numeric(tracker_df["Buy Amount"], errors="coerce")
     sell_amounts = pd.to_numeric(tracker_df["Sell Amount"], errors="coerce")
     pct_gain = ((sell_amounts - buy_amounts) / buy_amounts) * 100
-    pct_gain = pct_gain.replace([float("inf"), float("-inf")], pd.NA)
+    pct_gain = pd.to_numeric(pct_gain.replace([float("inf"), float("-inf")], pd.NA), errors="coerce")
     tracker_df["% Gain"] = pct_gain.round(2)
 
     edited_tracker_df = st.data_editor(
