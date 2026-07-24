@@ -437,8 +437,8 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Candle Strength", "Beta", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+tab0, tab_trade_tracker, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Trade Tracker", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Candle Strength", "Beta", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -448,23 +448,122 @@ tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_can
 with tab0:
     st.header("Psychology")
     st.write("Psychology is the most important aspect of trading")
+    st.write("Psycology alone is the reason I have blown up accounts.")
     st.write(" ")
-    st.write("Mind like a quarterback.")
-    st.write("Tom Brady either throws the ball in a safe place for the receiver to catch or he throws it away. No home runs. He is happy with a short gain consistently.")
+    st.write("Extreme Patience")
+    st.write("      Each day I should be fine not taking a trade. Just patiently watch the market and my data. Then if something lines up I take it.")
+    st.write("      Remember that this trading account is my entire future. Smart trades at the right time will compound into a fortune. Dumb trades at the wrong time will compound into a disaster.")
+    st.write("      Most days I will be best off by just watching charts and doing nothing.")
+    st.write("      The hardest thing is not trading at all. Most of the time staying away is the best decision.")
+    st.write("      Being in a trade is one of the toughest places to be in because rational thinking goes away.")
+    st.write("      What ive noticed is by being very-very patient, I am able to identify the best possible trade entries and get out quickly. Not being in a position gave me that ability to read markets correctly.")
     st.write(" ")
-    st.write("Remember that this trading account is my entire future. Smart trades at the right time will compound into a fortune. Dumb trades at the wrong time will compound into a disaster.")
-    st.write("Most days I will be best off by just watching charts and doing nothing.")
+    st.write("Day Trading only ")
+    st.write("      Try to not hold over the weekend - Dont trade Friday unless there is a quick day trade.")
+    st.write("      My mind will be too focussed on news and Bitcoin over the weekend if I enter a position on friday.")
+    st.write("      Not to mention the 3 days you lose out on theta.")
     st.write(" ")
-    st.write("Being in a trade is one of the toughest places to be in because rational thinking goes away.")
-    st.write("What ive noticed is by being very-very patient, I am able to identify the best possible trade entries and get out quickly. Not being in a position gave me that ability to read markets correctly.")
+    
     st.write(" ")
-    st.write("Try to not hold over the weekend - Dont trade Friday unless there is a quick day trade.")
-    st.write("My mind will be too focussed on news and Bitcoin over the weekend if I enter a position on friday.")
-    st.write("Not to mention the 3 days you lose out on theta.")
-    st.write(" ")
-    st.write("The hardest thing is not trading at all. Most of the time staying away is the best decision.")
-    st.write(" ")
-    st.write("Its not about finding the perfect trade that will double your money. Its about finding opportunities where reward outweighs the risk and taking a shot.")
+    st.write("Reality of Trading")
+    st.write("      Its not about finding the perfect trade that will double your money. Its about finding opportunities where reward outweighs the risk and taking a shot.")
+###############################################################################################################################################################
+
+# Trade Tracker
+with tab_trade_tracker:
+    st.header("Trade Tracker")
+
+    base_dir = DATA_DIR
+    tracker_file = os.path.join(base_dir, "trade_tracker.xlsx")
+
+    if "trade_tracker_df" not in st.session_state:
+        if os.path.exists(tracker_file):
+            try:
+                loaded_df = pd.read_excel(tracker_file)
+            except Exception:
+                loaded_df = pd.DataFrame(columns=["Date", "Ticker", "Call/Put", "Buy Amount", "Sell Amount", "% Gain"])
+        else:
+            loaded_df = pd.DataFrame(columns=["Date", "Ticker", "Call/Put", "Buy Amount", "Sell Amount", "% Gain"])
+        st.session_state["trade_tracker_df"] = loaded_df
+
+    tracker_df = st.session_state["trade_tracker_df"].copy()
+
+    if tracker_df.empty:
+        tracker_df = pd.DataFrame(
+            [
+                {
+                    "Date": "",
+                    "Ticker": "",
+                    "Call/Put": "",
+                    "Buy Amount": 0.0,
+                    "Sell Amount": 0.0,
+                    "% Gain": 0.0,
+                }
+            ]
+        )
+
+    buy_amounts = pd.to_numeric(tracker_df["Buy Amount"], errors="coerce")
+    sell_amounts = pd.to_numeric(tracker_df["Sell Amount"], errors="coerce")
+    pct_gain = ((sell_amounts - buy_amounts) / buy_amounts) * 100
+    pct_gain = pct_gain.replace([float("inf"), float("-inf")], pd.NA)
+    tracker_df["% Gain"] = pct_gain.round(2)
+
+    edited_tracker_df = st.data_editor(
+        tracker_df,
+        use_container_width=True,
+        num_rows="dynamic",
+        column_config={
+            "Date": st.column_config.TextColumn("Date"),
+            "Ticker": st.column_config.TextColumn("Ticker"),
+            "Call/Put": st.column_config.SelectboxColumn("Call/Put", options=["Call", "Put", ""]),
+            "Buy Amount": st.column_config.NumberColumn("Buy Amount", min_value=0.0, step=1.0, format="$%.2f"),
+            "Sell Amount": st.column_config.NumberColumn("Sell Amount", min_value=0.0, step=1.0, format="$%.2f"),
+            "% Gain": st.column_config.NumberColumn("% Gain", disabled=True, format="%.2f%%"),
+        },
+        hide_index=True,
+        key="trade_tracker_editor",
+    )
+
+    summary_df = edited_tracker_df.copy()
+    summary_df["Buy Amount"] = pd.to_numeric(summary_df["Buy Amount"], errors="coerce")
+    summary_df["Sell Amount"] = pd.to_numeric(summary_df["Sell Amount"], errors="coerce")
+    summary_df["% Gain"] = pd.to_numeric(summary_df["% Gain"], errors="coerce")
+    summary_df = summary_df.dropna(subset=["Buy Amount", "Sell Amount"])
+
+    st.subheader("Live Summary")
+    summary_col1, summary_col2, summary_col3, summary_col4 = st.columns(4)
+    total_trades = len(summary_df)
+    total_buy_amount = float(summary_df["Buy Amount"].sum()) if total_trades else 0.0
+    total_sell_amount = float(summary_df["Sell Amount"].sum()) if total_trades else 0.0
+    total_pl = total_sell_amount - total_buy_amount
+    avg_pct_gain = float(summary_df["% Gain"].mean()) if total_trades and summary_df["% Gain"].notna().any() else 0.0
+    win_rate = float((summary_df["% Gain"] > 0).mean() * 100) if total_trades and summary_df["% Gain"].notna().any() else 0.0
+
+    summary_col1.metric("Trades", f"{total_trades}")
+    summary_col2.metric("Total Buy", f"${total_buy_amount:,.2f}")
+    summary_col3.metric("Total Sell", f"${total_sell_amount:,.2f}")
+    summary_col4.metric("Total P/L", f"${total_pl:,.2f}")
+
+    summary_col5, summary_col6 = st.columns(2)
+    summary_col5.metric("Average % Gain", f"{avg_pct_gain:.2f}%")
+    summary_col6.metric("Win Rate", f"{win_rate:.2f}%")
+
+    save_col1, save_col2 = st.columns([1, 4])
+    with save_col1:
+        if st.button("Save Trade Tracker"):
+            try:
+                save_df = edited_tracker_df.copy()
+                save_df.to_excel(tracker_file, index=False)
+                st.session_state["trade_tracker_df"] = save_df
+                st.success(f"Saved to {tracker_file}")
+            except Exception as e:
+                st.error(f"Could not save trade tracker: {e}")
+
+    with save_col2:
+        st.caption("% Gain is calculated as (Sell Amount - Buy Amount) / Buy Amount * 100 and updates when saved.")
+
+    st.session_state["trade_tracker_df"] = edited_tracker_df
+
 ###############################################################################################################################################################
 
 # Home Page
