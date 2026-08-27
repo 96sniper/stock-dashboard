@@ -1,0 +1,404 @@
+Stock,Earnings Date,Sector,Industry
+CRM,08/26/2026,Technology,Software Application
+CRWD,08/26/2026,Technology,Software Infastructure
+SNPS,08/26/2026,Technology,Software Infastructure
+CSIQ,08/27/2026,Technology,Solar
+ADSK,08/27/2026,Technology,Software Application
+RY,08/27/2026,Financials,Banks Diversified
+WDAY,08/27/2026,Technology,Software Application
+AFRM,08/27/2026,Technology,Software Infastructure
+MRVL,08/27/2026,Technology,Semiconductors
+DLTR,08/27/2026,Consumer Defensive,Discount Stores
+DG,08/27/2026,Consumer Defensive,Discount Stores
+BBY,08/27/2026,Consumer Cyclical,Specialty Retail
+BURL,08/27/2026,Consumer Cyclical,Apparel Retail
+ULTA,08/27/2026,Consumer Cyclical,Specialty Retail
+TD,08/27/2026,Financials,Banks Diversified
+IREN,08/27/2026,Financials,Capital Markets
+MDB,09/01/2026,Technology,Software Infastructure
+DELL,09/01/2026,Technology,Computer Hardware
+PANW,09/01/2026,Technology,Software Infastructure
+MDT,09/01/2026,Healthcare,Medical Devices
+GTLB,09/01/2026,Technology,Software Infastructure
+NTAP,09/02/2026,Technology,Computer Hardware
+AVGO,09/02/2026,Technology,Semiconductors
+SNOW,09/02/2026,Technology,Software Application
+AI,09/02/2026,Technology,Software Application
+CPRT,09/03/2026,Industrials,Specialty Business Services
+LULU,09/03/2026,Consumer Cyclical,Apparel Retail
+DOCU,09/03/2026,Technology,Software Application
+ZS,09/03/2026,Technology,Software Infastructure
+CASY,09/08/2026,Consumer Cyclical,Specialty Retail
+AEO,09/09/2026,Consumer Cyclical,Apparel Retail
+ORCL,09/10/2026,Technology,Software Infastructure
+ADBE,09/10/2026,Technology,Software Infastructure
+RH,09/10/2026,Consumer Cyclical,Specialty Retail
+M,09/10/2026,Consumer Cyclical,Specialty Retail
+LEN,09/17/2026,Consumer Cyclical,Residential Construction
+AZO,09/22/2026,Consumer Cyclical,Specialty Retail
+CTAS,09/23/2026,Industrials,Specialty Business Services
+UEC,09/24/2026,Energy,Uranium
+DRI,09/24/2026,Consumer Cyclical,Restaurants
+KBH,09/24/2026,Consumer Cyclical,Residential Construction
+COST,09/24/2026,Consumer Defensive,Discount Stores
+JBL,09/24/2026,Technology,Electronic Components
+CCL,09/28/2026,Consumer Cyclical,Travel Services
+NKE,09/29/2026,Consumer Cyclical,Footwear and Accesories
+KMX,09/29/2026,Consumer Cyclical,Auto and Truck Dealerships
+MU,09/30/2026,Technology,Semiconductors
+ACN,10/01/2026,Technology,Information Technology
+DAL,10/08/2026,Industrials,Airlines
+PEP,10/08/2026,Consumer Defensive,Beverages
+WFC,10/13/2026,Financials,Banks Diversified
+C,10/13/2026,Financials,Banks Diversified
+JPM,10/13/2026,Financials,Banks Diversified
+JNJ,10/13/2026,Healthcare,Drug Manufacturers - General
+DPZ,10/13/2026,Consumer Cyclical,Restaurants
+GS,10/13/2026,Financials,Capital Markets
+ABT,10/14/2026,Healthcare,Medical Devices
+PLD,10/14/2026,Real Estate,Real Estate
+ASML,10/14/2026,Technology,Semiconductors Equipment and Materials
+BLK,10/14/2026,Financials,Asset Management
+SYF,10/14/2026,Financials,Credit Services
+FAST,10/14/2026,Industrials,Industrial Distribution
+STT,10/14/2026,Financials,Asset Management
+MS,10/14/2026,Financials,Capital Markets
+PGR,10/14/2026,Financials,Insurance Propery and Casualty
+JBHT,10/14/2026,Industrials,Integrated Freight and Logistics
+BAC,10/14/2026,Financials,Banks Diversified
+SCHW,10/15/2026,Financials,Capital Markets
+TSM,10/15/2026,Technology,Semiconductors
+AA,10/15/2026,Basic Materials,Aluminum
+PNC,10/15/2026,Financials,Banks Regional
+USB,10/15/2026,Financials,Banks Regional
+TRV,10/15/2026,Financials,Insurance Propery and Casualty
+TFC,10/16/2026,Financials,Banks Regional
+CFG,10/16/2026,Financials,Banks Regional
+RF,10/16/2026,Financials,Banks Regional
+STLD,10/19/2026,Basic Materials,Steel
+CLF,10/19/2026,Basic Materials,Steel
+KO,10/20/2026,Consumer Defensive,Beverages
+NOC,10/20/2026,Industrials,Aerospace and Defense
+MMM,10/20/2026,Industrials,Conglomerates
+LMT,10/20/2026,Industrials,Aerospace and Defense
+GE,10/20/2026,Industrials,Aerospace and Defense
+COF,10/20/2026,Financials,Credit Services
+EFX,10/20/2026,Industrials,Consulting Services
+DHR,10/20/2026,Healthcare,Diagnostics and Research
+RTX,10/20/2026,Industrials,Aerospace and Defense
+HAL,10/20/2026,Energy,Oil and Gas Equipment and Services
+ISRG,10/20/2026,Healthcare,Medical Instruments and Supplies
+VZ,10/20/2026,Communication Services,Telecom Services
+GPC,10/20/2026,Consumer Cyclical,Auto Parts
+GM,10/20/2026,Consumer Cyclical,Auto Manufacturers
+NFLX,10/20/2026,Communication Services,Entertainment
+WAB,10/21/2026,Industrials,Railroads
+URI,10/21/2026,Industrials,Rental and Leasing Services
+IBM,10/21/2026,Technology,Information Technology
+LRCX,10/21/2026,Technology,Semiconductors Equipment and Materials
+SAP,10/21/2026,Technology,Information Technology
+TER,10/21/2026,Technology,Semiconductors Equipment and Materials
+MCO,10/21/2026,Financials,Financial Data and Stock Exchanges
+TSLA,10/21/2026,Consumer Cyclical,Auto Manufacturers
+ONB,10/21/2026,Financials,Banks Regional
+CME,10/21/2026,Financials,Financial Data and Stock Exchanges
+T,10/21/2026,Communication Services,Telecom Services
+LUV,10/21/2026,Industrials,Airlines
+LVS,10/21/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+FE,10/21/2026,Utilities,Regulated Electric
+PM,10/21/2026,Consumer Defensive,Tobacco
+TMO,10/21/2026,Healthcare,Diagnostics and Research
+ELV,10/21/2026,Healthcare,Healthcare Plans
+UAL,10/21/2026,Industrials,Airlines
+CCI,10/21/2026,Real Estate,Real Estate
+UNP,10/22/2026,Industrials,Railroads
+NSC,10/22/2026,Industrials,Railroads
+NEM,10/22/2026,Basic Materials,Gold Miners
+VLO,10/22/2026,Energy,Oil and Gas Refining and Marketing
+BX,10/22/2026,Financials,Unknown
+TSCO,10/22/2026,Consumer Cyclical,Specialty Retail
+HON,10/22/2026,Industrials,Conglomerates
+FCX,10/22/2026,Basic Materials,Copper
+F,10/22/2026,Consumer Cyclical,Auto Manufacturers
+CNP,10/22/2026,Utilities,Regulated Electric
+DECK,10/22/2026,Consumer Cyclical,Footwear and Accesories
+TMUS,10/22/2026,Communication Services,Telecom Services
+CSX,10/22/2026,Industrials,Railroads
+PHM,10/22/2026,Consumer Cyclical,Residential Construction
+HBAN,10/22/2026,Healthcare,Banks Regional
+DLR,10/22/2026,Real Estate,Real Estate
+TECK,10/22/2026,Basic Materials,Other Industrial Metals and Mining
+DOW,10/22/2026,Basic Materials,Chemicals
+PG,10/22/2026,Consumer Defensive,Household and Personal Products
+INTC,10/22/2026,Technology,Semiconductors
+ROP,10/22/2026,Technology,Software Application
+SLB,10/23/2026,Energy,Oil and Gas Equipment and Services
+ITW,10/23/2026,Industrials,Special Industrial Machinery
+INFY,10/23/2026,Technology,Information Technology
+AXP,10/23/2026,Financials,Credit Services
+CORZ,10/23/2026,Technology,Software Application
+NXPI,10/26/2026,Technology,Semiconductors
+NUE,10/26/2026,Basic Materials,Steel
+BRO,10/26/2026,Financials,Insurance Brokers
+CDNS,10/26/2026,Technology,Software Application
+WM,10/26/2026,Industrials,Waste Management
+WELL,10/26/2026,Real Estate,Real Estate
+CB,10/27/2026,Financials,Insurance Propery and Casualty
+CZR,10/27/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+TXN,10/27/2026,Technology,Semiconductors
+RCL,10/27/2026,Consumer Cyclical,Travel Services
+NEE,10/27/2026,Utilities,Regulated Electric
+SOFI,10/27/2026,Financials,Credit Services
+CARR,10/27/2026,Industrials,Building Products and Equipment
+CWH,10/27/2026,Consumer Cyclical,Auto and Truck Dealerships
+UPS,10/27/2026,Industrials,Integrated Freight and Logistics
+W,10/27/2026,Consumer Cyclical,Internet Retail
+OKE,10/27/2026,Energy,Oil and Gas Midstream
+UNH,10/27/2026,Healthcare,Healthcare Plans
+GLW,10/27/2026,Technology,Electronic Components
+PPG,10/27/2026,Basic Materials,Specialty Chemicals
+AMT,10/27/2026,Real Estate,Real Estate
+SCCO,10/27/2026,Basic Materials,Copper
+BKNG,10/27/2026,Consumer Cyclical,Travel Services
+SHW,10/27/2026,Basic Materials,Specialty Chemicals
+V,10/27/2026,Financials,Credit Services
+PCAR,10/27/2026,Industrials,Farm and Heavy Construction Machinery
+PYPL,10/27/2026,Financials,Credit Services
+ECL,10/27/2026,Basic Materials,Specialty Chemicals
+ADP,10/28/2026,Technology,Software Application
+CVS,10/28/2026,Consumer Cyclical,Healthcare Plans
+CHRW,10/28/2026,Industrials,Integrated Freight and Logistics
+MGM,10/28/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+BSX,10/28/2026,Healthcare,Medical Devices
+FND,10/28/2026,Consumer Cyclical,Home Improvement Retail
+PSA,10/28/2026,Financials,Real Estate
+CVNA,10/28/2026,Consumer Cyclical,Auto and Truck Dealerships
+AWK,10/28/2026,Utilities,Regulated Water
+APH,10/28/2026,Technology,Electronic Components
+GOOG,10/28/2026,Communication Services,Internet Content and Information
+META,10/28/2026,Communication Services,Internet Content and Information
+FLEX,10/28/2026,Technology,Electronic Components
+BA,10/28/2026,Industrials,Aerospace and Defense
+PRU,10/28/2026,Financials,Insurance Life
+AEM,10/28/2026,Basic Materials,Gold Miners
+CSTM,10/28/2026,Basic Materials,Unknown
+ORLY,10/28/2026,Consumer Cyclical,Specialty Retail
+OTIS,10/28/2026,Industrials,Special Industrial Machinery
+MSFT,10/28/2026,Technology,Software Infastructure
+KLAC,10/28/2026,Technology,Semiconductors Equipment and Materials
+BOOT,10/28/2026,Consumer Cyclical,Apparel Retail
+HLT,10/28/2026,Consumer Cyclical,Lodging
+VRSK,10/28/2026,Industrials,Consulting Services
+GEV,10/28/2026,Industrials,Special Industrial Machinery
+NI,10/28/2026,Utilities,Regulated Gas
+FDXF,10/28/2026,Industrials,Integrated Freight and Logistics
+GD,10/28/2026,Industrials,Aerospace and Defense
+WHR,10/28/2026,Consumer Cyclical,Furnishings/Fixtures/Appliances
+NOW,10/28/2026,Technology,Software Application
+EXR,10/28/2026,Real Estate,Real Estate
+SBUX,10/28/2026,Consumer Cyclical,Restaurants
+GOOGL,10/28/2026,Communication Services,Internet Content and Information
+TEL,10/28/2026,Technology,Electronic Components
+AGI,10/28/2026,Basic Materials,Gold Miners
+FDX,10/28/2026,Industrials,Integrated Freight and Logistics
+AER,10/28/2026,Industrials,Rental and Leasing Services
+SYK,10/29/2026,Healthcare,Medical Devices
+RMD,10/29/2026,Healthcare,Medical Instruments and Supplies
+MRK,10/29/2026,Healthcare,Drug Manufacturers - General
+LLY,10/29/2026,Healthcare,Drug Manufacturers - General
+SO,10/29/2026,Utilities,Regulated Electric
+RSG,10/29/2026,Industrials,Waste Management
+FSLR,10/29/2026,Technology,Solar
+CAT,10/29/2026,Industrials,Farm and Heavy Construction Machinery
+AEP,10/29/2026,Utilities,Regulated Electric
+TWLO,10/29/2026,Technology,Software Infastructure
+PWR,10/29/2026,Industrials,Engineering and Construction
+QCOM,10/29/2026,Technology,Semiconductors
+NET,10/29/2026,Technology,Software Infastructure
+MSTR,10/29/2026,Technology,Software Application
+IR,10/29/2026,Industrials,Special Industrial Machinery
+TT,10/29/2026,Industrials,Building Products and Equipment
+MPWR,10/29/2026,Technology,Semiconductors
+BLDR,10/29/2026,Industrials,Building Products and Equipment
+AAPL,10/29/2026,Technology,Consumer Electronics
+CMCSA,10/29/2026,Communication Services,Telecom Services
+GILD,10/29/2026,Healthcare,Drug Manufacturers - General
+DHI,10/29/2026,Consumer Cyclical,Residential Construction
+COIN,10/29/2026,Financials,Financial Data and Stock Exchanges
+CROX,10/29/2026,Consumer Cyclical,Footwear and Accesories
+LKQ,10/29/2026,Consumer Cyclical,Auto Parts
+ICE,10/29/2026,Financials,Financial Data and Stock Exchanges
+SHAK,10/29/2026,Consumer Cyclical,Restaurants
+MA,10/29/2026,Financials,Credit Services
+VMC,10/29/2026,Basic Materials,Building Materials
+FOXA,10/29/2026,Communication Services,Entertainment
+Z,10/29/2026,Communication Services,Internet Content and Information
+SPGI,10/29/2026,Financials,Financial Data and Stock Exchanges
+XEL,10/29/2026,Utilities,Regulated Electric
+BWA,10/29/2026,Consumer Cyclical,Auto Parts
+ALSN,10/29/2026,Consumer Cyclical,Auto Parts
+EW,10/29/2026,Healthcare,Medical Devices
+DXCM,10/29/2026,Healthcare,Medical Devices
+AMZN,10/29/2026,Consumer Cyclical,Internet Retail
+MO,10/29/2026,Consumer Defensive,Tobacco
+CRH,10/29/2026,Basic Materials,Building Materials
+BMY,10/29/2026,Healthcare,Drug Manufacturers - General
+PSX,10/29/2026,Energy,Oil and Gas Refining and Marketing
+ABBV,10/29/2026,Healthcare,Drug Manufacturers - General
+RBLX,10/29/2026,Communication Services,Electronic Gaming and Multimedia
+CNX,10/29/2026,Energy,Oil and Gas E&P
+RDDT,10/29/2026,Communication Services,Internet Content and Information
+LIN,10/30/2026,Basic Materials,Specialty Chemicals
+D,10/30/2026,Utilities,Regulated Electric
+LYB,10/30/2026,Basic Materials,Specialty Chemicals
+AON,10/30/2026,Financials,Insurance Brokers
+XOM,10/30/2026,Energy,Oil and Gas Intergrated
+CL,10/30/2026,Consumer Defensive,Household and Personal Products
+CVX,10/30/2026,Energy,Oil and Gas Intergrated
+LSCC,11/02/2026,Technology,Semiconductors
+FANG,11/02/2026,Energy,Oil and Gas E&P
+EL,11/02/2026,Consumer Defensive,Household and Personal Products
+ON,11/02/2026,Technology,Semiconductors
+PLTR,11/02/2026,Technology,Software Infastructure
+PEG,11/02/2026,Utilities,Regulated Electric
+WMB,11/02/2026,Energy,Oil and Gas Midstream
+SPG,11/02/2026,Real Estate,Real Estate
+VRTX,11/02/2026,Healthcare,Biotechnology
+SPOT,11/03/2026,Communication Services,Internet Content and Information
+ANET,11/03/2026,Technology,Computer Hardware
+SHOP,11/03/2026,Technology,Software Application
+SMCI,11/03/2026,Technology,Computer Hardware
+RIVN,11/03/2026,Consumer Cyclical,Auto Manufacturers
+FNV,11/03/2026,Basic Materials,Gold Miners
+MAR,11/03/2026,Consumer Cyclical,Lodging
+SWKS,11/03/2026,Technology,Semiconductors
+CRUS,11/03/2026,Technology,Semiconductors
+TOST,11/03/2026,Technology,Software Infastructure
+WING,11/03/2026,Consumer Cyclical,Restaurants
+YUM,11/03/2026,Consumer Cyclical,Restaurants
+SPCX,11/03/2026,Industrials,Aerospace and Defense
+MLM,11/03/2026,Basic Materials,Building Materials
+GT,11/03/2026,Consumer Cyclical,Auto Parts
+PFE,11/03/2026,Healthcare,Drug Manufacturers - General
+IT,11/03/2026,Technology,Information Technology
+TEM,11/03/2026,Healthcare,Health Information Services
+AMGN,11/03/2026,Healthcare,Drug Manufacturers - General
+ZTS,11/03/2026,Healthcare,Drug Manufacturers - Specialty and Generic
+UPST,11/03/2026,Financials,Credit Services
+LYV,11/03/2026,Communication Services,Entertainment
+EXC,11/03/2026,Utilities,Regulated Electric
+UBER,11/03/2026,Technology,Software Application
+ETN,11/03/2026,Industrials,Special Industrial Machinery
+AMD,11/03/2026,Technology,Semiconductors
+GPN,11/03/2026,Industrials,Specialty Business Services
+MOS,11/03/2026,Basic Materials,Agricultural Inputs
+MPC,11/03/2026,Energy,Oil and Gas Refining and Marketing
+CTVA,11/03/2026,Basic Materials,Agricultural Inputs
+ZBRA,11/03/2026,Technology,Communication Equipment
+EXPD,11/03/2026,Industrials,Integrated Freight and Logistics
+FTNT,11/04/2026,Technology,Software Infastructure
+ENTG,11/04/2026,Technology,Semiconductors Equipment and Materials
+ARM,11/04/2026,Technology,Semiconductors
+BROS,11/04/2026,Consumer Cyclical,Restaurants
+EBAY,11/04/2026,Consumer Cyclical,Internet Retail
+APP,11/04/2026,Technology,Software Application
+ETSY,11/04/2026,Consumer Cyclical,Internet Retail
+CMG,11/04/2026,Consumer Cyclical,Restaurants
+UHAL,11/04/2026,Industrials,Rental and Leasing Services
+MELI,11/04/2026,Consumer Cyclical,Internet Retail
+SRE,11/04/2026,Utilities,Diversified
+DASH,11/04/2026,Communication Services,Internet Content and Information
+PPL,11/04/2026,Utilities,Regulated Electric
+SEZL,11/04/2026,Financials,Credit Services
+MARA,11/04/2026,Financials,Capital Markets
+HOOD,11/04/2026,Financials,Capital Markets
+EMR,11/04/2026,Industrials,Special Industrial Machinery
+ALL,11/04/2026,Financials,Insurance Propery and Casualty
+AFL,11/04/2026,Financials,Insurance Life
+GWW,11/04/2026,Industrials,Industrial Distribution
+PSN,11/04/2026,Technology,Information Technology
+JCI,11/04/2026,Industrials,Building Products and Equipment
+DVN,11/04/2026,Energy,Oil and Gas E&P
+LYFT,11/04/2026,Technology,Software Application
+AEE,11/04/2026,Utilities,Regulated Electric
+NCLH,11/04/2026,Consumer Cyclical,Travel Services
+CF,11/04/2026,Basic Materials,Agricultural Inputs
+ATO,11/04/2026,Utilities,Regulated Gas
+TRMB,11/04/2026,Technology,Scientific and Technical Instruments
+ELF,11/04/2026,Consumer Defensive,Household and Personal Products
+ALB,11/04/2026,Basic Materials,Specialty Chemicals
+U,11/04/2026,Technology,Software Application
+DD,11/05/2026,Basic Materials,Specialty Chemicals
+APD,11/05/2026,Basic Materials,Specialty Chemicals
+ED,11/05/2026,Utilities,Regulated Electric
+CE,11/05/2026,Basic Materials,Chemicals
+NRG,11/05/2026,Utilities,Independant Power Providers
+MSI,11/05/2026,Technology,Communication Equipment
+CENX,11/05/2026,Basic Materials,Aluminum
+WPM,11/05/2026,Basic Materials,Gold Miners
+ABNB,11/05/2026,Consumer Cyclical,Travel Services
+ROKU,11/05/2026,Communication Services,Entertainment
+HUN,11/05/2026,Basic Materials,Chemicals
+MP,11/05/2026,Basic Materials,Other Industrial Metals and Mining
+DUK,11/05/2026,Utilities,Regulated Electric
+VST,11/05/2026,Utilities,Independant Power Providers
+WYNN,11/05/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+PH,11/05/2026,Industrials,Special Industrial Machinery
+ROK,11/05/2026,Industrials,Special Industrial Machinery
+MNST,11/05/2026,Consumer Defensive,Beverages
+HSY,11/05/2026,Consumer Defensive,Confectioners
+TDG,11/05/2026,Industrials,Aerospace and Defense
+MCHP,11/05/2026,Technology,Semiconductors
+EOG,11/05/2026,Energy,Oil and Gas E&P
+KKR,11/05/2026,Financials,Asset Management
+SN,11/05/2026,Consumer Cyclical,Furnishings/Fixtures/Appliances
+PZZA,11/05/2026,Consumer Cyclical,Restaurants
+PENN,11/05/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+MCD,11/05/2026,Consumer Cyclical,Restaurants
+COP,11/05/2026,Energy,Oil and Gas E&P
+DDOG,11/05/2026,Technology,Software Application
+DKNG,11/05/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+CI,11/05/2026,Healthcare,Healthcare Plans
+EXPE,11/05/2026,Consumer Cyclical,Travel Services
+MRNA,11/05/2026,Healthcare,Biotechnology
+H,11/05/2026,Consumer Cyclical,Lodging
+HUM,11/06/2026,Healthcare,Healthcare Plans
+OXY,11/09/2026,Energy,Oil and Gas E&P
+PINS,11/09/2026,Communication Services,Internet Content and Information
+MET,11/09/2026,Financials,Insurance Life
+CART,11/09/2026,Consumer Cyclical,Internet Retail
+HIMS,11/09/2026,Consumer Defensive,Household and Personal Products
+CRSP,11/09/2026,Healthcare,Biotechnology
+QRVO,11/09/2026,Technology,Semiconductors
+XYZ,11/09/2026,Technology,Software Infastructure
+CEG,11/09/2026,Utilities,Renewable
+CELH,11/09/2026,Consumer Defensive,Beverages
+TTWO,11/09/2026,Communication Services,Electronic Gaming and Multimedia
+SE,11/10/2026,Consumer Cyclical,Internet Retail
+NBIS,11/10/2026,Communication Services,Internet Content and Information
+CRWV,11/11/2026,Technology,Software Infastructure
+ONON,11/11/2026,Consumer Cyclical,Footwear and Accesories
+BULL,11/12/2026,Technology,Software Application
+CSCO,11/12/2026,Technology,Communication Equipment
+AMAT,11/12/2026,Technology,Semiconductors Equipment and Materials
+DIS,11/12/2026,Communication Services,Entertainment
+JKS,11/16/2026,Technology,Solar
+NVDA,11/17/2026,Technology,Semiconductors
+HD,11/17/2026,Consumer Cyclical,Home Improvement Retail
+LOW,11/18/2026,Consumer Cyclical,Home Improvement Retail
+TGT,11/18/2026,Consumer Defensive,Discount Stores
+VVV,11/18/2026,Consumer Cyclical,Auto and Truck Dealerships
+TJX,11/18/2026,Consumer Cyclical,Apparel Retail
+ZIM,11/19/2026,Industrials,Marine Shipping
+J,11/19/2026,Industrials,Engineering and Construction
+ROST,11/19/2026,Consumer Cyclical,Apparel Retail
+INTU,11/19/2026,Technology,Software Application
+WMT,11/19/2026,Consumer Defensive,Discount Stores
+ZM,11/24/2026,Technology,Software Application
+ADI,11/24/2026,Technology,Semiconductors
+ARMK,11/24/2026,Industrials,Specialty Business Services
+DKS,11/24/2026,Consumer Cyclical,Specialty Retail
+BABA,11/24/2026,Consumer Cyclical,Internet Retail
+DE,11/25/2026,Industrials,Farm and Heavy Construction Machinery
+A,11/25/2026,Healthcare,Diagnostics and Research
+ANF,11/25/2026,Consumer Cyclical,Apparel Retail
