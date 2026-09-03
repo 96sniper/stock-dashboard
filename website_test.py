@@ -438,7 +438,7 @@ DATA_DIR = resolve_data_dir()
 
 # Tabs
 tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "SPY Analysis", "YTD Analysis", "Candle Strength", "Beta", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Beta", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
@@ -533,7 +533,7 @@ with tab_sector_analysis:
             return None
         return max(valid_matches, key=os.path.getmtime)
 
-    sub_tab_yearly, sub_tab_ytd, sub_tab_qtd = st.tabs(["Yearly Table", "Year-to-Date", "Quarter-to-Date"])
+    sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_favorites = st.tabs(["Yearly Table", "Year-to-Date", "Quarter-to-Date", "Favorites"])
 
     with sub_tab_yearly:
         latest_file = latest_sector_chart(
@@ -564,6 +564,16 @@ with tab_sector_analysis:
             st.image(latest_file, width=sector_chart_width)
         else:
             st.warning("QTD bar chart image not found.")
+
+    with sub_tab_favorites:
+        latest_file = latest_sector_chart(
+            "favorite_trading_tickers_ytd_bar_chart_*.png",
+            "favorite_trading_tickers_ytd_bar_chart.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=sector_chart_width)
+        else:
+            st.warning("Favorites YTD bar chart image not found.")
 
 ###############################################################################################################################################################
 
@@ -1307,18 +1317,19 @@ with tab_spy_vix:
 
 #######################################################################################################################################################################
 
-# SPY Analysis
+# Index Analysis
 with tab_spy_analysis:
-    st.header("SPY Analysis")
+    st.header("Index Analysis")
 
     base_dir = DATA_DIR
 
-    day_tab1, day_tab2, day_tab3, day_tab4, day_tab5 = st.tabs([
+    day_tab1, day_tab2, day_tab3, day_tab4, day_tab5, day_tab6 = st.tabs([
         "Daily SPY Gain Chart",
         "SPY Daily Positive Count Ghart",
-        "Monthly SPY Gain Chart",
-        "Yearly SPY Gain Chart",
+        "Monthly Gain Chart",
+        "Yearly Gain Chart",
         "SPY Last 10 Weeks",
+        "Price vs Avg Trend",
     ])
 
     with day_tab1:
@@ -1336,18 +1347,22 @@ with tab_spy_analysis:
             st.warning("SPY Daily Positive Count Ghart image not found.")
 
     with day_tab3:
-        monthly_gain_path = os.path.join(base_dir, "MONTHLY_SPY_Gain_Chart.png")
-        if os.path.exists(monthly_gain_path):
-            st.image(monthly_gain_path, width=700)
-        else:
-            st.warning("Monthly SPY Gain Chart image not found.")
+        monthly_cols = st.columns(3)
+        for col, ticker in zip(monthly_cols, ["SPY", "QQQ", "IWM"]):
+            monthly_gain_path = os.path.join(base_dir, f"MONTHLY_{ticker}_Gain_Chart.png")
+            if os.path.exists(monthly_gain_path):
+                col.image(monthly_gain_path, use_container_width=True)
+            else:
+                col.warning(f"Monthly {ticker} Gain Chart image not found.")
 
     with day_tab4:
-        yearly_gain_path = os.path.join(base_dir, "YEARLY_SPY_Gain_Chart.png")
-        if os.path.exists(yearly_gain_path):
-            st.image(yearly_gain_path, width=700)
-        else:
-            st.warning("Yearly SPY Gain Chart image not found.")
+        yearly_cols = st.columns(3)
+        for col, ticker in zip(yearly_cols, ["SPY", "QQQ", "IWM"]):
+            yearly_gain_path = os.path.join(base_dir, f"YEARLY_{ticker}_Gain_Chart.png")
+            if os.path.exists(yearly_gain_path):
+                col.image(yearly_gain_path, use_container_width=True)
+            else:
+                col.warning(f"Yearly {ticker} Gain Chart image not found.")
 
     with day_tab5:
         spy_10wk_matches = glob.glob(os.path.join(base_dir, "spy_last_10_weeks_*_graph.png"))
@@ -1356,6 +1371,14 @@ with tab_spy_analysis:
             st.image(latest_spy_10wk, width=800)
         else:
             st.warning("SPY Last 10 Weeks image not found.")
+
+    with day_tab6:
+        for ticker in ["SPY", "QQQ", "IWM"]:
+            trend_chart_path = os.path.join(base_dir, f"{ticker}_Price_vs_Avg_Trend.png")
+            if os.path.exists(trend_chart_path):
+                st.image(trend_chart_path, use_container_width=True)
+            else:
+                st.warning(f"{ticker} Price vs Avg Trend image not found.")
 
 #######################################################################################################################################################################
 
@@ -1386,7 +1409,7 @@ with tab_ytd:
     )
 
     row_height = 24
-    ytd_sub_sector, ytd_sub_all = st.tabs(["Sector ETFs", "All Stocks"])
+    ytd_sub_sector, ytd_sub_all, ytd_sub_favorites = st.tabs(["Sector ETFs", "All Stocks", "Favorites"])
 
     with ytd_sub_sector:
         st.subheader("Sector ETFs")
@@ -1513,6 +1536,15 @@ with tab_ytd:
                 st.error(f"⚠️ Failed to load all-stocks XLSX file: {e}")
         else:
             st.warning("All stocks YTD analysis file not found.")
+
+    with ytd_sub_favorites:
+        st.subheader("Favorites")
+        favorites_matches = glob.glob(os.path.join(base_dir, "favorite_trading_tickers_ytd_bar_chart_*.png"))
+        if favorites_matches:
+            latest_favorites_chart = max(favorites_matches, key=os.path.getmtime)
+            st.image(latest_favorites_chart, width=1400)
+        else:
+            st.warning("Favorites YTD bar chart image not found.")
 
 #######################################################################################################################################################################
 
