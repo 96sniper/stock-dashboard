@@ -222,6 +222,63 @@ def render_bull_pct_donut(df: pd.DataFrame) -> None:
     components.html(svg, height=320, scrolling=False)
 
 
+def render_daily_close_strength_donut(df: pd.DataFrame) -> None:
+    ticker_column = find_matching_column(df, ["TICKER"])
+    strength_column = find_matching_column(df, ["D_CLOSE_STRENGTH"])
+    if ticker_column is None or strength_column is None:
+        st.warning("Daily close strength graphic requires TICKER and D_CLOSE_STRENGTH columns.")
+        return
+
+    chart_df = df[[ticker_column, strength_column]].copy()
+    chart_df[strength_column] = pd.to_numeric(chart_df[strength_column], errors="coerce")
+    valid_rows = (
+        chart_df[ticker_column].notna()
+        & chart_df[ticker_column].astype(str).str.strip().ne("")
+        & chart_df[strength_column].between(0, 100)
+    )
+    excluded_count = int((~valid_rows).sum())
+    chart_df = chart_df.loc[valid_rows].drop_duplicates(subset=[ticker_column])
+    if chart_df.empty:
+        st.warning("No tickers with valid daily close strength values (0-100) to chart.")
+        return
+
+    total = len(chart_df)
+    above_count = int((chart_df[strength_column] > 50).sum())
+    below_count = total - above_count
+    above_pct = above_count / total * 100
+    below_pct = below_count / total * 100
+    st.markdown("#### Daily Close Strength - % of Tickers")
+    components.html(
+        f"""
+        <div style="font-family:Arial,sans-serif; text-align:center; color:#111111;">
+          <svg width="220" height="220" viewBox="0 0 180 180" role="img"
+               aria-label="Daily close strength: {above_pct:.1f}% above 50%, {below_pct:.1f}% at or below 50%">
+            <circle cx="90" cy="90" r="64" fill="none" stroke="#E74C3C" stroke-width="26" />
+            <circle cx="90" cy="90" r="64" fill="none" stroke="#2ECC71" stroke-width="26"
+                    pathLength="100" stroke-dasharray="{above_pct:.6f} {100 - above_pct:.6f}"
+                    transform="rotate(-90 90 90)" />
+            <text x="90" y="85" text-anchor="middle" font-size="11" font-weight="700">D_CLOSE</text>
+            <text x="90" y="102" text-anchor="middle" font-size="11">{total} tickers</text>
+          </svg>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px 28px; font-size:14px;">
+            <span><span style="color:#2ECC71;">&#9679;</span>
+              Above 50%: <b>{above_pct:.1f}%</b> ({above_count} tickers)</span>
+            <span><span style="color:#E74C3C;">&#9679;</span>
+              50% or below: <b>{below_pct:.1f}%</b> ({below_count} tickers)</span>
+          </div>
+        </div>
+        """,
+        height=290,
+        scrolling=False,
+    )
+    st.caption(
+        "Percentages use unique tickers with valid D_CLOSE_STRENGTH values (0-100). "
+        "Exactly 50% is included in the 50% or below group."
+    )
+    if excluded_count:
+        st.caption(f"Excluded {excluded_count} rows with missing tickers or missing/invalid daily close strength.")
+
+
 def render_trend_pie_charts(df: pd.DataFrame) -> None:
     """Render pie charts for DAILY, WEEKLY, and MONTHLY BULL vs BEAR counts."""
     def polar_to_cartesian(center_x: float, center_y: float, radius: float, angle_in_degrees: float) -> tuple[float, float]:
@@ -1583,6 +1640,7 @@ with tab_candle_strength:
             latest_etf_file = max(etf_matches, key=os.path.getmtime)
             try:
                 etf_df = pd.read_excel(latest_etf_file)
+                render_daily_close_strength_donut(etf_df)
                 etf_table_height = min(900, max(360, row_height * (len(etf_df) + 1) + 12))
                 st.dataframe(
                     etf_df,
@@ -1645,6 +1703,7 @@ with tab_candle_strength:
             latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
             try:
                 all_stocks_df = pd.read_excel(latest_all_stocks_file)
+                render_daily_close_strength_donut(all_stocks_df)
                 all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
                 st.dataframe(
                     all_stocks_df,
@@ -1769,7 +1828,5 @@ with tab_mercury:
 
 
 #######################################################################################################################################################################
-
-
 
 
