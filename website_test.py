@@ -303,7 +303,7 @@ def render_ath_drawdown_donut(df: pd.DataFrame, threshold: float = -19.99) -> No
             <circle cx="90" cy="90" r="64" fill="none" stroke="#E74C3C" stroke-width="26"
                     pathLength="100" stroke-dasharray="{below_pct:.6f} {100 - below_pct:.6f}"
                     transform="rotate(-90 90 90)" />
-            <text x="90" y="88" text-anchor="middle" font-size="24" font-weight="700">{below_count}</text>
+            <text x="90" y="88" text-anchor="middle" font-size="22" font-weight="700">{below_pct:.1f}%</text>
             <text x="90" y="106" text-anchor="middle" font-size="11">of {total} stocks</text>
           </svg>
           <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:2px 16px; font-size:{14 if size > 180 else 12}px;">
@@ -340,7 +340,6 @@ def render_ath_drawdown_donut(df: pd.DataFrame, threshold: float = -19.99) -> No
     if not sectors:
         return
 
-    st.markdown(f"#### By Sector - More Than 20% Below ATH (%_FROM_ATH < {threshold})")
     columns_per_row = 4
     for row_start in range(0, len(sectors), columns_per_row):
         row_columns = st.columns(columns_per_row)
@@ -1540,7 +1539,7 @@ with tab_ytd:
     )
 
     row_height = 24
-    ytd_sub_sector, ytd_sub_all, ytd_sub_favorites = st.tabs(["Sector ETFs", "All Stocks", "Favorites"])
+    ytd_sub_sector, ytd_sub_all = st.tabs(["Sector ETFs", "All Stocks"])
 
     with ytd_sub_sector:
         st.subheader("Sector ETFs")
@@ -1669,15 +1668,6 @@ with tab_ytd:
                 st.error(f"⚠️ Failed to load all-stocks XLSX file: {e}")
         else:
             st.warning("All stocks YTD analysis file not found.")
-
-    with ytd_sub_favorites:
-        st.subheader("Favorites")
-        favorites_matches = glob.glob(os.path.join(base_dir, "favorite_trading_tickers_ytd_bar_chart_*.png"))
-        if favorites_matches:
-            latest_favorites_chart = max(favorites_matches, key=os.path.getmtime)
-            st.image(latest_favorites_chart, width=1400)
-        else:
-            st.warning("Favorites YTD bar chart image not found.")
 
 #######################################################################################################################################################################
 
