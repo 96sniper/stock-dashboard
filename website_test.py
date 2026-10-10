@@ -279,6 +279,53 @@ def render_daily_close_strength_donut(df: pd.DataFrame) -> None:
         st.caption(f"Excluded {excluded_count} rows with missing tickers or missing/invalid daily close strength.")
 
 
+def render_ath_drawdown_donut(df: pd.DataFrame, threshold: float = -19.99) -> None:
+    ath_column = find_matching_column(df, ["%_FROM_ATH", "PCT_FROM_ATH", "% From ATH"])
+    if ath_column is None:
+        st.info("No `%_FROM_ATH` column found for the drawdown graphic.")
+        return
+
+    ath_values = pd.to_numeric(df[ath_column], errors="coerce")
+    valid_values = ath_values.dropna()
+    excluded_count = int(ath_values.isna().sum())
+    total = len(valid_values)
+    if total == 0:
+        st.info("No valid `%_FROM_ATH` values to chart.")
+        return
+
+    below_count = int((valid_values < threshold).sum())
+    other_count = total - below_count
+    below_pct = below_count / total * 100
+    other_pct = other_count / total * 100
+
+    st.markdown(f"#### Stocks More Than 20% Below ATH (%_FROM_ATH < {threshold})")
+    components.html(
+        f"""
+        <div style="font-family:Arial,sans-serif; text-align:center; color:#111111;">
+          <svg width="220" height="220" viewBox="0 0 180 180" role="img"
+               aria-label="{below_count} of {total} stocks have %_FROM_ATH below {threshold}">
+            <circle cx="90" cy="90" r="64" fill="none" stroke="#2ECC71" stroke-width="26" />
+            <circle cx="90" cy="90" r="64" fill="none" stroke="#E74C3C" stroke-width="26"
+                    pathLength="100" stroke-dasharray="{below_pct:.6f} {100 - below_pct:.6f}"
+                    transform="rotate(-90 90 90)" />
+            <text x="90" y="88" text-anchor="middle" font-size="24" font-weight="700">{below_count}</text>
+            <text x="90" y="106" text-anchor="middle" font-size="11">of {total} stocks</text>
+          </svg>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px 28px; font-size:14px;">
+            <span><span style="color:#E74C3C;">&#9679;</span>
+              Below {threshold}%: <b>{below_count}</b> ({below_pct:.1f}%)</span>
+            <span><span style="color:#2ECC71;">&#9679;</span>
+              {threshold}% or higher: <b>{other_count}</b> ({other_pct:.1f}%)</span>
+          </div>
+        </div>
+        """,
+        height=290,
+        scrolling=False,
+    )
+    if excluded_count:
+        st.caption(f"Excluded {excluded_count} rows with missing/invalid `%_FROM_ATH`.")
+
+
 def render_trend_pie_charts(df: pd.DataFrame) -> None:
     """Render pie charts for DAILY, WEEKLY, and MONTHLY BULL vs BEAR counts."""
     def polar_to_cartesian(center_x: float, center_y: float, radius: float, angle_in_degrees: float) -> tuple[float, float]:
@@ -1580,6 +1627,8 @@ with tab_ytd:
                     st.caption(f"Showing {len(filtered_df):,} of {len(all_stocks_df):,} rows")
                 else:
                     st.caption("No `Sector` or `Industry` columns were found in this file.")
+
+                render_ath_drawdown_donut(filtered_df)
 
                 all_stocks_table_height = min(900, max(360, row_height * (len(filtered_df) + 1) + 12))
                 st.dataframe(
