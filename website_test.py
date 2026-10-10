@@ -285,25 +285,20 @@ def render_ath_drawdown_donut(df: pd.DataFrame, threshold: float = -19.99) -> No
         st.info("No `%_FROM_ATH` column found for the drawdown graphic.")
         return
 
-    ath_values = pd.to_numeric(df[ath_column], errors="coerce")
-    valid_values = ath_values.dropna()
-    excluded_count = int(ath_values.isna().sum())
-    total = len(valid_values)
-    if total == 0:
-        st.info("No valid `%_FROM_ATH` values to chart.")
-        return
+    from html import escape as html_escape
 
-    below_count = int((valid_values < threshold).sum())
-    other_count = total - below_count
-    below_pct = below_count / total * 100
-    other_pct = other_count / total * 100
-
-    st.markdown(f"#### Stocks More Than 20% Below ATH (%_FROM_ATH < {threshold})")
-    components.html(
-        f"""
+    def donut_html(values: pd.Series, title: str, size: int) -> str:
+        total = len(values)
+        below_count = int((values < threshold).sum())
+        other_count = total - below_count
+        below_pct = below_count / total * 100
+        other_pct = other_count / total * 100
+        safe_title = html_escape(title)
+        return f"""
         <div style="font-family:Arial,sans-serif; text-align:center; color:#111111;">
-          <svg width="220" height="220" viewBox="0 0 180 180" role="img"
-               aria-label="{below_count} of {total} stocks have %_FROM_ATH below {threshold}">
+          <div style="font-size:{15 if size > 180 else 13}px; font-weight:700; margin:0 0 4px 0;">{safe_title}</div>
+          <svg width="{size}" height="{size}" viewBox="0 0 180 180" role="img"
+               aria-label="{safe_title}: {below_count} of {total} stocks have %_FROM_ATH below {threshold}">
             <circle cx="90" cy="90" r="64" fill="none" stroke="#2ECC71" stroke-width="26" />
             <circle cx="90" cy="90" r="64" fill="none" stroke="#E74C3C" stroke-width="26"
                     pathLength="100" stroke-dasharray="{below_pct:.6f} {100 - below_pct:.6f}"
@@ -311,19 +306,51 @@ def render_ath_drawdown_donut(df: pd.DataFrame, threshold: float = -19.99) -> No
             <text x="90" y="88" text-anchor="middle" font-size="24" font-weight="700">{below_count}</text>
             <text x="90" y="106" text-anchor="middle" font-size="11">of {total} stocks</text>
           </svg>
-          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px 28px; font-size:14px;">
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:2px 16px; font-size:{14 if size > 180 else 12}px;">
             <span><span style="color:#E74C3C;">&#9679;</span>
               Below {threshold}%: <b>{below_count}</b> ({below_pct:.1f}%)</span>
             <span><span style="color:#2ECC71;">&#9679;</span>
               {threshold}% or higher: <b>{other_count}</b> ({other_pct:.1f}%)</span>
           </div>
         </div>
-        """,
-        height=290,
+        """
+
+    ath_values = pd.to_numeric(df[ath_column], errors="coerce")
+    valid_mask = ath_values.notna()
+    excluded_count = int((~valid_mask).sum())
+    if not valid_mask.any():
+        st.info("No valid `%_FROM_ATH` values to chart.")
+        return
+
+    components.html(
+        donut_html(ath_values[valid_mask], f"All Stocks - More Than 20% Below ATH (%_FROM_ATH < {threshold})", 220),
+        height=320,
         scrolling=False,
     )
     if excluded_count:
         st.caption(f"Excluded {excluded_count} rows with missing/invalid `%_FROM_ATH`.")
+
+    sector_column = find_matching_column(df, ["Sector"])
+    if sector_column is None:
+        return
+
+    sector_labels = df[sector_column].astype("string").str.strip()
+    sector_mask = valid_mask & sector_labels.notna() & sector_labels.ne("")
+    sectors = sorted(sector_labels[sector_mask].unique())
+    if not sectors:
+        return
+
+    st.markdown(f"#### By Sector - More Than 20% Below ATH (%_FROM_ATH < {threshold})")
+    columns_per_row = 4
+    for row_start in range(0, len(sectors), columns_per_row):
+        row_columns = st.columns(columns_per_row)
+        for column, sector in zip(row_columns, sectors[row_start:row_start + columns_per_row]):
+            with column:
+                components.html(
+                    donut_html(ath_values[sector_mask & sector_labels.eq(sector)], sector, 160),
+                    height=280,
+                    scrolling=False,
+                )
 
 
 def render_trend_pie_charts(df: pd.DataFrame) -> None:
