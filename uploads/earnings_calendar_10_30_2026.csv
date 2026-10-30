@@ -1,0 +1,315 @@
+Stock,Market Cap (B USD),Earnings Date,Sector,Industry
+PSX,109.87,10/28/2026,Energy,Oil and Gas Refining and Marketing
+ORLY,71.16,10/28/2026,Consumer Cyclical,Specialty Retail
+CSTM,3.06,10/28/2026,Basic Materials,Unknown
+NI,21.4,10/28/2026,Utilities,Regulated Gas
+AWK,28.75,10/28/2026,Utilities,Regulated Water
+MGM,7.52,10/28/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+PSN,5.32,10/28/2026,Technology,Information Technology
+AGI,11.37,10/28/2026,Basic Materials,Gold Miners
+WING,4.02,10/28/2026,Consumer Cyclical,Restaurants
+F,48.66,10/28/2026,Consumer Cyclical,Auto Manufacturers
+FDX,73.47,10/28/2026,Industrials,Integrated Freight and Logistics
+TMUS,166.49,10/28/2026,Communication Services,Telecom Services
+AEM,82.9,10/28/2026,Basic Materials,Gold Miners
+AEP,70.93,10/28/2026,Utilities,Regulated Electric
+CMG,40.62,10/28/2026,Consumer Cyclical,Restaurants
+BOOT,3.93,10/28/2026,Consumer Cyclical,Apparel Retail
+GOOG,3404.09,10/28/2026,Communication Services,Internet Content and Information
+GOOGL,3426.09,10/28/2026,Communication Services,Internet Content and Information
+ETSY,7.7,10/28/2026,Consumer Cyclical,Internet Retail
+FTNT,99.72,10/28/2026,Technology,Software Infastructure
+BSX,60.67,10/28/2026,Healthcare,Medical Devices
+CVNA,77.12,10/28/2026,Consumer Cyclical,Auto and Truck Dealerships
+EBAY,54.3,10/28/2026,Consumer Cyclical,Internet Retail
+AER,24.0,10/28/2026,Industrials,Rental and Leasing Services
+LKQ,4.65,10/29/2026,Consumer Cyclical,Auto Parts
+H,17.0,10/29/2026,Consumer Cyclical,Lodging
+FND,5.06,10/29/2026,Consumer Cyclical,Home Improvement Retail
+NCLH,8.01,10/29/2026,Consumer Cyclical,Travel Services
+MSTR,55.23,10/29/2026,Technology,Software Application
+RIVN,17.06,10/29/2026,Consumer Cyclical,Auto Manufacturers
+CROX,6.81,10/29/2026,Consumer Cyclical,Footwear and Accesories
+DASH,78.14,10/29/2026,Communication Services,Internet Content and Information
+FSLR,18.4,10/29/2026,Technology,Solar
+LLY,1261.07,10/29/2026,Healthcare,Drug Manufacturers - General
+GILD,212.58,10/29/2026,Healthcare,Drug Manufacturers - General
+DXCM,31.09,10/29/2026,Healthcare,Medical Devices
+BMY,127.93,10/29/2026,Healthcare,Drug Manufacturers - General
+BLDR,6.88,10/29/2026,Industrials,Building Products and Equipment
+CARR,43.85,10/29/2026,Industrials,Building Products and Equipment
+XEL,49.97,10/29/2026,Utilities,Regulated Electric
+FDXF,18.77,10/29/2026,Industrials,Integrated Freight and Logistics
+IR,31.01,10/29/2026,Industrials,Special Industrial Machinery
+ICE,93.99,10/29/2026,Financials,Financial Data and Stock Exchanges
+PWR,92.96,10/29/2026,Industrials,Engineering and Construction
+COIN,36.5,10/29/2026,Financials,Financial Data and Stock Exchanges
+RSG,74.72,10/29/2026,Industrials,Waste Management
+DLR,67.28,10/29/2026,Real Estate,Real Estate
+TWLO,31.27,10/29/2026,Technology,Software Infastructure
+HSY,33.02,10/29/2026,Consumer Defensive,Confectioners
+ENTG,23.23,10/29/2026,Technology,Semiconductors Equipment and Materials
+MPWR,58.86,10/29/2026,Technology,Semiconductors
+CART,13.36,10/29/2026,Consumer Cyclical,Internet Retail
+MRK,369.98,10/29/2026,Healthcare,Drug Manufacturers - General
+TECK,29.53,10/29/2026,Basic Materials,Other Industrial Metals and Mining
+CRH,59.68,10/29/2026,Basic Materials,Building Materials
+PINS,10.92,10/29/2026,Communication Services,Internet Content and Information
+LIN,235.12,10/29/2026,Basic Materials,Specialty Chemicals
+RBLX,30.54,10/29/2026,Communication Services,Electronic Gaming and Multimedia
+RDDT,17.65,10/29/2026,Communication Services,Internet Content and Information
+AMZN,2591.32,10/29/2026,Consumer Cyclical,Internet Retail
+BWA,10.31,10/29/2026,Consumer Cyclical,Auto Parts
+VMC,35.95,10/29/2026,Basic Materials,Building Materials
+D,58.56,10/30/2026,Utilities,Regulated Electric
+LYB,21.9,10/30/2026,Basic Materials,Specialty Chemicals
+XOM,767.49,10/30/2026,Energy,Oil and Gas Intergrated
+CL,76.75,10/30/2026,Consumer Defensive,Household and Personal Products
+EXC,47.75,10/30/2026,Utilities,Regulated Electric
+JKS,0.45,10/30/2026,Technology,Solar
+ABBV,519.13,10/30/2026,Healthcare,Drug Manufacturers - General
+CVX,460.76,10/30/2026,Energy,Oil and Gas Intergrated
+GD,100.38,10/30/2026,Industrials,Aerospace and Defense
+AAPL,5018.35,11/02/2026,Technology,Consumer Electronics
+ON,27.63,11/02/2026,Technology,Semiconductors
+PEG,36.97,11/02/2026,Utilities,Regulated Electric
+WMB,90.37,11/02/2026,Energy,Oil and Gas Midstream
+MAR,104.1,11/02/2026,Consumer Cyclical,Lodging
+ROKU,23.06,11/02/2026,Communication Services,Entertainment
+LSCC,13.08,11/02/2026,Technology,Semiconductors
+FOXA,26.71,11/02/2026,Communication Services,Entertainment
+ALSN,8.89,11/02/2026,Consumer Cyclical,Auto Parts
+VRTX,141.75,11/02/2026,Healthcare,Biotechnology
+HUN,1.67,11/02/2026,Basic Materials,Chemicals
+EL,39.22,11/02/2026,Consumer Defensive,Household and Personal Products
+TEM,13.2,11/02/2026,Healthcare,Health Information Services
+CWH,0.32,11/02/2026,Consumer Cyclical,Auto and Truck Dealerships
+CE,5.32,11/02/2026,Basic Materials,Chemicals
+FANG,59.23,11/02/2026,Energy,Oil and Gas E&P
+PLTR,446.9,11/02/2026,Technology,Software Infastructure
+YUM,42.32,11/03/2026,Consumer Cyclical,Restaurants
+MPC,124.25,11/03/2026,Energy,Oil and Gas Refining and Marketing
+UPST,2.25,11/03/2026,Financials,Credit Services
+AMD,813.43,11/03/2026,Technology,Semiconductors
+ETN,142.66,11/03/2026,Industrials,Special Industrial Machinery
+ANET,212.07,11/03/2026,Technology,Computer Hardware
+IT,14.41,11/03/2026,Technology,Information Technology
+DD,18.88,11/03/2026,Basic Materials,Specialty Chemicals
+EXPD,25.82,11/03/2026,Industrials,Integrated Freight and Logistics
+MOS,5.83,11/03/2026,Basic Materials,Agricultural Inputs
+PFE,173.53,11/03/2026,Healthcare,Drug Manufacturers - General
+SHOP,201.58,11/03/2026,Technology,Software Application
+SMCI,20.73,11/03/2026,Technology,Computer Hardware
+PRU,40.16,11/03/2026,Financials,Insurance Life
+BKNG,111.01,11/03/2026,Consumer Cyclical,Travel Services
+AMGN,252.37,11/03/2026,Healthcare,Drug Manufacturers - General
+SWKS,20.18,11/03/2026,Technology,Semiconductors
+TOST,18.21,11/03/2026,Technology,Software Infastructure
+ZBRA,16.94,11/03/2026,Technology,Communication Equipment
+XYZ,45.77,11/03/2026,Technology,Software Infastructure
+MET,63.57,11/04/2026,Financials,Insurance Life
+ALB,10.66,11/04/2026,Basic Materials,Specialty Chemicals
+CF,18.51,11/04/2026,Basic Materials,Agricultural Inputs
+Z,6.91,11/04/2026,Communication Services,Internet Content and Information
+UHAL,11.12,11/04/2026,Industrials,Rental and Leasing Services
+ALL,65.92,11/04/2026,Financials,Insurance Propery and Casualty
+SEZL,4.47,11/04/2026,Financials,Credit Services
+AFL,62.27,11/04/2026,Financials,Insurance Life
+BROS,7.5,11/04/2026,Consumer Cyclical,Restaurants
+ARM,218.36,11/04/2026,Technology,Semiconductors
+UBER,132.64,11/04/2026,Technology,Software Application
+CVS,115.77,11/04/2026,Consumer Cyclical,Healthcare Plans
+TRMB,15.14,11/04/2026,Technology,Scientific and Technical Instruments
+EXPE,34.21,11/04/2026,Consumer Cyclical,Travel Services
+ATO,29.09,11/04/2026,Utilities,Regulated Gas
+GT,1.24,11/04/2026,Consumer Cyclical,Auto Parts
+QCOM,174.82,11/04/2026,Technology,Semiconductors
+MELI,82.53,11/04/2026,Consumer Cyclical,Internet Retail
+MCD,182.04,11/04/2026,Consumer Cyclical,Restaurants
+APP,77.14,11/04/2026,Technology,Software Application
+EW,53.17,11/04/2026,Healthcare,Medical Devices
+MSI,81.26,11/04/2026,Technology,Communication Equipment
+MLM,38.27,11/04/2026,Basic Materials,Building Materials
+SN,29.15,11/04/2026,Consumer Cyclical,Furnishings/Fixtures/Appliances
+MARA,2.61,11/04/2026,Financials,Capital Markets
+W,15.73,11/04/2026,Consumer Cyclical,Internet Retail
+ELF,6.57,11/04/2026,Consumer Defensive,Household and Personal Products
+EMR,91.44,11/04/2026,Industrials,Special Industrial Machinery
+DDOG,85.01,11/04/2026,Technology,Software Application
+CRUS,5.44,11/04/2026,Technology,Semiconductors
+GWW,63.81,11/04/2026,Industrials,Industrial Distribution
+LYV,41.31,11/05/2026,Communication Services,Entertainment
+CI,79.12,11/05/2026,Healthcare,Healthcare Plans
+ZTS,32.87,11/05/2026,Healthcare,Drug Manufacturers - Specialty and Generic
+GPN,25.41,11/05/2026,Industrials,Specialty Business Services
+SRE,56.52,11/05/2026,Utilities,Diversified
+SO,108.28,11/05/2026,Utilities,Regulated Electric
+CORZ,4.15,11/05/2026,Technology,Software Application
+PH,112.74,11/05/2026,Industrials,Special Industrial Machinery
+U,16.57,11/05/2026,Technology,Software Application
+DKNG,10.31,11/05/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+AEE,30.62,11/05/2026,Utilities,Regulated Electric
+ABNB,98.4,11/05/2026,Consumer Cyclical,Travel Services
+WPM,52.26,11/05/2026,Basic Materials,Gold Miners
+NET,99.16,11/05/2026,Technology,Software Infastructure
+DUK,99.31,11/05/2026,Utilities,Regulated Electric
+MP,6.99,11/05/2026,Basic Materials,Other Industrial Metals and Mining
+PZZA,0.6,11/05/2026,Consumer Cyclical,Restaurants
+MCHP,41.6,11/05/2026,Technology,Semiconductors
+LYFT,6.08,11/05/2026,Technology,Software Application
+SHAK,3.01,11/05/2026,Consumer Cyclical,Restaurants
+APD,69.98,11/05/2026,Basic Materials,Specialty Chemicals
+WYNN,7.68,11/05/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+ED,43.15,11/05/2026,Utilities,Regulated Electric
+MNST,92.65,11/05/2026,Consumer Defensive,Beverages
+COP,183.93,11/05/2026,Energy,Oil and Gas E&P
+DVN,57.29,11/05/2026,Energy,Oil and Gas E&P
+EOG,86.68,11/05/2026,Energy,Oil and Gas E&P
+AFRM,24.46,11/05/2026,Technology,Software Infastructure
+SPG,82.74,11/05/2026,Real Estate,Real Estate
+VRSK,25.6,11/05/2026,Industrials,Consulting Services
+TDG,63.38,11/05/2026,Industrials,Aerospace and Defense
+ROK,48.24,11/05/2026,Industrials,Special Industrial Machinery
+CENX,3.29,11/05/2026,Basic Materials,Aluminum
+IREN,9.64,11/05/2026,Financials,Capital Markets
+CELH,7.31,11/05/2026,Consumer Defensive,Beverages
+PENN,2.11,11/05/2026,Consumer Cyclical,Resorts/Casinos/Gambling
+PPL,26.86,11/06/2026,Utilities,Regulated Electric
+VST,46.04,11/06/2026,Utilities,Independant Power Providers
+MRNA,88.22,11/06/2026,Healthcare,Biotechnology
+HUM,49.74,11/06/2026,Healthcare,Healthcare Plans
+TTWO,35.73,11/09/2026,Communication Services,Electronic Gaming and Multimedia
+NRG,19.97,11/09/2026,Utilities,Independant Power Providers
+CRSP,4.92,11/09/2026,Healthcare,Biotechnology
+CEG,92.13,11/09/2026,Utilities,Renewable
+OXY,63.74,11/09/2026,Energy,Oil and Gas E&P
+HIMS,6.42,11/09/2026,Consumer Defensive,Household and Personal Products
+KKR,86.9,11/09/2026,Financials,Asset Management
+SE,45.44,11/10/2026,Consumer Cyclical,Internet Retail
+CRWV,29.71,11/10/2026,Technology,Software Infastructure
+ONON,11.25,11/10/2026,Consumer Cyclical,Footwear and Accesories
+CTVA,7.66,11/11/2026,Basic Materials,Agricultural Inputs
+FNV,42.94,11/11/2026,Basic Materials,Gold Miners
+CSIQ,0.61,11/12/2026,Technology,Solar
+CSCO,408.61,11/12/2026,Technology,Communication Equipment
+BULL,2.76,11/12/2026,Technology,Software Application
+NBIS,41.33,11/12/2026,Communication Services,Internet Content and Information
+AMAT,307.25,11/12/2026,Technology,Semiconductors Equipment and Materials
+ARMK,14.17,11/16/2026,Industrials,Specialty Business Services
+NVDA,4891.7,11/17/2026,Technology,Semiconductors
+MDT,123.65,11/17/2026,Healthcare,Medical Devices
+HD,328.0,11/17/2026,Consumer Cyclical,Home Improvement Retail
+DIS,191.59,11/17/2026,Communication Services,Entertainment
+TGT,69.57,11/18/2026,Consumer Defensive,Discount Stores
+TJX,154.79,11/18/2026,Consumer Cyclical,Apparel Retail
+LOW,116.65,11/18/2026,Consumer Cyclical,Home Improvement Retail
+WMT,984.33,11/19/2026,Consumer Defensive,Discount Stores
+VVV,4.11,11/19/2026,Consumer Cyclical,Auto and Truck Dealerships
+PANW,299.84,11/19/2026,Technology,Software Infastructure
+ROST,73.35,11/19/2026,Consumer Cyclical,Apparel Retail
+CPRT,28.06,11/19/2026,Industrials,Specialty Business Services
+INTU,91.46,11/19/2026,Technology,Software Application
+ZIM,3.42,11/19/2026,Industrials,Marine Shipping
+J,18.05,11/23/2026,Industrials,Engineering and Construction
+ZM,27.81,11/23/2026,Technology,Software Application
+A,49.45,11/23/2026,Healthcare,Diagnostics and Research
+ADI,199.81,11/24/2026,Technology,Semiconductors
+DKS,13.94,11/24/2026,Consumer Cyclical,Specialty Retail
+BBY,19.94,11/24/2026,Consumer Cyclical,Specialty Retail
+BABA,243.13,11/24/2026,Consumer Cyclical,Internet Retail
+ZS,38.75,11/24/2026,Technology,Software Infastructure
+ANF,6.96,11/24/2026,Consumer Cyclical,Apparel Retail
+DELL,266.87,11/24/2026,Technology,Computer Hardware
+DE,181.69,11/25/2026,Industrials,Farm and Heavy Construction Machinery
+ADSK,52.15,11/27/2026,Technology,Software Application
+BURL,14.87,11/27/2026,Consumer Cyclical,Apparel Retail
+NTAP,38.86,12/01/2026,Technology,Computer Hardware
+MRVL,175.11,12/01/2026,Technology,Semiconductors
+MDB,28.25,12/01/2026,Technology,Software Infastructure
+GTLB,8.98,12/01/2026,Technology,Software Infastructure
+AEO,3.29,12/01/2026,Consumer Cyclical,Apparel Retail
+CRWD,253.52,12/01/2026,Technology,Software Infastructure
+SNOW,105.88,12/02/2026,Technology,Software Application
+M,6.3,12/02/2026,Consumer Cyclical,Specialty Retail
+CRM,188.7,12/02/2026,Technology,Software Application
+RY,279.52,12/03/2026,Financials,Banks Diversified
+ULTA,27.26,12/03/2026,Consumer Cyclical,Specialty Retail
+TD,202.36,12/03/2026,Financials,Banks Diversified
+DOCU,15.33,12/03/2026,Technology,Software Application
+UEC,3.8,12/08/2026,Energy,Uranium
+CASY,25.12,12/08/2026,Consumer Cyclical,Specialty Retail
+AZO,50.83,12/08/2026,Consumer Cyclical,Specialty Retail
+ADBE,97.53,12/09/2026,Technology,Software Infastructure
+AVGO,1541.83,12/09/2026,Technology,Semiconductors
+RH,2.75,12/10/2026,Consumer Cyclical,Specialty Retail
+COST,451.31,12/10/2026,Consumer Defensive,Discount Stores
+ORCL,394.55,12/14/2026,Technology,Software Infastructure
+LEN,20.67,12/15/2026,Consumer Cyclical,Residential Construction
+JBL,27.92,12/16/2026,Technology,Electronic Components
+NKE,57.53,12/17/2026,Consumer Cyclical,Footwear and Accesories
+ACN,158.25,12/17/2026,Technology,Information Technology
+KMX,7.92,12/17/2026,Consumer Cyclical,Auto and Truck Dealerships
+KBH,2.91,12/17/2026,Consumer Cyclical,Residential Construction
+CTAS,87.9,12/17/2026,Industrials,Specialty Business Services
+CCL,38.58,12/18/2026,Consumer Cyclical,Travel Services
+DRI,24.88,12/18/2026,Consumer Cyclical,Restaurants
+MU,991.79,12/23/2026,Technology,Semiconductors
+UNH,364.96,01/12/2027,Healthcare,Healthcare Plans
+INFY,50.85,01/13/2027,Technology,Information Technology
+C,200.11,01/14/2027,Financials,Banks Diversified
+TSM,2086.41,01/14/2027,Technology,Semiconductors
+WFC,249.72,01/14/2027,Financials,Banks Diversified
+MS,286.88,01/14/2027,Financials,Capital Markets
+BLK,185.39,01/14/2027,Financials,Asset Management
+JPM,891.68,01/14/2027,Financials,Banks Diversified
+CFG,26.59,01/15/2027,Financials,Banks Regional
+STT,45.76,01/15/2027,Financials,Asset Management
+JBHT,20.62,01/15/2027,Industrials,Integrated Freight and Logistics
+BAC,345.55,01/15/2027,Financials,Banks Diversified
+PNC,90.48,01/15/2027,Financials,Banks Regional
+GS,258.6,01/19/2027,Financials,Capital Markets
+DHI,40.91,01/19/2027,Consumer Cyclical,Residential Construction
+MMM,89.38,01/19/2027,Industrials,Conglomerates
+NFLX,257.23,01/19/2027,Communication Services,Entertainment
+COF,124.22,01/19/2027,Financials,Credit Services
+TEL,61.31,01/20/2027,Technology,Electronic Components
+PLD,124.37,01/20/2027,Real Estate,Real Estate
+HAL,29.89,01/20/2027,Energy,Oil and Gas Equipment and Services
+ONB,9.44,01/20/2027,Financials,Banks Regional
+GE,312.01,01/21/2027,Industrials,Aerospace and Defense
+ISRG,152.53,01/21/2027,Healthcare,Medical Instruments and Supplies
+HBAN,31.63,01/21/2027,Healthcare,Banks Regional
+FCX,88.79,01/21/2027,Basic Materials,Copper
+SCHW,151.33,01/21/2027,Financials,Capital Markets
+PG,374.08,01/21/2027,Consumer Defensive,Household and Personal Products
+SLB,78.81,01/22/2027,Energy,Oil and Gas Equipment and Services
+BRO,23.16,01/25/2027,Financials,Insurance Brokers
+NUE,61.17,01/25/2027,Basic Materials,Steel
+PPG,26.39,01/26/2027,Basic Materials,Specialty Chemicals
+SHW,79.89,01/26/2027,Basic Materials,Specialty Chemicals
+BA,136.0,01/26/2027,Industrials,Aerospace and Defense
+RCL,81.63,01/26/2027,Consumer Cyclical,Travel Services
+UPS,92.03,01/26/2027,Industrials,Integrated Freight and Logistics
+V,773.0,01/26/2027,Financials,Credit Services
+GLW,105.71,01/26/2027,Technology,Electronic Components
+ADP,116.27,01/27/2027,Technology,Software Application
+WM,92.91,01/27/2027,Industrials,Waste Management
+NOW,108.06,01/27/2027,Technology,Software Application
+GEV,225.32,01/27/2027,Industrials,Special Industrial Machinery
+APH,194.55,01/27/2027,Technology,Electronic Components
+MSFT,3891.18,01/27/2027,Technology,Software Infastructure
+OTIS,28.78,01/27/2027,Industrials,Special Industrial Machinery
+TER,42.19,01/27/2027,Technology,Semiconductors Equipment and Materials
+FLEX,31.67,01/27/2027,Technology,Electronic Components
+SBUX,119.3,01/27/2027,Consumer Cyclical,Restaurants
+CHRW,14.22,01/27/2027,Industrials,Integrated Freight and Logistics
+RMD,32.71,01/28/2027,Healthcare,Medical Instruments and Supplies
+SYK,112.62,01/28/2027,Healthcare,Medical Devices
+MA,555.91,01/28/2027,Financials,Credit Services
+INTC,342.42,01/28/2027,Technology,Semiconductors
+MO,129.47,01/28/2027,Consumer Defensive,Tobacco
+TT,89.58,01/28/2027,Industrials,Building Products and Equipment
+CAT,284.22,01/28/2027,Industrials,Farm and Heavy Construction Machinery
+KLAC,205.71,01/28/2027,Technology,Semiconductors Equipment and Materials
+CNX,5.35,01/28/2027,Energy,Oil and Gas E&P
+AON,68.28,01/29/2027,Financials,Insurance Brokers
