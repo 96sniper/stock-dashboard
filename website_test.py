@@ -1257,31 +1257,65 @@ with tab8:
     
     base_dir = DATA_DIR
 
-    # Display latest earnings calendar graph
-    graph_pattern = os.path.join(base_dir, "earnings_calendar_*_graph.png")
-    graph_files = glob.glob(graph_pattern)
+    def latest_earnings_output(suffix: str) -> str | None:
+        # Exact match so e.g. "_graph.png" doesn't also pick up "_market_cap_graph.png".
+        name_regex = re.compile(r"^earnings_calendar_\d{2}_\d{2}_\d{4}" + re.escape(suffix) + r"$")
+        matches = [
+            path for path in glob.glob(os.path.join(base_dir, "earnings_calendar_*"))
+            if name_regex.match(os.path.basename(path))
+        ]
+        if suffix.endswith(".png"):
+            matches = [path for path in matches if is_valid_png(path)]
+        return max(matches, key=os.path.getmtime) if matches else None
 
-    if graph_files:
-        latest_graph = max(graph_files, key=os.path.getmtime)
-        st.image(latest_graph, use_container_width=True)
-    else:
-        st.warning("earnings calendar graph image not found.")
+    def show_earnings_png(suffix: str, label: str) -> None:
+        png_path = latest_earnings_output(suffix)
+        if png_path:
+            st.image(png_path, use_container_width=True)
+        else:
+            st.warning(f"{label} image not found.")
 
-    # Search for files starting with "earnings_calendar" and ending in .csv
-    pattern = os.path.join(base_dir, "earnings_calendar_*.csv")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        
+    def show_csv(csv_path: str | None, label: str) -> None:
+        if not csv_path:
+            st.warning(f"{label} file not found.")
+            return
         try:
-            df = pd.read_csv(latest_file)
-            st.dataframe(df, use_container_width=True)
+            st.dataframe(pd.read_csv(csv_path), use_container_width=True, hide_index=True)
         except Exception as e:
-            st.error(f"⚠️ Failed to load CSV file: {e}")
-    else:
-        st.warning("earnings calendar file not found.")
+            st.error(f"⚠️ Failed to load {label} CSV file: {e}")
+
+    (
+        earnings_calendar_tab,
+        earnings_market_cap_tab,
+        earnings_sector_tab,
+        earnings_industry_tab,
+        earnings_volume_tab,
+    ) = st.tabs([
+        "Earnings Calendar",
+        "Market Cap",
+        "Sector Market Cap %",
+        "Industry Market Cap %",
+        "Volume Stats",
+    ])
+
+    with earnings_calendar_tab:
+        show_earnings_png("_graph.png", "Earnings calendar graph")
+        show_csv(latest_earnings_output(".csv"), "Earnings calendar")
+
+    with earnings_market_cap_tab:
+        show_earnings_png("_market_cap_graph.png", "Earnings market cap graph")
+
+    with earnings_sector_tab:
+        show_earnings_png("_sector_market_cap_graph.png", "Sector market cap graph")
+
+    with earnings_industry_tab:
+        st.caption("Chart shows industries above 1% of total market cap; the table lists all industries.")
+        show_earnings_png("_industry_market_cap_graph.png", "Industry market cap graph")
+        show_csv(latest_earnings_output("_industry_market_cap.csv"), "Industry market cap")
+
+    with earnings_volume_tab:
+        volume_stats_path = os.path.join(base_dir, "STOCKS_VOLUME_STATS.csv")
+        show_csv(volume_stats_path if os.path.exists(volume_stats_path) else None, "STOCKS_VOLUME_STATS")
 
 ###############################################################################################################################################################
 
