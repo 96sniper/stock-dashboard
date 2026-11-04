@@ -567,9 +567,9 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
-                                                          "Upcoming Earnings", "Market Cap", "20/50ma Crossover", 
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_8ema_study, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+                                                          "Upcoming Earnings", "Market Cap", "20/50ma Crossover", "8_EMA Study", 
                                                           "NAAIM Data", "Notes"])
 
 ###############################################################################################################################################################
@@ -604,11 +604,12 @@ with tab1:
     st.header("Seasonality")
 
     base_dir = DATA_DIR
-    season_tab1, season_tab2, season_tab3, season_tab4 = st.tabs([
+    season_tab1, season_tab2, season_tab3, season_tab4, season_tab_mercury = st.tabs([
         "SPY",
         "QQQ",
         "IWM",
         "VIX",
+        "Mercury Retrograde",
     ])
 
     with season_tab1:
@@ -642,6 +643,43 @@ with tab1:
             st.image(latest_file, width=1500)
         else:
             st.warning("VIX seasonality image not found.")
+
+    with season_tab_mercury:
+        st.subheader("Mercury Retrograde")
+
+        def extract_mercury_page_number(path: str) -> int:
+            name = os.path.basename(path)
+            try:
+                return int(name.split("_page_")[1].split("_")[0])
+            except Exception:
+                return -1
+
+        summary_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_summary_*_graph.png"))
+        if summary_matches:
+            st.image(max(summary_matches, key=os.path.getmtime), use_container_width=True)
+        else:
+            st.warning("Mercury retrograde summary image not found.")
+
+        period_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_*.xlsx"))
+        if period_matches:
+            try:
+                st.write("Mercury retrograde periods")
+                st.dataframe(
+                    pd.read_excel(max(period_matches, key=os.path.getmtime)),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+            except Exception as e:
+                st.error(f"⚠️ Failed to load Mercury retrograde periods file: {e}")
+        else:
+            st.warning("Mercury retrograde periods file not found.")
+
+        page_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_spy_page_*_graph.png"))
+        if page_matches:
+            for page_path in sorted(page_matches, key=extract_mercury_page_number, reverse=True):
+                st.image(page_path, use_container_width=True)
+        else:
+            st.warning("Mercury retrograde SPY page images not found.")
 
 ###############################################################################################################################################################
 
@@ -1365,6 +1403,43 @@ with tab9:
 
 ###############################################################################################################################################################
 
+# 8_EMA Study
+with tab_8ema_study:
+    st.header("8_EMA Study")
+
+    base_dir = DATA_DIR
+
+    def show_8ema_csv(file_name: str, label: str, key: str) -> None:
+        csv_path = os.path.join(base_dir, file_name)
+        if not os.path.exists(csv_path):
+            st.warning(f"{file_name} not found.")
+            return
+        try:
+            ema_df = pd.read_csv(csv_path)
+        except Exception as e:
+            st.error(f"⚠️ Failed to load {label} CSV file: {e}")
+            return
+
+        tickers = sorted(ema_df["TICKER"].dropna().unique()) if "TICKER" in ema_df.columns else []
+        selected_tickers = st.multiselect(
+            f"Filter {label} tickers (leave empty for all)",
+            tickers,
+            key=f"{key}_ticker_filter",
+        )
+        if selected_tickers:
+            ema_df = ema_df[ema_df["TICKER"].isin(selected_tickers)]
+        st.dataframe(ema_df, use_container_width=True, hide_index=True)
+
+    ema_stocks_tab, ema_crypto_tab = st.tabs(["Stocks", "Crypto"])
+
+    with ema_stocks_tab:
+        show_8ema_csv("TICKERS_FULL_PRICE_DATA.csv", "stock", "ema_stocks")
+
+    with ema_crypto_tab:
+        show_8ema_csv("CRYPTO_FULL_PRICE_DATA.csv", "crypto", "ema_crypto")
+
+###############################################################################################################################################################
+
 # NAAIM Data
 with tab10:
     st.header("NAAIM Data")
@@ -1898,45 +1973,4 @@ with tab_fed_funds_spy:
             st.error(f"⚠️ Failed to load Fed meeting dates CSV file: {e}")
     else:
         st.warning("Fed meeting dates CSV file not found.")
-
-#######################################################################################################################################################################
-
-# Mercury Retrograde Analysis
-with tab_mercury:
-    st.header("Mercury Retrograde Analysis")
-
-    base_dir = DATA_DIR
-
-    def extract_mercury_page_number(path: str) -> int:
-        name = os.path.basename(path)
-        try:
-            return int(name.split("_page_")[1].split("_")[0])
-        except Exception:
-            return -1
-
-    summary_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_summary_*_graph.png"))
-    page_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_spy_page_*_graph.png"))
-    ordered_pages = sorted(page_matches, key=extract_mercury_page_number, reverse=True)
-
-    merc_tab_labels = ["Summary Stats"] + [f"Page {extract_mercury_page_number(p)}" for p in ordered_pages]
-    merc_tab_items = [None] + ordered_pages  # None placeholder for summary tab
-    merc_tabs = st.tabs(merc_tab_labels)
-
-    with merc_tabs[0]:
-        if summary_matches:
-            latest_summary = max(summary_matches, key=os.path.getmtime)
-            st.image(latest_summary, use_container_width=True)
-        else:
-            st.warning("Mercury retrograde summary image not found.")
-
-    for tab, page_path in zip(merc_tabs[1:], ordered_pages):
-        with tab:
-            st.image(page_path, use_container_width=True)
-
-    
-             
-
-
-#######################################################################################################################################################################
-
 
