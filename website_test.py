@@ -567,9 +567,9 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab9, tab10, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Beta", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
-                                                          "Upcoming Earnings", "20/50ma Crossover", 
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab_mercury, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab10, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Mercury Retrograde Analysis", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+                                                          "Upcoming Earnings", "Market Cap", "20/50ma Crossover", 
                                                           "NAAIM Data", "Notes"])
 
 ###############################################################################################################################################################
@@ -1287,15 +1287,9 @@ with tab8:
     (
         earnings_calendar_tab,
         earnings_market_cap_tab,
-        earnings_sector_tab,
-        earnings_industry_tab,
-        earnings_volume_tab,
     ) = st.tabs([
         "Earnings Calendar",
         "Market Cap",
-        "Sector Market Cap %",
-        "Industry Market Cap %",
-        "Volume Stats",
     ])
 
     with earnings_calendar_tab:
@@ -1305,17 +1299,24 @@ with tab8:
     with earnings_market_cap_tab:
         show_earnings_png("_market_cap_graph.png", "Earnings market cap graph")
 
-    with earnings_sector_tab:
+###############################################################################################################################################################
+
+# Market Cap
+with tab_market_cap:
+    st.header("Market Cap")
+
+    sector_market_cap_tab, industry_market_cap_tab = st.tabs([
+        "Sector Market Cap %",
+        "Industry Market Cap %",
+    ])
+
+    with sector_market_cap_tab:
         show_earnings_png("_sector_market_cap_graph.png", "Sector market cap graph")
 
-    with earnings_industry_tab:
+    with industry_market_cap_tab:
         st.caption("Chart shows industries above 1% of total market cap; the table lists all industries.")
         show_earnings_png("_industry_market_cap_graph.png", "Industry market cap graph")
         show_csv(latest_earnings_output("_industry_market_cap.csv"), "Industry market cap")
-
-    with earnings_volume_tab:
-        volume_stats_path = os.path.join(base_dir, "STOCKS_VOLUME_STATS.csv")
-        show_csv(volume_stats_path if os.path.exists(volume_stats_path) else None, "STOCKS_VOLUME_STATS")
 
 ###############################################################################################################################################################
 
@@ -1819,9 +1820,11 @@ with tab_candle_strength:
 
 #######################################################################################################################################################################
 
-# Beta (Average Percent Moves)
+# Price and Volume Stats
 with tab_beta:
-    st.header("Beta - Average Daily % Moves")
+    st.header("Price and Volume Stats")
+
+    beta_tab, volume_stats_tab = st.tabs(["Beta", "Volume Stats"])
 
     base_dir = DATA_DIR
     beta_matches = glob.glob(os.path.join(base_dir, "AVERAGE_PCT_MOVES_*.xlsx"))
@@ -1844,24 +1847,32 @@ with tab_beta:
         unsafe_allow_html=True,
     )
 
-    st.write("Average absolute daily % moves over the past year, sorted from highest to lowest.")
+    with beta_tab:
+        st.subheader("Beta - Average Daily % Moves")
+        st.write("Average absolute daily % moves over the past year, sorted from highest to lowest.")
 
-    if beta_matches:
-        latest_beta_file = max(beta_matches, key=os.path.getmtime)
-        try:
-            beta_df = pd.read_excel(latest_beta_file)
-            beta_table_height = min(900, max(360, 24 * (len(beta_df) + 1) + 12))
-            st.dataframe(
-                beta_df,
-                use_container_width=True,
-                height=beta_table_height,
-                hide_index=True,
-                row_height=24,
-            )
-        except Exception as e:
-            st.error(f"⚠️ Failed to load beta (average % moves) XLSX file: {e}")
-    else:
-        st.warning("Average % moves XLSX file not found.")
+        if beta_matches:
+            latest_beta_file = max(beta_matches, key=os.path.getmtime)
+            try:
+                beta_df = pd.read_excel(latest_beta_file)
+                beta_table_height = min(900, max(360, 24 * (len(beta_df) + 1) + 12))
+                st.dataframe(
+                    beta_df,
+                    use_container_width=True,
+                    height=beta_table_height,
+                    hide_index=True,
+                    row_height=24,
+                )
+            except Exception as e:
+                st.error(f"⚠️ Failed to load beta (average % moves) XLSX file: {e}")
+        else:
+            st.warning("Average % moves XLSX file not found.")
+
+    with volume_stats_tab:
+        st.subheader("Volume Stats")
+        st.write("Latest daily volume, 20 trading day average volume, today's relative volume (current / 20 day average), and AVG_DAILY_PCT_MOVE (average absolute close-to-close % move over the last 20 trading days).")
+        volume_stats_path = os.path.join(base_dir, "STOCKS_VOLUME_STATS.csv")
+        show_csv(volume_stats_path if os.path.exists(volume_stats_path) else None, "STOCKS_VOLUME_STATS")
 
 #######################################################################################################################################################################
 
@@ -1870,24 +1881,23 @@ with tab_fed_funds_spy:
     st.header("Fed Funds Rate - SPY")
 
     base_dir = DATA_DIR
-    fed_page_matches = glob.glob(os.path.join(base_dir, "fed_rates_spy_page_*_graph.png"))
 
-    if fed_page_matches:
-        def extract_fed_page_number(path: str) -> int:
-            name = os.path.basename(path)
-            try:
-                return int(name.split("_page_")[1].split("_")[0])
-            except Exception:
-                return -1
-
-        ordered_pages = sorted(fed_page_matches, key=extract_fed_page_number, reverse=True)
-        fed_tab_labels = [f"Page {extract_fed_page_number(p)}" for p in ordered_pages]
-        fed_tabs = st.tabs(fed_tab_labels)
-        for tab, page_path in zip(fed_tabs, ordered_pages):
-            with tab:
-                st.image(page_path, use_container_width=True)
+    st.subheader("Fed Meeting Dates")
+    fed_meeting_matches = glob.glob(os.path.join(base_dir, "fed_meeting_dates_*.csv"))
+    if fed_meeting_matches:
+        latest_fed_meetings = max(fed_meeting_matches, key=os.path.getmtime)
+        try:
+            fed_meetings_df = pd.read_csv(latest_fed_meetings)
+            upcoming_meetings = fed_meetings_df[fed_meetings_df["STATUS"] == "Upcoming"]
+            prior_meetings = fed_meetings_df[fed_meetings_df["STATUS"] == "Prior"].iloc[::-1]
+            st.write("Upcoming meetings")
+            st.dataframe(upcoming_meetings, use_container_width=True, hide_index=True)
+            st.write("Prior meetings (most recent first)")
+            st.dataframe(prior_meetings, use_container_width=True, hide_index=True)
+        except Exception as e:
+            st.error(f"⚠️ Failed to load Fed meeting dates CSV file: {e}")
     else:
-        st.warning("Fed Funds Rate - SPY graph images not found.")
+        st.warning("Fed meeting dates CSV file not found.")
 
 #######################################################################################################################################################################
 
