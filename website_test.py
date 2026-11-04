@@ -567,10 +567,10 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_8ema_study, tab10, tab11 = st.tabs([
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_8ema_study, tab11 = st.tabs([
                                                           "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "Market Cap", "20/50ma Crossover", "8_EMA Study", 
-                                                          "NAAIM Data", "Notes"])
+                                                          "Notes"])
 
 ###############################################################################################################################################################
 
@@ -1416,6 +1416,12 @@ with tab_8ema_study:
             return
         try:
             ema_df = pd.read_csv(csv_path)
+            if file_name == "TICKERS_FULL_PRICE_DATA.csv":
+                dates = pd.to_datetime(ema_df["DATE"], errors="raise")
+                if dates.isna().any() or ema_df["TICKER"].isna().any():
+                    raise ValueError("Stock price data contains missing dates or tickers.")
+                ema_df = ema_df.loc[dates.sort_values(kind="stable").index]
+                ema_df = ema_df.drop_duplicates(subset="TICKER", keep="last").sort_values("TICKER")
         except Exception as e:
             st.error(f"⚠️ Failed to load {label} CSV file: {e}")
             return
@@ -1439,35 +1445,6 @@ with tab_8ema_study:
         show_8ema_csv("CRYPTO_FULL_PRICE_DATA.csv", "crypto", "ema_crypto")
 
 ###############################################################################################################################################################
-
-# NAAIM Data
-with tab10:
-    st.header("NAAIM Data")
-    st.write("Above 90 seems to be an area where you should start to see a stock market pullback/selloff. Below 40 seems to be an area where you should start to see a stock market rally.")
-    
-    base_dir = DATA_DIR
-
-    # Search for files starting with "naaim_plot" and ending in .png
-    pattern = os.path.join(base_dir, "naaim_plot_*.png")
-    matching_files = glob.glob(pattern)
-
-    if matching_files:
-        # Grab the most recently modified one
-        latest_file = max(matching_files, key=os.path.getmtime)
-        st.image(latest_file, width=1500)
-    else:
-        st.warning("NAAIM Plot image not found.")
-
-    st.subheader("NAAIM + SPY Overlay")
-
-    combined_pattern = os.path.join(base_dir, "naaim_spy_combined_*_graph.png")
-    combined_files = glob.glob(combined_pattern)
-
-    if combined_files:
-        latest_combined = max(combined_files, key=os.path.getmtime)
-        st.image(latest_combined, width=1500)
-    else:
-        st.warning("NAAIM + SPY combined graph image not found.")
 
 # Notes
 with tab11:
@@ -1973,4 +1950,3 @@ with tab_fed_funds_spy:
             st.error(f"⚠️ Failed to load Fed meeting dates CSV file: {e}")
     else:
         st.warning("Fed meeting dates CSV file not found.")
-
