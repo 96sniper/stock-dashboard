@@ -1439,6 +1439,18 @@ with tab_8ema_study:
     ema_stocks_tab, ema_crypto_tab = st.tabs(["Stocks", "Crypto"])
 
     with ema_stocks_tab:
+        ema_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_8_ema_breadth_*_graph.png"))
+        if ema_breadth_path:
+            st.image(ema_breadth_path, use_container_width=True)
+            st.caption("Latest row per stock, grouped overall and by sector. This chart is not changed by the ticker filter below.")
+        else:
+            st.warning("Stock 8 EMA breadth chart not found. Run the combined analysis script to generate it.")
+        ema_daily_path = latest_valid_png(os.path.join(base_dir, "stocks_8_ema_daily_net_*_graph.png"))
+        if ema_daily_path:
+            st.image(ema_daily_path, use_container_width=True)
+            st.caption("Daily net breadth = Upward + Above count minus Downward + Below count. The ticker filter below does not change this chart.")
+        else:
+            st.warning("Daily stock 8 EMA chart not found. Run the combined analysis script to generate it.")
         show_8ema_csv("TICKERS_FULL_PRICE_DATA.csv", "stock", "ema_stocks")
 
     with ema_crypto_tab:
