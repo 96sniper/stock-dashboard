@@ -567,9 +567,9 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_8ema_study, tab11 = st.tabs([
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab11 = st.tabs([
                                                           "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
-                                                          "Upcoming Earnings", "Market Cap", "20/50ma Crossover", "8_EMA Study", 
+                                                          "Upcoming Earnings", "Market Cap", "Moving Average Studies", "Drawdown",
                                                           "Notes"])
 
 ###############################################################################################################################################################
@@ -1358,9 +1358,13 @@ with tab_market_cap:
 
 ###############################################################################################################################################################
 
-# 20/50ma Crossover
+# Moving Average Studies
 with tab9:
-    st.header("20/50ma Crossover")
+    st.header("Moving Average Studies")
+    tab_20_50_crossover, tab_8ema_study = st.tabs(["20/50 Crossover", "8_EMA Study"])
+
+with tab_20_50_crossover:
+    st.header("20/50 Crossover")
     st.write("SPY daily candlestick pages with MA 20/50 crossover zones and summary stats.")
     st.write("Green Zones show where the 20MA flips above the 50MA. Red Zones show where the 20MA flips below the 50MA.")
     st.write("This chart shows that when a 20/50ma crossover, the odds of price action to a certain direction increases.")
@@ -1393,11 +1397,9 @@ with tab9:
                 return 999999
 
         latest_run_pages = sorted(latest_run_pages, key=extract_page_number, reverse=True)
-        ma_tab_labels = [f"Page {extract_page_number(p)}" for p in latest_run_pages]
-        ma_tabs = st.tabs(ma_tab_labels)
-        for tab, page_path in zip(ma_tabs, latest_run_pages):
-            with tab:
-                st.image(page_path, use_container_width=True)
+        for page_path in latest_run_pages:
+            st.subheader(f"Page {extract_page_number(page_path)}")
+            st.image(page_path, use_container_width=True)
     else:
         st.warning("20/50ma crossover graph images not found.")
 
@@ -1457,6 +1459,20 @@ with tab_8ema_study:
         show_8ema_csv("CRYPTO_FULL_PRICE_DATA.csv", "crypto", "ema_crypto")
 
 ###############################################################################################################################################################
+
+# Drawdown
+with tab_drawdown:
+    st.header("Drawdown")
+    st.caption("Last 10 years: percentage below the running adjusted-close peak within the chart window. Zero marks a new or recovered peak.")
+    for drawdown_ticker in ["SPY", "SMH", "QQQ", "IWM"]:
+        st.subheader(drawdown_ticker)
+        drawdown_path = latest_valid_png(
+            os.path.join(DATA_DIR, f"{drawdown_ticker.lower()}_drawdown_*.png")
+        )
+        if drawdown_path:
+            st.image(drawdown_path, use_container_width=True)
+        else:
+            st.warning(f"{drawdown_ticker} drawdown chart not found. Run the combined analysis script to generate it.")
 
 # Notes
 with tab11:
