@@ -567,8 +567,8 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+tab0, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
+                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Notes"])
 
 ###############################################################################################################################################################
@@ -679,94 +679,6 @@ with tab1:
                 st.image(page_path, use_container_width=True)
         else:
             st.warning("Mercury retrograde SPY page images not found.")
-
-###############################################################################################################################################################
-
-# Sector Analysis
-with tab_sector_analysis:
-    st.header("Sector Analysis")
-
-    base_dir = DATA_DIR
-    sector_chart_width = 1200
-    yearly_chart_width = 1600
-
-    def latest_sector_chart(*filename_patterns: str) -> str | None:
-        matches: list[str] = []
-        for filename_pattern in filename_patterns:
-            matches.extend(glob.glob(os.path.join(base_dir, filename_pattern)))
-        unique_matches = list(set(matches))
-        valid_matches = [path for path in unique_matches if is_valid_png(path)]
-        if not valid_matches:
-            return None
-        return max(valid_matches, key=os.path.getmtime)
-
-    sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_favorites, sub_tab_groups = st.tabs(
-        ["Yearly Table", "Year-to-Date", "Quarter-to-Date", "Favorites", "Industry/Group YTD"]
-    )
-
-    with sub_tab_yearly:
-        latest_file = latest_sector_chart(
-            "sector_etf_yearly_gain_table_*.png",
-            "sector_etf_yearly_gain_table.png",
-        )
-        if latest_file:
-            st.image(latest_file, width=yearly_chart_width)
-        else:
-            st.warning("Yearly gain table image not found.")
-
-    with sub_tab_ytd:
-        latest_file = latest_sector_chart(
-            "etf_ytd_bar_chart_*.png",
-            "etf_ytd_bar_chart.png",
-        )
-        if latest_file:
-            st.image(latest_file, width=sector_chart_width)
-        else:
-            st.warning("YTD bar chart image not found.")
-
-    with sub_tab_qtd:
-        latest_file = latest_sector_chart(
-            "etf_qtd_bar_chart_*.png",
-            "etf_qtd_bar_chart.png",
-        )
-        if latest_file:
-            st.image(latest_file, width=sector_chart_width)
-        else:
-            st.warning("QTD bar chart image not found.")
-
-    with sub_tab_favorites:
-        latest_file = latest_sector_chart(
-            "favorite_trading_tickers_ytd_bar_chart_*.png",
-            "favorite_trading_tickers_ytd_bar_chart.png",
-        )
-        if latest_file:
-            st.image(latest_file, width=sector_chart_width)
-        else:
-            st.warning("Favorites YTD bar chart image not found.")
-
-    with sub_tab_groups:
-        group_ytd_charts = [
-            ("MAG7", "mag7_ytd_bar_chart"),
-            ("Semiconductors", "semiconductor_stocks_ytd_bar_chart"),
-            ("Semi Equipment & Materials", "semiconductor_equipment_materials_ytd_bar_chart"),
-            ("Software Infrastructure", "software_infrastructure_ytd_bar_chart"),
-            ("Software Application", "software_application_ytd_bar_chart"),
-            ("Restaurants", "restaurants_ytd_bar_chart"),
-            ("Residential Construction", "residential_construction_ytd_bar_chart"),
-            ("Banks Diversified", "banks_diversified_ytd_bar_chart"),
-            ("Credit Services", "credit_services_ytd_bar_chart"),
-            ("Energy Sector", "energy_sector_ytd_bar_chart"),
-            ("Utilities Sector", "utilities_sector_ytd_bar_chart"),
-        ]
-        for group_tab, (group_label, group_prefix) in zip(
-            st.tabs([label for label, _ in group_ytd_charts]), group_ytd_charts
-        ):
-            with group_tab:
-                latest_file = latest_sector_chart(f"{group_prefix}_*.png", f"{group_prefix}.png")
-                if latest_file:
-                    st.image(latest_file, width=sector_chart_width)
-                else:
-                    st.warning(f"{group_label} YTD bar chart image not found.")
 
 ###############################################################################################################################################################
 
@@ -1489,15 +1401,16 @@ with tab_8ema_study:
 with tab_drawdown:
     st.header("Drawdown")
     st.caption("Last 10 years: percentage below the running adjusted-close peak within the chart window. Zero marks a new or recovered peak.")
-    for drawdown_ticker in ["SPY", "SMH", "QQQ", "IWM"]:
-        st.subheader(drawdown_ticker)
-        drawdown_path = latest_valid_png(
-            os.path.join(DATA_DIR, f"{drawdown_ticker.lower()}_drawdown_*.png")
-        )
-        if drawdown_path:
-            st.image(drawdown_path, use_container_width=True)
-        else:
-            st.warning(f"{drawdown_ticker} drawdown chart not found. Run the combined analysis script to generate it.")
+    drawdown_tickers = ["SPY", "QQQ", "SMH", "IWM", "BTC"]
+    for drawdown_ticker, drawdown_tab in zip(drawdown_tickers, st.tabs(drawdown_tickers)):
+        with drawdown_tab:
+            drawdown_path = latest_valid_png(
+                os.path.join(DATA_DIR, f"{drawdown_ticker.lower()}_drawdown_*.png")
+            )
+            if drawdown_path:
+                st.image(drawdown_path, use_container_width=True)
+            else:
+                st.warning(f"{drawdown_ticker} drawdown chart not found. Run the combined analysis script to generate it.")
 
 # 52-Week Highs/Lows
 with tab_52_week:
@@ -1696,7 +1609,9 @@ with tab_ytd:
     )
 
     row_height = 24
-    ytd_sub_sector, ytd_sub_all = st.tabs(["Sector ETFs", "All Stocks"])
+    ytd_sub_sector, ytd_sub_all, sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_favorites, sub_tab_groups = st.tabs(
+        ["Sector ETFs", "All Stocks", "Yearly Table", "Year-to-Date", "Quarter-to-Date", "Favorites", "Industry/Group YTD"]
+    )
 
     with ytd_sub_sector:
         st.subheader("Sector ETFs")
@@ -1825,6 +1740,83 @@ with tab_ytd:
                 st.error(f"⚠️ Failed to load all-stocks XLSX file: {e}")
         else:
             st.warning("All stocks YTD analysis file not found.")
+
+    sector_chart_width = 1200
+    yearly_chart_width = 1600
+
+    def latest_sector_chart(*filename_patterns: str) -> str | None:
+        matches: list[str] = []
+        for filename_pattern in filename_patterns:
+            matches.extend(glob.glob(os.path.join(base_dir, filename_pattern)))
+        unique_matches = list(set(matches))
+        valid_matches = [path for path in unique_matches if is_valid_png(path)]
+        if not valid_matches:
+            return None
+        return max(valid_matches, key=os.path.getmtime)
+
+    with sub_tab_yearly:
+        latest_file = latest_sector_chart(
+            "sector_etf_yearly_gain_table_*.png",
+            "sector_etf_yearly_gain_table.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=yearly_chart_width)
+        else:
+            st.warning("Yearly gain table image not found.")
+
+    with sub_tab_ytd:
+        latest_file = latest_sector_chart(
+            "etf_ytd_bar_chart_*.png",
+            "etf_ytd_bar_chart.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=sector_chart_width)
+        else:
+            st.warning("YTD bar chart image not found.")
+
+    with sub_tab_qtd:
+        latest_file = latest_sector_chart(
+            "etf_qtd_bar_chart_*.png",
+            "etf_qtd_bar_chart.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=sector_chart_width)
+        else:
+            st.warning("QTD bar chart image not found.")
+
+    with sub_tab_favorites:
+        latest_file = latest_sector_chart(
+            "favorite_trading_tickers_ytd_bar_chart_*.png",
+            "favorite_trading_tickers_ytd_bar_chart.png",
+        )
+        if latest_file:
+            st.image(latest_file, width=sector_chart_width)
+        else:
+            st.warning("Favorites YTD bar chart image not found.")
+
+    with sub_tab_groups:
+        group_ytd_charts = [
+            ("MAG7", "mag7_ytd_bar_chart"),
+            ("Semiconductors", "semiconductor_stocks_ytd_bar_chart"),
+            ("Semi Equipment & Materials", "semiconductor_equipment_materials_ytd_bar_chart"),
+            ("Software Infrastructure", "software_infrastructure_ytd_bar_chart"),
+            ("Software Application", "software_application_ytd_bar_chart"),
+            ("Restaurants", "restaurants_ytd_bar_chart"),
+            ("Residential Construction", "residential_construction_ytd_bar_chart"),
+            ("Banks Diversified", "banks_diversified_ytd_bar_chart"),
+            ("Credit Services", "credit_services_ytd_bar_chart"),
+            ("Energy Sector", "energy_sector_ytd_bar_chart"),
+            ("Utilities Sector", "utilities_sector_ytd_bar_chart"),
+        ]
+        for group_tab, (group_label, group_prefix) in zip(
+            st.tabs([label for label, _ in group_ytd_charts]), group_ytd_charts
+        ):
+            with group_tab:
+                latest_file = latest_sector_chart(f"{group_prefix}_*.png", f"{group_prefix}.png")
+                if latest_file:
+                    st.image(latest_file, width=sector_chart_width)
+                else:
+                    st.warning(f"{group_label} YTD bar chart image not found.")
 
 #######################################################################################################################################################################
 
