@@ -567,35 +567,10 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
-                                                          "Mindset", "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
+                                                          "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
                                                           "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Notes"])
 
-###############################################################################################################################################################
-
-# Mindset
-with tab0:
-    st.header("Psychology")
-    st.write("Psychology is the most important aspect of trading")
-    st.write("Psycology alone is the reason I have blown up accounts.")
-    st.write(" ")
-    st.write("Extreme Patience")
-    st.write("      Each day I should be fine not taking a trade. Just patiently watch the market and my data. Then if something lines up I take it.")
-    st.write("      Remember that this trading account is my entire future. Smart trades at the right time will compound into a fortune. Dumb trades at the wrong time will compound into a disaster.")
-    st.write("      Most days I will be best off by just watching charts and doing nothing.")
-    st.write("      The hardest thing is not trading at all. Most of the time staying away is the best decision.")
-    st.write("      Being in a trade is one of the toughest places to be in because rational thinking goes away.")
-    st.write("      What ive noticed is by being very-very patient, I am able to identify the best possible trade entries and get out quickly. Not being in a position gave me that ability to read markets correctly.")
-    st.write(" ")
-    st.write("Day Trading only ")
-    st.write("      Try to not hold over the weekend - Dont trade Friday unless there is a quick day trade.")
-    st.write("      My mind will be too focussed on news and Bitcoin over the weekend if I enter a position on friday.")
-    st.write("      Not to mention the 3 days you lose out on theta.")
-    st.write(" ")
-    
-    st.write(" ")
-    st.write("Reality of Trading")
-    st.write("      Its not about finding the perfect trade that will double your money. Its about finding opportunities where reward outweighs the risk and taking a shot.")
 ###############################################################################################################################################################
 
 # Home Page
@@ -851,6 +826,12 @@ with tab3:
             st.image(latest_file, width=1500)
         else:
             st.warning("Daily Close Above Below Count image not found.")
+        st.subheader("SPY Candles Shaded by Daily Close Above/Below (Last 4 Months)")
+        shading_files = glob.glob(os.path.join(base_dir, "SPY_daily_close_above_shading_*.png"))
+        if shading_files:
+            st.image(max(shading_files, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("SPY close above/below shading image not found.")
 
     with cab_tab1:
         st.subheader("Weekly Close Above/Below")
@@ -861,6 +842,12 @@ with tab3:
             st.image(latest_file, width=1500)
         else:
             st.warning("Weekly Close Above Below Count image not found.")
+        st.subheader("SPY Candles Shaded by Weekly Close Above/Below")
+        shading_files = glob.glob(os.path.join(base_dir, "SPY_weekly_close_above_shading_*.png"))
+        if shading_files:
+            st.image(max(shading_files, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("SPY weekly close above/below shading image not found.")
 
     with cab_tab2:
         st.subheader("Monthly Close Above/Below")
@@ -871,6 +858,12 @@ with tab3:
             st.image(latest_file, width=1500)
         else:
             st.warning("Monthly Close Above Below Count image not found.")
+        st.subheader("SPY Candles Shaded by Monthly Close Above/Below")
+        shading_files = glob.glob(os.path.join(base_dir, "SPY_monthly_close_above_shading_*.png"))
+        if shading_files:
+            st.image(max(shading_files, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("SPY monthly close above/below shading image not found.")
 
     with cab_tab3:
         matches = [
@@ -1418,7 +1411,7 @@ with tab_52_week:
     highs_lows_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*_graph.png"))
     if highs_lows_path:
         st.image(highs_lows_path, use_container_width=True)
-        st.caption("Daily net = new 52-week highs minus new 52-week lows (intraday records vs the prior 252 sessions).")
+        st.caption("Last 100 trading days. Daily net = new 52-week highs minus new 52-week lows (intraday records vs the prior 252 sessions). Green dot = positive, red dot = negative.")
     else:
         st.warning("52-week highs/lows chart not found. Run the combined analysis script to generate it.")
     highs_lows_csvs = glob.glob(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*.csv"))
@@ -1431,21 +1424,49 @@ with tab_52_week:
 
 # Notes
 with tab11:
-    st.write("Trading Psychology:")
-    st.write("FOMO:")
-    st.write("Afraid of watching the market move in a direction without me.")
-    st.write("Causes me to take stupid trades at the worst time because I’m afraid to watch the market keep moving while I’m on the sidelines.")
-    st.write("What I need to realize is that if I’m putting the time into reading charts consistently, then I will find unlimited trades.")
-    st.write("It is better for me to sit on the sidelines and wait for the charts to show a high reward/risk ratio setup than to force something just because I want action.") 
-    st.write("When I am patient for my trades, I will make plenty of money.")
-    st.write("Remember that my goal is to make 20% per week and compound that over time. This is ambitious but is totally doable if I am patient and am watching chart consistently.")
-    st.write("Be GRATEFULL. Dont get all emotional and upset for missing a trade or taking a small loss. There is a new trade always. I am very lucky to be in the position I am in.")
-    st.write("Just be patient and keep reading charts. The success will come.")
-    st.write("Check intraday price changes. How do the top % gainers look and how do the bottom % losers look? That will determine market direction.")
-    st.write("Seeing the losers show bottoming tails is bullish. Seeing the winners show topping tails is bearish. Are the losers at support?")
-    st.write("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
-    st.write("A 1$ move in the SPY creates about a 20% option move gain on 1 week out expiration at the money options.")
-    st.write("Its a quick move that i dont hold overnight. I need to be quick with a stop loss and make sure all indicators are in my favor.")
+    st.header("Notes")
+    notes_mindset_tab, notes_fomo_tab, notes_spy_options_tab = st.tabs(["Mindset", "FOMO", "SPY Options"])
+
+    with notes_mindset_tab:
+        st.subheader("Psychology")
+        st.write("Psychology is the most important aspect of trading")
+        st.write("Psycology alone is the reason I have blown up accounts.")
+        st.write(" ")
+        st.write("Extreme Patience")
+        st.write("      Each day I should be fine not taking a trade. Just patiently watch the market and my data. Then if something lines up I take it.")
+        st.write("      Remember that this trading account is my entire future. Smart trades at the right time will compound into a fortune. Dumb trades at the wrong time will compound into a disaster.")
+        st.write("      Most days I will be best off by just watching charts and doing nothing.")
+        st.write("      The hardest thing is not trading at all. Most of the time staying away is the best decision.")
+        st.write("      Being in a trade is one of the toughest places to be in because rational thinking goes away.")
+        st.write("      What ive noticed is by being very-very patient, I am able to identify the best possible trade entries and get out quickly. Not being in a position gave me that ability to read markets correctly.")
+        st.write(" ")
+        st.write("Day Trading only ")
+        st.write("      Try to not hold over the weekend - Dont trade Friday unless there is a quick day trade.")
+        st.write("      My mind will be too focussed on news and Bitcoin over the weekend if I enter a position on friday.")
+        st.write("      Not to mention the 3 days you lose out on theta.")
+        st.write(" ")
+
+        st.write(" ")
+        st.write("Reality of Trading")
+        st.write("      Its not about finding the perfect trade that will double your money. Its about finding opportunities where reward outweighs the risk and taking a shot.")
+
+    with notes_fomo_tab:
+        st.write("Trading Psychology:")
+        st.write("FOMO:")
+        st.write("Afraid of watching the market move in a direction without me.")
+        st.write("Causes me to take stupid trades at the worst time because I’m afraid to watch the market keep moving while I’m on the sidelines.")
+        st.write("What I need to realize is that if I’m putting the time into reading charts consistently, then I will find unlimited trades.")
+        st.write("It is better for me to sit on the sidelines and wait for the charts to show a high reward/risk ratio setup than to force something just because I want action.") 
+        st.write("When I am patient for my trades, I will make plenty of money.")
+        st.write("Remember that my goal is to make 20% per week and compound that over time. This is ambitious but is totally doable if I am patient and am watching chart consistently.")
+        st.write("Be GRATEFULL. Dont get all emotional and upset for missing a trade or taking a small loss. There is a new trade always. I am very lucky to be in the position I am in.")
+        st.write("Just be patient and keep reading charts. The success will come.")
+        st.write("Check intraday price changes. How do the top % gainers look and how do the bottom % losers look? That will determine market direction.")
+        st.write("Seeing the losers show bottoming tails is bullish. Seeing the winners show topping tails is bearish. Are the losers at support?")
+
+    with notes_spy_options_tab:
+        st.write("A 1$ move in the SPY creates about a 20% option move gain on 1 week out expiration at the money options.")
+        st.write("Its a quick move that i dont hold overnight. I need to be quick with a stop loss and make sure all indicators are in my favor.")
 
 #######################################################################################################################################################################
 
