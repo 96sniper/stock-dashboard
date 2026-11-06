@@ -567,10 +567,9 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab11 = st.tabs([
+tab0, tab1, tab_sector_analysis, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
                                                           "Mindset", "Seasonality", "Sector Analysis", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
-                                                          "Upcoming Earnings", "Market Cap", "Moving Average Studies", "Drawdown",
-                                                          "Notes"])
+                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Notes"])
 
 ###############################################################################################################################################################
 
@@ -701,7 +700,9 @@ with tab_sector_analysis:
             return None
         return max(valid_matches, key=os.path.getmtime)
 
-    sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_favorites = st.tabs(["Yearly Table", "Year-to-Date", "Quarter-to-Date", "Favorites"])
+    sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_favorites, sub_tab_groups = st.tabs(
+        ["Yearly Table", "Year-to-Date", "Quarter-to-Date", "Favorites", "Industry/Group YTD"]
+    )
 
     with sub_tab_yearly:
         latest_file = latest_sector_chart(
@@ -742,6 +743,30 @@ with tab_sector_analysis:
             st.image(latest_file, width=sector_chart_width)
         else:
             st.warning("Favorites YTD bar chart image not found.")
+
+    with sub_tab_groups:
+        group_ytd_charts = [
+            ("MAG7", "mag7_ytd_bar_chart"),
+            ("Semiconductors", "semiconductor_stocks_ytd_bar_chart"),
+            ("Semi Equipment & Materials", "semiconductor_equipment_materials_ytd_bar_chart"),
+            ("Software Infrastructure", "software_infrastructure_ytd_bar_chart"),
+            ("Software Application", "software_application_ytd_bar_chart"),
+            ("Restaurants", "restaurants_ytd_bar_chart"),
+            ("Residential Construction", "residential_construction_ytd_bar_chart"),
+            ("Banks Diversified", "banks_diversified_ytd_bar_chart"),
+            ("Credit Services", "credit_services_ytd_bar_chart"),
+            ("Energy Sector", "energy_sector_ytd_bar_chart"),
+            ("Utilities Sector", "utilities_sector_ytd_bar_chart"),
+        ]
+        for group_tab, (group_label, group_prefix) in zip(
+            st.tabs([label for label, _ in group_ytd_charts]), group_ytd_charts
+        ):
+            with group_tab:
+                latest_file = latest_sector_chart(f"{group_prefix}_*.png", f"{group_prefix}.png")
+                if latest_file:
+                    st.image(latest_file, width=sector_chart_width)
+                else:
+                    st.warning(f"{group_label} YTD bar chart image not found.")
 
 ###############################################################################################################################################################
 
@@ -1473,6 +1498,23 @@ with tab_drawdown:
             st.image(drawdown_path, use_container_width=True)
         else:
             st.warning(f"{drawdown_ticker} drawdown chart not found. Run the combined analysis script to generate it.")
+
+# 52-Week Highs/Lows
+with tab_52_week:
+    st.header("All Stocks: New 52-Week Highs vs Lows")
+    highs_lows_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*_graph.png"))
+    if highs_lows_path:
+        st.image(highs_lows_path, use_container_width=True)
+        st.caption("Daily net = new 52-week highs minus new 52-week lows (intraday records vs the prior 252 sessions).")
+    else:
+        st.warning("52-week highs/lows chart not found. Run the combined analysis script to generate it.")
+    highs_lows_csvs = glob.glob(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*.csv"))
+    if highs_lows_csvs:
+        try:
+            highs_lows_df = pd.read_csv(max(highs_lows_csvs, key=os.path.getmtime))
+            st.dataframe(highs_lows_df.iloc[::-1], use_container_width=True, hide_index=True)
+        except Exception as e:
+            st.error(f"Could not read 52-week highs/lows data: {e}")
 
 # Notes
 with tab11:
