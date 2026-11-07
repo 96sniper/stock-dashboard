@@ -567,8 +567,8 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab3b, tab_sector_summary, tab_industry_summary, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
-                                                          "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below Tickers", "Close Above/Below Summary", "Close Above/Below Sector Summary", "Close Above/Below Industry Summary",
+tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
+                                                          "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below",
                                                           "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Notes"])
 
 ###############################################################################################################################################################
@@ -660,7 +660,7 @@ with tab1:
 # Tail Candles (Daily/Weekly/Monthly)
 with tab2:
     st.header("Tail Candles (D-W-M)")
-    st.write("Daily Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
+    st.write("Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     base_dir = DATA_DIR
 
     def show_latest_png(file_pattern: str, not_found_message: str, width: int = 1500, exclude_substring: str | None = None) -> None:
@@ -691,131 +691,79 @@ with tab2:
         else:
             st.warning(not_found_message)
 
-    (
-        tc_tab1, tc_tab2, tc_tab3, tc_tab4,
-        tc_tab5, tc_tab6, tc_tab7, tc_tab8,
-        tc_tab9, tc_tab10, tc_tab11, tc_tab12,
-    ) = st.tabs([
-        "Daily Count",
-        "Daily Count (Separate)",
-        "Daily Bullish Wick",
-        "Daily Bearish Wick",
-        "Weekly Count",
-        "Weekly Count (Separate)",
-        "Weekly Bullish Wick",
-        "Weekly Bearish Wick",
-        "Monthly Count",
-        "Monthly Count (Separate)",
-        "Monthly Bullish Wick",
-        "Monthly Bearish Wick",
-    ])
+    timeframe_tabs = st.tabs(["Daily", "Weekly", "Monthly"])
+    for timeframe, timeframe_tab in zip(("Daily", "Weekly", "Monthly"), timeframe_tabs):
+        period = timeframe.lower()
+        with timeframe_tab:
+            count_tab, separate_tab, bullish_tab, bearish_tab = st.tabs([
+                f"{timeframe} Count",
+                f"{timeframe} Count (Separate)",
+                f"{timeframe} Bullish Wick",
+                f"{timeframe} Bearish Wick",
+            ])
 
-    with tc_tab1:
-        show_latest_png(
-            "daily_tail_candle_count_*.png",
-            "Daily Tail Candle Count image not found.",
-            exclude_substring="daily_tail_candle_count_separate_",
-        )
+            with count_tab:
+                show_latest_png(
+                    f"{period}_tail_candle_count_*.png",
+                    f"{timeframe} Tail Candle Count image not found.",
+                    exclude_substring=f"{period}_tail_candle_count_separate_",
+                )
 
-    with tc_tab2:
-        show_latest_png(
-            "daily_tail_candle_count_separate_*.png",
-            "Daily Tail Candle Count (Separate) image not found.",
-        )
+            with separate_tab:
+                show_latest_png(
+                    f"{period}_tail_candle_count_separate_*.png",
+                    f"{timeframe} Tail Candle Count (Separate) image not found.",
+                )
 
-    with tc_tab3:
-        show_wick_table(
-            "daily_summary_data_*.xlsx",
-            "Bullish Wick",
-            "Daily Bullish Wick Candles",
-            "Daily Summary Data file not found.",
-        )
+            with bullish_tab:
+                show_wick_table(
+                    f"{period}_summary_data_*.xlsx",
+                    "Bullish Wick",
+                    f"{timeframe} Bullish Wick Candles",
+                    f"{timeframe} Summary Data file not found.",
+                )
 
-    with tc_tab4:
-        show_wick_table(
-            "daily_summary_data_*.xlsx",
-            "Bearish Wick",
-            "Daily Bearish Wick Candles",
-            "Daily Summary Data file not found.",
-        )
-
-    with tc_tab5:
-        show_latest_png(
-            "weekly_tail_candle_count_*.png",
-            "Weekly Tail Candle Count image not found.",
-            exclude_substring="weekly_tail_candle_count_separate_",
-        )
-
-    with tc_tab6:
-        show_latest_png(
-            "weekly_tail_candle_count_separate_*.png",
-            "Weekly Tail Candle Count (Separate) image not found.",
-        )
-
-    with tc_tab7:
-        show_wick_table(
-            "weekly_summary_data_*.xlsx",
-            "Bullish Wick",
-            "Weekly Bullish Wick Candles",
-            "Weekly Summary Data file not found.",
-        )
-
-    with tc_tab8:
-        show_wick_table(
-            "weekly_summary_data_*.xlsx",
-            "Bearish Wick",
-            "Weekly Bearish Wick Candles",
-            "Weekly Summary Data file not found.",
-        )
-
-    with tc_tab9:
-        show_latest_png(
-            "monthly_tail_candle_count_*.png",
-            "Monthly Tail Candle Count image not found.",
-            exclude_substring="monthly_tail_candle_count_separate_",
-        )
-
-    with tc_tab10:
-        show_latest_png(
-            "monthly_tail_candle_count_separate_*.png",
-            "Monthly Tail Candle Count (Separate) image not found.",
-        )
-
-    with tc_tab11:
-        show_wick_table(
-            "monthly_summary_data_*.xlsx",
-            "Bullish Wick",
-            "Monthly Bullish Wick Candles",
-            "Monthly Summary Data file not found.",
-        )
-
-    with tc_tab12:
-        show_wick_table(
-            "monthly_summary_data_*.xlsx",
-            "Bearish Wick",
-            "Monthly Bearish Wick Candles",
-            "Monthly Summary Data file not found.",
-        )
+            with bearish_tab:
+                show_wick_table(
+                    f"{period}_summary_data_*.xlsx",
+                    "Bearish Wick",
+                    f"{timeframe} Bearish Wick Candles",
+                    f"{timeframe} Summary Data file not found.",
+                )
 
 ###############################################################################################################################################################
 
-# Close Above/Below Summary
+# Close Above/Below
 with tab3:
-    st.header("Close Above/Below Tickers")
-    st.write("Daily Close Above Candles minus Daily Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
+    st.header("Close Above/Below")
+    st.write("Close Above Candles minus Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
     base_dir = DATA_DIR
-    cab_tab0, cab_tab1, cab_tab2, cab_tab3, cab_tab4, cab_tab5, cab_tab6, cab_tab7, cab_tab8 = st.tabs([
+    (
+        cab_daily, cab_weekly, cab_monthly, cab_summary_tab1, cab_summary_tab2,
+        tab_sector_summary, tab_industry_summary,
+    ) = st.tabs([
         "Daily",
         "Weekly",
         "Monthly",
-        "Daily Close Trend",
-        "Weekly Close Trend",
-        "Monthly Close Trend",
-        "Daily Close Trend - All Stocks",
-        "Weekly Close Trend - All Stocks",
-        "Monthly Close Trend - All Stocks",
+        "CURRENT_TREND_SUMMARY",
+        "CURRENT_TREND_SUMMARY_ALL_STOCKS",
+        "Sector Summary",
+        "Industry Summary",
     ])
+
+    with cab_daily:
+        cab_tab0, cab_tab3, cab_tab6 = st.tabs([
+            "Daily", "Daily Close Trend", "Daily Close Trend - All Stocks",
+        ])
+    with cab_weekly:
+        cab_tab1, cab_tab4, cab_tab7 = st.tabs([
+            "Weekly", "Weekly Close Trend", "Weekly Close Trend - All Stocks",
+        ])
+    with cab_monthly:
+        cab_tab2, cab_tab5, cab_tab8 = st.tabs([
+            "Monthly", "Monthly Close Trend", "Monthly Close Trend - All Stocks",
+        ])
 
     with cab_tab0:
         st.subheader("Daily Close Above/Below")
@@ -919,10 +867,7 @@ with tab3:
 ###############################################################################################################################################################
 
 # Close Above/Below Summary
-with tab3b:
-    st.header("Close Above/Below Summary")
-    st.write("Current trend summary tables and percentage trend analysis for ETFs/indices and the all-stocks universe.")
-
+with tab3:
     base_dir = DATA_DIR
     sector_name_tokens = [
         "MAG7",
@@ -941,12 +886,8 @@ with tab3b:
         "FINANCIAL",
         "UTILITY",
     ]
-    cab_summary_tab1, cab_summary_tab2 = st.tabs([
-        "CURRENT_TREND_SUMMARY",
-        "CURRENT_TREND_SUMMARY_ALL_STOCKS",
-    ])
-
     with cab_summary_tab1:
+        st.write("Current trend summary tables and percentage trend analysis for ETFs/indices.")
         pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_*.xlsx")
         matching_files = [
             p for p in glob.glob(pattern)
@@ -978,6 +919,7 @@ with tab3b:
             st.warning("Close Above/Below Summary image not found.")
 
     with cab_summary_tab2:
+        st.write("Current trend summary tables and percentage trend analysis for the all-stocks universe.")
         matches = [
             path
             for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx"))
@@ -1273,9 +1215,10 @@ with tab8:
 with tab_market_cap:
     st.header("Market Cap")
 
-    sector_market_cap_tab, industry_market_cap_tab = st.tabs([
+    sector_market_cap_tab, industry_market_cap_tab, top_stock_market_cap_tab = st.tabs([
         "Sector Market Cap %",
         "Industry Market Cap %",
+        "Top 20 Stocks",
     ])
 
     with sector_market_cap_tab:
@@ -1285,6 +1228,10 @@ with tab_market_cap:
         st.caption("Chart shows industries above 1% of total market cap; the table lists all industries.")
         show_earnings_png("_industry_market_cap_graph.png", "Industry market cap graph")
         show_csv(latest_earnings_output("_industry_market_cap.csv"), "Industry market cap")
+
+    with top_stock_market_cap_tab:
+        st.caption("The 20 largest tracked stocks, shown as a share of total tracked market cap.")
+        show_earnings_png("_top_stock_market_cap_graph.png", "Top 20 stocks market cap graph")
 
 ###############################################################################################################################################################
 
@@ -1476,15 +1423,10 @@ with tab_spy_vix:
 
     base_dir = DATA_DIR
 
-    (
-        svix_tab1, svix_tab2, svix_tab3, svix_tab4, svix_tab5, svix_tab6
-    ) = st.tabs([
+    svix_tab1, svix_tab2, svix_tab3 = st.tabs([
         "VIX Daily Returns & % Positive Rate",
         "SPY Daily Returns & % Positive Rate",
         "VIX Avg Price & STD Dev Bands",
-        "SPY Candles with UVXY+SPY Positive Dates",
-        "SPY Candles with VIX+SPY Positive Dates",
-        "SPY Combined Positive Signals",
     ])
 
     with svix_tab1:
@@ -1509,32 +1451,6 @@ with tab_spy_vix:
             st.image(max(matches, key=os.path.getmtime), width=1200)
         else:
             st.warning("VIX Avg Price & STD Dev Bands image not found.")
-
-    with svix_tab4:
-        matches = glob.glob(os.path.join(base_dir, "spy_uvxy_positive_*_graph.png"))
-        if matches:
-            st.image(max(matches, key=os.path.getmtime), width=1200)
-        else:
-            st.warning("SPY Candles with UVXY+SPY Positive Dates image not found.")
-
-    with svix_tab5:
-        matches = glob.glob(os.path.join(base_dir, "spy_vix_positive_*_graph.png"))
-        if matches:
-            st.image(max(matches, key=os.path.getmtime), width=1200)
-        else:
-            st.warning("SPY Candles with VIX+SPY Positive Dates image not found.")
-
-    with svix_tab6:
-        matches = glob.glob(os.path.join(base_dir, "spy_combined_positive_signals_*.xlsx"))
-        if matches:
-            latest_file = max(matches, key=os.path.getmtime)
-            try:
-                combined_df = pd.read_excel(latest_file)
-                st.dataframe(combined_df, use_container_width=True, hide_index=True)
-            except Exception as e:
-                st.error(f"⚠️ Failed to load combined signal XLSX file: {e}")
-        else:
-            st.warning("SPY combined positive signals file not found.")
 
 #######################################################################################################################################################################
 
