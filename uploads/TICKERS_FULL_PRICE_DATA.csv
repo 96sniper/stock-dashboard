@@ -1,0 +1,671 @@
+TICKER,Sector,Industry,DATE,TIMEFRAME,CLOSE,OPEN,LOW,HIGH,VOLUME,8_EMA,8_EMA_SLOPE,8_EMA_ABOVE_BELOW
+MMM,Industrials,Conglomerates,2026-11-06,1D,185.15,184.04,183.59,187.6,3370300,181.94,Upward,Above
+AOS,Industrials,Specialty Industrial Machinery,2026-11-06,1D,64.55,64.76,64.18,65.61,2041700,64.36,Upward,Above
+ABT,Healthcare,Medical Devices,2026-11-06,1D,109.93,111.08,109.81,111.81,8345100,109.58,Upward,Above
+ABBV,Healthcare,Drug Manufacturers - General,2026-11-06,1D,291.31,282.27,281.07,291.73,5039500,289.59,Upward,Above
+ACN,Technology,Information Technology Services,2026-11-06,1D,260.5,258.53,255.41,261.22,4262700,256.88,Upward,Above
+ADBE,Technology,Software - Application,2026-11-06,1D,239.3,239.0,236.84,243.38,3295500,247.04,Downward,Below
+AMD,Technology,Semiconductors,2026-11-06,1D,449.04,444.43,433.3,459.8,45682000,478.74,Downward,Below
+AES,Utilities,Utilities - Diversified,2026-11-06,1D,14.87,14.89,14.87,14.93,5078200,14.87,Downward,Below
+AFL,Financial Services,Insurance - Life,2026-11-06,1D,124.06,123.92,123.51,125.8,2015500,124.04,Upward,Above
+A,Healthcare,Diagnostics & Research,2026-11-06,1D,174.76,171.54,171.28,176.41,2048400,174.99,Downward,Below
+APD,Basic Materials,Specialty Chemicals,2026-11-06,1D,304.84,302.36,301.16,309.41,1075900,310.2,Downward,Below
+ABNB,Consumer Cyclical,Travel Services,2026-11-06,1D,189.99,191.15,184.05,192.5,12748100,174.61,Upward,Above
+AKAM,Technology,Software - Infrastructure,2026-11-06,1D,83.09,83.37,81.74,85.45,10415200,86.83,Downward,Below
+ALB,Basic Materials,Specialty Chemicals,2026-11-06,1D,99.25,99.0,96.15,101.02,2444300,95.51,Upward,Above
+ARE,Real Estate,REIT - Office,2026-11-06,1D,44.8,44.5,44.01,45.2,1879200,43.59,Upward,Above
+ALGN,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,166.0,157.89,157.15,166.12,1756700,158.16,Upward,Above
+ALLE,Industrials,Security & Protection Services,2026-11-06,1D,185.39,184.61,183.9,187.02,972000,185.56,Downward,Below
+LNT,Utilities,Utilities - Regulated Electric,2026-11-06,1D,72.67,72.14,71.89,72.91,3384100,72.02,Upward,Above
+ALL,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,254.81,259.13,254.76,262.54,2174500,259.84,Downward,Below
+GOOGL,Communication Services,Internet Content & Information,2026-11-06,1D,284.78,284.9,284.59,290.49,36283900,291.01,Downward,Below
+GOOG,Communication Services,Internet Content & Information,2026-11-06,1D,283.93,283.42,283.0,289.22,24585600,289.44,Downward,Below
+MO,Consumer Defensive,Tobacco,2026-11-06,1D,76.12,75.16,74.8,77.01,7175100,76.52,Downward,Below
+AMZN,Consumer Cyclical,Internet Retail,2026-11-06,1D,259.3,259.81,258.53,264.18,42497100,255.43,Upward,Above
+AMCR,Consumer Cyclical,Packaging & Containers,2026-11-06,1D,44.87,44.76,44.1,45.59,4385100,46.43,Downward,Below
+AEE,Utilities,Utilities - Regulated Electric,2026-11-06,1D,112.85,112.14,111.42,114.38,3122100,111.27,Upward,Above
+AEP,Utilities,Utilities - Regulated Electric,2026-11-06,1D,126.53,124.88,124.23,127.16,3669300,128.27,Downward,Below
+AXP,Financial Services,Credit Services,2026-11-06,1D,320.99,320.05,319.2,326.78,2932400,323.44,Downward,Below
+AIG,Financial Services,Insurance - Diversified,2026-11-06,1D,77.75,79.36,77.73,79.96,4627700,80.4,Downward,Below
+AMT,Real Estate,REIT - Specialty,2026-11-06,1D,188.79,190.06,188.47,194.48,2958000,189.21,Downward,Below
+AWK,Utilities,Utilities - Regulated Water,2026-11-06,1D,150.29,148.0,146.93,150.83,3270400,147.22,Upward,Above
+AMP,Financial Services,Asset Management,2026-11-06,1D,501.49,503.47,497.93,511.96,557400,504.5,Downward,Below
+AME,Industrials,Specialty Industrial Machinery,2026-11-06,1D,228.67,226.84,225.19,229.31,1737900,236.82,Downward,Below
+AMGN,Healthcare,Drug Manufacturers - General,2026-11-06,1D,460.42,448.17,447.04,462.91,2579400,460.52,Downward,Below
+APH,Technology,Electronic Components,2026-11-06,1D,74.59,75.24,73.1,75.83,17223500,77.44,Downward,Below
+ADI,Technology,Semiconductors,2026-11-06,1D,363.56,374.81,354.72,374.81,6867800,393.59,Downward,Below
+AON,Financial Services,Insurance Brokers,2026-11-06,1D,334.81,333.62,332.12,338.81,977900,329.78,Upward,Above
+APA,Energy,Oil & Gas E&P,2026-11-06,1D,44.63,43.32,42.89,45.48,11139100,46.9,Downward,Below
+APO,Financial Services,Asset Management,2026-11-06,1D,116.75,117.44,115.65,118.79,3319400,117.02,Downward,Below
+AAPL,Technology,Consumer Electronics,2026-11-06,1D,342.37,338.73,338.3,345.79,44676300,343.05,Downward,Below
+AMAT,Technology,Semiconductor Equipment & Materials,2026-11-06,1D,332.72,346.16,329.29,348.71,9458100,364.53,Downward,Below
+APP,Communication Services,Advertising Agencies,2026-11-06,1D,391.22,355.95,348.69,398.0,11691900,301.8,Upward,Above
+APTV,Consumer Cyclical,Auto Parts,2026-11-06,1D,39.44,40.13,39.4,41.05,4079900,42.08,Downward,Below
+ACGL,Financial Services,Insurance - Diversified,2026-11-06,1D,107.28,108.41,106.61,108.71,2368500,107.24,Upward,Above
+ADM,Consumer Defensive,Farm Products,2026-11-06,1D,69.97,70.13,69.6,71.21,3512400,73.05,Downward,Below
+ARES,Financial Services,Asset Management,2026-11-06,1D,133.98,133.2,131.54,135.4,1561900,130.73,Upward,Above
+ANET,Technology,Computer Hardware,2026-11-06,1D,170.8,172.8,167.0,173.6,11977700,171.9,Downward,Below
+AJG,Financial Services,Insurance Brokers,2026-11-06,1D,281.61,278.7,275.01,286.24,1506300,277.77,Upward,Above
+AIZ,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,307.0,300.74,299.91,308.31,468200,299.73,Upward,Above
+T,Communication Services,Telecom Services,2026-11-06,1D,21.63,21.39,21.23,21.86,40042600,21.6,Upward,Above
+ATO,Utilities,Utilities - Regulated Gas,2026-11-06,1D,173.22,172.25,171.24,173.93,1012700,173.32,Downward,Below
+ADSK,Technology,Software - Application,2026-11-06,1D,261.72,262.9,258.61,264.68,1885100,258.12,Upward,Above
+ADP,Technology,Software - Application,2026-11-06,1D,303.35,295.43,295.43,304.88,2401900,299.6,Upward,Above
+AZO,Consumer Cyclical,Auto Parts,2026-11-06,1D,3216.35,3232.0,3201.26,3271.37,120800,3229.33,Downward,Below
+AVY,Consumer Cyclical,Packaging & Containers,2026-11-06,1D,186.78,185.48,185.0,187.76,604300,186.26,Upward,Above
+AXON,Industrials,Aerospace & Defense,2026-11-06,1D,313.0,337.0,307.0,337.0,5225400,391.22,Downward,Below
+BKR,Energy,Oil & Gas Equipment & Services,2026-11-06,1D,47.87,46.48,46.03,48.36,12646900,50.97,Downward,Below
+BALL,Consumer Cyclical,Packaging & Containers,2026-11-06,1D,65.92,65.9,64.65,66.21,2571900,65.76,Upward,Above
+BAC,Financial Services,Banks - Diversified,2026-11-06,1D,49.42,49.54,49.27,50.45,36219700,50.2,Downward,Below
+BAX,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,25.79,24.99,24.76,25.83,6194600,25.3,Upward,Above
+BDX,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,211.88,209.29,208.95,214.88,2172600,204.82,Upward,Above
+BRK-B,Financial Services,Insurance - Diversified,2026-11-06,1D,570.89,562.07,559.61,575.12,5413200,560.99,Upward,Above
+BBY,Consumer Cyclical,Specialty Retail,2026-11-06,1D,99.63,98.33,97.22,101.8,2740000,98.17,Upward,Above
+TECH,Healthcare,Biotechnology,2026-11-06,1D,72.78,72.68,72.63,72.8,2307600,72.69,Upward,Above
+BIIB,Healthcare,Drug Manufacturers - General,2026-11-06,1D,248.35,241.28,240.0,250.03,1002100,248.44,Downward,Below
+BLK,Financial Services,Asset Management,2026-11-06,1D,1178.87,1157.78,1155.52,1195.19,521300,1170.69,Upward,Above
+BX,Financial Services,Asset Management,2026-11-06,1D,119.5,118.65,118.05,120.8,6323300,119.25,Upward,Above
+XYZ,Technology,Software - Infrastructure,2026-11-06,1D,85.48,84.07,83.09,86.65,7757300,81.24,Upward,Above
+BE,Industrials,Electrical Equipment & Parts,2026-11-06,1D,173.24,183.31,168.84,186.33,23205400,194.77,Downward,Below
+BNY,Financial Services,Banks - Diversified,2026-11-06,1D,147.72,146.54,146.31,149.35,2631700,148.25,Downward,Below
+BA,Industrials,Aerospace & Defense,2026-11-06,1D,173.4,172.0,169.88,174.47,6237800,174.97,Downward,Below
+BKNG,Consumer Cyclical,Travel Services,2026-11-06,1D,160.67,164.53,160.58,167.67,7907900,160.04,Upward,Above
+BSX,Healthcare,Medical Devices,2026-11-06,1D,42.75,43.35,42.69,43.63,14710400,43.94,Downward,Below
+BMY,Healthcare,Drug Manufacturers - General,2026-11-06,1D,62.14,61.46,61.32,63.06,9794700,62.41,Downward,Below
+AVGO,Technology,Semiconductors,2026-11-06,1D,293.69,311.13,289.77,311.52,32379300,316.27,Downward,Below
+BR,Technology,Information Technology Services,2026-11-06,1D,190.4,188.16,186.73,191.94,1174300,186.2,Upward,Above
+BRO,Financial Services,Insurance Brokers,2026-11-06,1D,72.12,71.71,71.71,73.51,2323700,71.61,Upward,Above
+BF-B,Consumer Defensive,Beverages - Wineries & Distilleries,2026-11-06,1D,30.58,29.93,29.81,30.84,2540600,29.83,Upward,Above
+BG,Consumer Defensive,Farm Products,2026-11-06,1D,99.1,98.0,98.0,100.45,2718200,98.17,Upward,Above
+BXP,Real Estate,REIT - Office,2026-11-06,1D,65.01,64.36,64.07,65.7,1608000,63.85,Upward,Above
+CHRW,Industrials,Integrated Freight & Logistics,2026-11-06,1D,125.33,127.51,124.49,128.95,1139900,130.42,Downward,Below
+CDNS,Technology,Software - Application,2026-11-06,1D,319.92,315.5,306.93,320.55,2034500,324.37,Downward,Below
+CPT,Real Estate,REIT - Residential,2026-11-06,1D,99.44,98.07,97.83,102.11,1702700,101.5,Downward,Below
+COF,Financial Services,Credit Services,2026-11-06,1D,201.87,201.79,201.24,206.28,3522500,204.92,Downward,Below
+CAH,Healthcare,Medical Distribution,2026-11-06,1D,271.72,265.58,263.92,272.99,1980900,260.09,Upward,Above
+CCL,Consumer Cyclical,Travel Services,2026-11-06,1D,29.58,29.2,29.07,29.92,13191600,29.19,Upward,Above
+CARR,Industrials,Building Products & Equipment,2026-11-06,1D,52.38,53.3,52.34,53.71,9196400,54.39,Downward,Below
+CVNA,Consumer Cyclical,Auto & Truck Dealerships,2026-11-06,1D,73.57,71.36,71.35,74.58,7640700,70.36,Upward,Above
+CASY,Consumer Cyclical,Specialty Retail,2026-11-06,1D,687.64,680.27,677.61,691.83,363500,681.17,Upward,Above
+CAT,Industrials,Farm & Heavy Construction Machinery,2026-11-06,1D,558.63,571.82,554.61,572.0,4788600,609.04,Downward,Below
+CBOE,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,353.27,347.08,346.34,357.7,1014800,342.48,Upward,Above
+CBRE,Real Estate,Real Estate Services,2026-11-06,1D,135.51,133.44,133.27,137.48,1563800,134.17,Upward,Above
+CDW,Technology,Information Technology Services,2026-11-06,1D,157.0,157.53,152.4,159.59,1507600,158.23,Downward,Below
+COR,Healthcare,Medical Distribution,2026-11-06,1D,333.56,333.61,332.67,338.54,1682000,337.6,Downward,Below
+CNC,Healthcare,Healthcare Plans,2026-11-06,1D,69.74,72.0,69.25,73.65,5807400,70.54,Downward,Below
+CNP,Utilities,Utilities - Regulated Electric,2026-11-06,1D,40.66,39.4,39.02,40.73,12679500,41.2,Downward,Below
+CF,Basic Materials,Agricultural Inputs,2026-11-06,1D,119.39,117.5,116.92,120.57,1877600,118.21,Upward,Above
+CRL,Healthcare,Diagnostics & Research,2026-11-06,1D,337.52,318.73,316.61,339.97,1063700,338.1,Downward,Below
+SCHW,Financial Services,Capital Markets,2026-11-06,1D,91.49,91.3,91.2,92.94,7578000,91.0,Upward,Above
+CHTR,Communication Services,Telecom Services,2026-11-06,1D,118.07,115.74,110.58,123.66,6463300,116.21,Upward,Above
+CVX,Energy,Oil & Gas Integrated,2026-11-06,1D,212.61,211.53,210.43,215.16,8081600,220.75,Downward,Below
+CMG,Consumer Cyclical,Restaurants,2026-11-06,1D,34.43,34.75,34.17,35.13,15578100,33.15,Upward,Above
+CB,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,365.02,362.3,362.3,368.3,1627100,366.05,Downward,Below
+CHD,Consumer Defensive,Household & Personal Products,2026-11-06,1D,109.33,107.46,106.39,109.94,1888300,109.03,Upward,Above
+CIEN,Technology,Communication Equipment,2026-11-06,1D,243.39,252.84,236.59,256.48,4717400,282.75,Downward,Below
+CI,Healthcare,Healthcare Plans,2026-11-06,1D,293.59,293.47,292.35,297.3,2428000,298.58,Downward,Below
+CINF,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,185.48,185.52,184.86,187.15,710000,184.34,Upward,Above
+CTAS,Industrials,Specialty Business Services,2026-11-06,1D,222.36,220.35,220.16,228.74,1772100,222.99,Downward,Below
+CSCO,Technology,Communication Equipment,2026-11-06,1D,93.85,96.63,93.35,97.52,23092400,101.14,Downward,Below
+C,Financial Services,Banks - Diversified,2026-11-06,1D,119.05,118.06,117.88,121.53,12241900,121.47,Downward,Below
+CFG,Financial Services,Banks - Regional,2026-11-06,1D,63.24,63.19,63.13,64.28,3285100,64.28,Downward,Below
+CLX,Consumer Defensive,Household & Personal Products,2026-11-06,1D,99.96,96.74,96.19,100.54,2387700,94.57,Upward,Above
+CME,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,305.89,303.68,301.4,308.76,1452900,304.05,Upward,Above
+CMS,Utilities,Utilities - Regulated Electric,2026-11-06,1D,69.18,68.77,68.29,69.58,3122000,69.43,Downward,Below
+KO,Consumer Defensive,Beverages - Non-Alcoholic,2026-11-06,1D,95.67,93.21,93.0,96.31,18420100,94.79,Upward,Above
+CTSH,Technology,Information Technology Services,2026-11-06,1D,64.72,65.11,63.69,65.11,5629300,65.52,Downward,Below
+COHR,Technology,Scientific & Technical Instruments,2026-11-06,1D,192.81,189.55,179.04,195.67,16226300,201.74,Downward,Below
+COIN,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,134.76,136.55,131.55,139.28,7559900,146.0,Downward,Below
+CL,Consumer Defensive,Household & Personal Products,2026-11-06,1D,96.56,95.3,95.3,97.46,5464300,96.3,Upward,Above
+CMCSA,Communication Services,Telecom Services,2026-11-06,1D,24.39,24.21,24.09,24.77,26421800,23.83,Upward,Above
+FIX,Industrials,Engineering & Construction,2026-11-06,1D,1017.5,1039.5,995.64,1055.97,1147300,1145.28,Downward,Below
+COP,Energy,Oil & Gas E&P,2026-11-06,1D,136.27,135.13,134.19,138.39,7656200,141.62,Downward,Below
+ED,Utilities,Utilities - Regulated Electric,2026-11-06,1D,118.56,119.93,118.5,121.09,2501500,117.98,Upward,Above
+STZ,Consumer Defensive,Beverages - Brewers,2026-11-06,1D,141.97,140.21,138.88,143.31,1608600,139.48,Upward,Above
+CEG,Utilities,Utilities - Independent Power Producers,2026-11-06,1D,249.95,246.05,243.38,252.72,5565900,252.98,Downward,Below
+COO,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,62.36,61.57,61.52,62.8,2059700,61.83,Upward,Above
+CPRT,Industrials,Specialty Business Services,2026-11-06,1D,31.95,31.27,31.24,32.08,10542500,31.22,Upward,Above
+GLW,Technology,Electronic Components,2026-11-06,1D,106.13,108.79,104.07,110.5,11692200,117.28,Downward,Below
+CPAY,Technology,Software - Infrastructure,2026-11-06,1D,455.16,437.78,427.97,458.64,1077900,424.56,Upward,Above
+CSGP,Real Estate,Real Estate Services,2026-11-06,1D,30.55,30.8,30.52,31.27,7688200,31.31,Downward,Below
+COST,Consumer Defensive,Discount Stores,2026-11-06,1D,1053.56,1045.25,1043.0,1063.02,2513100,1033.69,Upward,Above
+CRH,Basic Materials,Building Materials,2026-11-06,1D,94.81,92.86,92.45,95.6,6110200,93.36,Upward,Above
+CRWD,Technology,Software - Infrastructure,2026-11-06,1D,216.9,230.69,216.14,230.69,10985600,236.11,Downward,Below
+CCI,Real Estate,REIT - Specialty,2026-11-06,1D,88.6,88.84,87.6,90.89,5388100,88.43,Upward,Above
+CSX,Industrials,Railroads,2026-11-06,1D,49.12,50.0,49.06,50.38,15095200,50.78,Downward,Below
+CMI,Industrials,Specialty Industrial Machinery,2026-11-06,1D,450.07,451.22,448.5,459.81,2167800,482.02,Downward,Below
+CVS,Healthcare,Healthcare Plans,2026-11-06,1D,83.85,80.7,80.69,84.38,16096400,86.12,Downward,Below
+DHR,Healthcare,Diagnostics & Research,2026-11-06,1D,230.25,222.96,222.96,230.66,4061100,230.54,Downward,Below
+DRI,Consumer Cyclical,Restaurants,2026-11-06,1D,226.35,223.82,223.32,230.31,1088800,223.51,Upward,Above
+DDOG,Technology,Software - Application,2026-11-06,1D,179.04,181.54,175.73,185.18,5937300,210.94,Downward,Below
+DVA,Healthcare,Medical Care Facilities,2026-11-06,1D,191.35,189.63,188.75,191.9,603700,189.1,Upward,Above
+DECK,Consumer Cyclical,Footwear & Accessories,2026-11-06,1D,86.71,85.4,85.4,88.26,2209000,85.55,Upward,Above
+DE,Industrials,Farm & Heavy Construction Machinery,2026-11-06,1D,671.65,660.0,658.0,678.36,1216000,664.38,Upward,Above
+DELL,Technology,Computer Hardware,2026-11-06,1D,328.53,346.05,325.1,350.36,8589100,386.06,Downward,Below
+DAL,Industrials,Airlines,2026-11-06,1D,87.2,86.0,85.7,87.86,6120800,84.33,Upward,Above
+DVN,Energy,Oil & Gas E&P,2026-11-06,1D,42.21,41.0,40.6,43.18,19203600,46.21,Downward,Below
+DXCM,Healthcare,Medical Devices,2026-11-06,1D,79.41,82.73,79.2,82.85,3937100,82.65,Downward,Below
+FANG,Energy,Oil & Gas E&P,2026-11-06,1D,178.96,178.8,177.61,182.58,1637000,190.31,Downward,Below
+DLR,Real Estate,REIT - Specialty,2026-11-06,1D,174.2,176.4,172.35,177.86,2421700,177.7,Downward,Below
+DG,Consumer Defensive,Discount Stores,2026-11-06,1D,133.75,134.55,133.15,137.35,2037200,134.41,Downward,Below
+DLTR,Consumer Defensive,Discount Stores,2026-11-06,1D,131.14,134.62,130.85,136.84,2799200,134.54,Downward,Below
+D,Utilities,Utilities - Regulated Electric,2026-11-06,1D,68.6,68.25,67.83,69.25,3569900,67.63,Upward,Above
+DPZ,Consumer Cyclical,Restaurants,2026-11-06,1D,334.28,329.76,328.02,337.69,653500,327.87,Upward,Above
+DASH,Consumer Cyclical,Internet Retail,2026-11-06,1D,179.67,179.7,175.2,183.82,4548100,183.07,Downward,Below
+DOV,Industrials,Specialty Industrial Machinery,2026-11-06,1D,203.85,202.6,201.13,206.15,1351400,206.96,Downward,Below
+DOW,Basic Materials,Chemicals,2026-11-06,1D,31.4,31.73,31.31,32.18,6212400,32.65,Downward,Below
+DHI,Consumer Cyclical,Residential Construction,2026-11-06,1D,152.28,152.56,151.03,155.68,3082800,150.96,Upward,Above
+DTE,Utilities,Utilities - Regulated Electric,2026-11-06,1D,135.08,132.18,130.64,136.22,1758600,134.67,Upward,Above
+DUK,Utilities,Utilities - Regulated Electric,2026-11-06,1D,127.78,127.21,126.72,129.02,5782300,127.41,Upward,Above
+DD,Basic Materials,Specialty Chemicals,2026-11-06,1D,146.52,144.98,144.05,147.76,975700,144.53,Upward,Above
+ETN,Industrials,Specialty Industrial Machinery,2026-11-06,1D,341.72,345.49,333.86,347.5,4524400,359.9,Downward,Below
+EBAY,Consumer Cyclical,Internet Retail,2026-11-06,1D,121.96,121.66,121.22,123.79,3024800,121.64,Upward,Above
+ECHO,Communication Services,Telecom Services,2026-11-06,1D,94.62,92.54,91.25,95.45,4398900,94.96,Downward,Below
+ECL,Basic Materials,Specialty Chemicals,2026-11-06,1D,300.68,300.0,297.0,304.15,2219200,302.8,Downward,Below
+EIX,Utilities,Utilities - Regulated Electric,2026-11-06,1D,59.37,60.1,59.24,60.49,4035300,59.61,Downward,Below
+EW,Healthcare,Medical Devices,2026-11-06,1D,102.14,99.0,98.5,102.19,5112700,96.94,Upward,Above
+ELV,Healthcare,Healthcare Plans,2026-11-06,1D,425.62,421.47,421.47,430.69,1443900,425.35,Upward,Above
+EME,Industrials,Engineering & Construction,2026-11-06,1D,608.45,618.62,598.08,622.87,942700,648.22,Downward,Below
+EMR,Industrials,Specialty Industrial Machinery,2026-11-06,1D,162.35,164.67,161.13,165.0,2647000,165.0,Downward,Below
+ETR,Utilities,Utilities - Regulated Electric,2026-11-06,1D,110.55,109.06,108.69,111.27,4130600,109.79,Upward,Above
+EOG,Energy,Oil & Gas E&P,2026-11-06,1D,147.13,145.47,144.14,149.7,4564700,152.49,Downward,Below
+EQT,Energy,Oil & Gas E&P,2026-11-06,1D,49.4,50.99,49.38,51.33,7717800,52.52,Downward,Below
+EFX,Industrials,Consulting Services,2026-11-06,1D,189.59,190.0,186.99,191.53,1246700,187.23,Upward,Above
+EQIX,Real Estate,REIT - Specialty,2026-11-06,1D,1012.71,1001.63,998.35,1027.11,685300,1011.2,Upward,Above
+ERIE,Financial Services,Insurance Brokers,2026-11-06,1D,273.07,279.96,272.39,279.96,207100,269.47,Upward,Above
+ESS,Real Estate,REIT - Residential,2026-11-06,1D,272.18,267.05,265.32,274.11,547900,269.73,Upward,Above
+EL,Consumer Defensive,Household & Personal Products,2026-11-06,1D,110.06,105.5,105.0,110.93,3854400,108.37,Upward,Above
+EG,Financial Services,Insurance - Reinsurance,2026-11-06,1D,411.11,407.82,407.18,414.31,359100,410.23,Upward,Above
+EVRG,Utilities,Utilities - Regulated Electric,2026-11-06,1D,87.54,86.32,86.1,88.01,3813700,86.22,Upward,Above
+P,Technology,Computer Hardware,2026-11-06,1D,96.75,102.2,94.82,102.26,3556400,111.96,Downward,Below
+ES,Utilities,Utilities - Regulated Electric,2026-11-06,1D,69.84,70.47,69.82,71.17,3424400,69.49,Upward,Above
+EXC,Utilities,Utilities - Regulated Electric,2026-11-06,1D,45.62,45.65,45.3,46.09,8858800,45.7,Downward,Below
+EXE,Energy,Oil & Gas E&P,2026-11-06,1D,84.6,84.73,84.43,86.63,2219400,88.11,Downward,Below
+EXPE,Consumer Cyclical,Travel Services,2026-11-06,1D,259.24,272.19,258.71,274.81,4163900,282.12,Downward,Below
+EXPD,Industrials,Integrated Freight & Logistics,2026-11-06,1D,184.61,188.66,184.34,189.44,1689600,194.18,Downward,Below
+EXR,Real Estate,REIT - Industrial,2026-11-06,1D,159.19,157.03,157.03,161.01,1264100,155.17,Upward,Above
+XOM,Energy,Oil & Gas Integrated,2026-11-06,1D,165.87,164.25,163.51,166.79,15868500,173.21,Downward,Below
+FFIV,Technology,Software - Infrastructure,2026-11-06,1D,310.84,318.49,307.99,319.29,1091000,342.82,Downward,Below
+FDS,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,327.89,331.65,323.55,333.39,597600,331.19,Downward,Below
+FICO,Technology,Software - Application,2026-11-06,1D,704.55,683.03,667.18,706.6,676300,715.03,Downward,Below
+FAST,Industrials,Industrial Distribution,2026-11-06,1D,52.99,52.29,51.94,53.17,7060200,52.56,Upward,Above
+FRT,Real Estate,REIT - Retail,2026-11-06,1D,112.58,112.33,111.93,113.76,834800,111.79,Upward,Above
+FDX,Industrials,Integrated Freight & Logistics,2026-11-06,1D,308.14,312.54,307.36,316.67,1730000,313.44,Downward,Below
+FDXF,Industrials,Integrated Freight & Logistics,2026-11-06,1D,123.56,122.38,120.4,124.03,797900,122.93,Upward,Above
+FERG,Industrials,Industrial Distribution,2026-11-06,1D,233.7,232.64,231.94,236.07,2190200,237.32,Downward,Below
+FIS,Technology,Information Technology Services,2026-11-06,1D,28.73,28.64,28.39,29.02,11111300,33.35,Downward,Below
+FITB,Financial Services,Banks - Regional,2026-11-06,1D,53.04,52.95,52.82,53.58,6453500,53.66,Downward,Below
+FSLR,Technology,Solar,2026-11-06,1D,201.14,196.05,193.0,207.65,4117700,188.65,Upward,Above
+FE,Utilities,Utilities - Regulated Electric,2026-11-06,1D,46.43,46.1,45.82,46.73,5028500,46.45,Downward,Below
+FISV,Unknown,Unknown,2026-11-06,1D,62.88,60.9,60.8,63.87,9730700,57.33,Upward,Above
+FLEX,Technology,Electronic Components,2026-11-06,1D,69.78,72.5,66.81,72.55,5734700,78.48,Downward,Below
+F,Consumer Cyclical,Auto Manufacturers,2026-11-06,1D,12.44,12.42,12.34,12.68,37998300,12.37,Upward,Above
+FTNT,Technology,Software - Infrastructure,2026-11-06,1D,118.84,126.46,118.62,126.46,8025400,134.84,Downward,Below
+FTV,Technology,Scientific & Technical Instruments,2026-11-06,1D,65.37,64.77,64.44,65.74,3568000,65.26,Upward,Above
+FOXA,Communication Services,Entertainment,2026-11-06,1D,66.64,66.81,64.74,68.32,19576700,66.35,Upward,Above
+FOX,Communication Services,Entertainment,2026-11-06,1D,59.5,59.74,57.5,60.99,1740800,59.0,Upward,Above
+BEN,Financial Services,Asset Management,2026-11-06,1D,33.73,32.43,31.54,34.02,7203100,32.59,Upward,Above
+FCX,Basic Materials,Copper,2026-11-06,1D,59.42,59.09,58.3,60.52,16247500,61.94,Downward,Below
+GRMN,Technology,Scientific & Technical Instruments,2026-11-06,1D,285.57,282.61,279.81,287.41,942900,282.74,Upward,Above
+IT,Technology,Information Technology Services,2026-11-06,1D,190.1,191.14,185.0,191.38,1360500,208.28,Downward,Below
+GE,Industrials,Aerospace & Defense,2026-11-06,1D,323.24,317.07,315.06,325.18,5308600,315.49,Upward,Above
+GEHC,Healthcare,Medical Devices,2026-11-06,1D,82.38,81.71,81.49,83.27,4181000,80.17,Upward,Above
+GEV,Industrials,Specialty Industrial Machinery,2026-11-06,1D,774.11,797.23,751.25,821.5,7203400,833.2,Downward,Below
+GEN,Technology,Software - Infrastructure,2026-11-06,1D,29.79,30.31,29.66,30.5,6270600,29.01,Upward,Above
+GNRC,Industrials,Specialty Industrial Machinery,2026-11-06,1D,176.78,179.3,172.63,180.56,1270700,189.09,Downward,Below
+GD,Industrials,Aerospace & Defense,2026-11-06,1D,354.06,350.93,348.94,359.07,1219100,360.91,Downward,Below
+GIS,Consumer Defensive,Packaged Foods,2026-11-06,1D,35.51,35.48,34.95,35.93,8635300,34.96,Upward,Above
+GM,Consumer Cyclical,Auto Manufacturers,2026-11-06,1D,86.16,87.42,86.08,88.54,9046100,87.01,Downward,Below
+GPC,Consumer Cyclical,Auto Parts,2026-11-06,1D,122.8,121.32,121.08,124.52,760200,123.99,Downward,Below
+GILD,Healthcare,Drug Manufacturers - General,2026-11-06,1D,166.89,164.11,164.0,169.06,5817400,166.84,Upward,Above
+GPN,Industrials,Specialty Business Services,2026-11-06,1D,97.4,94.03,93.29,98.54,3648100,93.97,Upward,Above
+GL,Financial Services,Insurance - Life,2026-11-06,1D,157.18,157.38,156.82,158.51,475400,159.42,Downward,Below
+GDDY,Technology,Software - Infrastructure,2026-11-06,1D,114.38,116.36,114.08,118.79,1792300,114.66,Downward,Below
+GS,Financial Services,Capital Markets,2026-11-06,1D,865.82,870.29,864.75,886.33,2481600,891.43,Downward,Below
+HAL,Energy,Oil & Gas Equipment & Services,2026-11-06,1D,31.84,31.82,31.72,32.65,7176300,33.43,Downward,Below
+HIG,Financial Services,Insurance - Diversified,2026-11-06,1D,133.99,134.35,133.59,136.05,1489300,135.11,Downward,Below
+HAS,Consumer Cyclical,Leisure,2026-11-06,1D,118.91,117.46,117.13,120.71,1789400,118.37,Upward,Above
+HCA,Healthcare,Medical Care Facilities,2026-11-06,1D,494.99,498.0,491.33,500.26,1462200,485.59,Upward,Above
+DOC,Real Estate,REIT - Healthcare Facilities,2026-11-06,1D,20.26,19.86,19.75,20.32,5995300,19.71,Upward,Above
+HSIC,Healthcare,Medical Distribution,2026-11-06,1D,86.05,83.22,83.02,87.57,1375000,85.64,Upward,Above
+HSY,Consumer Defensive,Confectioners,2026-11-06,1D,178.08,171.23,171.23,179.83,2751700,172.26,Upward,Above
+HPE,Technology,Communication Equipment,2026-11-06,1D,44.77,47.34,43.89,47.34,17634300,50.63,Downward,Below
+HLT,Consumer Cyclical,Lodging,2026-11-06,1D,370.45,365.27,364.54,373.54,1732300,364.69,Upward,Above
+HD,Consumer Cyclical,Home Improvement Retail,2026-11-06,1D,343.47,340.7,338.12,346.82,5519200,338.61,Upward,Above
+HONA,Industrials,Aerospace & Defense,2026-11-06,1D,152.92,149.29,147.4,154.23,2611600,156.58,Downward,Below
+HON,Industrials,Conglomerates,2026-11-06,1D,220.05,211.94,211.94,220.62,2509000,220.65,Downward,Below
+HRL,Consumer Defensive,Packaged Foods,2026-11-06,1D,21.95,21.95,21.75,22.33,5875000,21.75,Upward,Above
+HST,Real Estate,REIT - Hotel & Motel,2026-11-06,1D,24.62,24.64,24.33,24.91,9292800,25.15,Downward,Below
+HWM,Industrials,Aerospace & Defense,2026-11-06,1D,205.81,205.21,201.9,207.28,4033500,206.79,Downward,Below
+HPQ,Technology,Computer Hardware,2026-11-06,1D,28.46,29.45,28.44,29.78,12663100,29.71,Downward,Below
+HUBB,Industrials,Electrical Equipment & Parts,2026-11-06,1D,429.45,428.18,424.77,433.72,1013195,434.66,Downward,Below
+HUM,Healthcare,Healthcare Plans,2026-11-06,1D,433.74,415.0,411.56,444.0,2576200,419.17,Upward,Above
+HBAN,Financial Services,Banks - Regional,2026-11-06,1D,15.47,15.5,15.45,15.73,16743400,15.73,Downward,Below
+HII,Industrials,Aerospace & Defense,2026-11-06,1D,288.74,286.67,281.34,290.93,518900,296.9,Downward,Below
+IBM,Technology,Information Technology Services,2026-11-06,1D,245.0,242.92,240.35,246.34,3491900,249.76,Downward,Below
+IEX,Industrials,Specialty Industrial Machinery,2026-11-06,1D,226.99,223.82,222.6,227.79,1247500,231.17,Downward,Below
+IDXX,Healthcare,Diagnostics & Research,2026-11-06,1D,676.04,652.12,650.0,680.57,589000,644.35,Upward,Above
+ITW,Industrials,Specialty Industrial Machinery,2026-11-06,1D,280.95,281.24,280.0,284.19,1920500,283.58,Downward,Below
+ILMN,Healthcare,Diagnostics & Research,2026-11-06,1D,213.13,208.52,205.51,216.0,2064500,233.85,Downward,Below
+INCY,Healthcare,Biotechnology,2026-11-06,1D,119.65,116.38,115.0,119.81,1486200,118.78,Upward,Above
+IR,Industrials,Specialty Industrial Machinery,2026-11-06,1D,82.99,81.19,80.94,83.62,3087300,81.53,Upward,Above
+PODD,Healthcare,Medical Devices,2026-11-06,1D,146.51,155.6,143.28,155.6,1567900,152.6,Downward,Below
+INTC,Technology,Semiconductors,2026-11-06,1D,56.28,54.99,54.56,57.32,173770300,65.28,Downward,Below
+IBKR,Financial Services,Capital Markets,2026-11-06,1D,75.82,74.18,73.85,76.71,5769900,77.21,Downward,Below
+ICE,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,172.27,170.16,168.7,173.42,2693400,169.7,Upward,Above
+IFF,Basic Materials,Specialty Chemicals,2026-11-06,1D,82.62,83.83,82.35,84.39,2893600,88.57,Downward,Below
+IP,Consumer Cyclical,Packaging & Containers,2026-11-06,1D,34.53,33.72,33.49,34.71,4488300,34.9,Downward,Below
+INTU,Technology,Software - Application,2026-11-06,1D,341.5,345.69,334.9,348.54,3615500,344.86,Downward,Below
+ISRG,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,452.8,457.0,450.51,463.25,2150400,453.44,Downward,Below
+IVZ,Financial Services,Asset Management,2026-11-06,1D,27.08,27.3,27.03,27.69,5094300,27.98,Downward,Below
+INVH,Real Estate,REIT - Residential,2026-11-06,1D,27.1,27.1,27.01,27.67,4544800,27.11,Downward,Below
+IQV,Healthcare,Diagnostics & Research,2026-11-06,1D,271.83,264.21,261.2,273.46,1398400,267.71,Upward,Above
+IRM,Real Estate,REIT - Specialty,2026-11-06,1D,106.52,106.03,103.44,107.41,2512600,112.18,Downward,Below
+JBHT,Industrials,Integrated Freight & Logistics,2026-11-06,1D,217.55,217.51,216.44,219.36,696800,222.08,Downward,Below
+JBL,Technology,Electronic Components,2026-11-06,1D,239.09,247.75,235.23,248.86,1676400,258.93,Downward,Below
+JKHY,Technology,Information Technology Services,2026-11-06,1D,173.23,175.11,172.4,177.02,1111000,169.19,Upward,Above
+J,Industrials,Engineering & Construction,2026-11-06,1D,148.9,145.38,144.55,149.84,1210500,152.3,Downward,Below
+JNJ,Healthcare,Drug Manufacturers - General,2026-11-06,1D,276.22,267.56,265.55,276.41,8860000,271.86,Upward,Above
+JCI,Industrials,Building Products & Equipment,2026-11-06,1D,135.03,134.74,133.6,136.88,5876700,142.45,Downward,Below
+JPM,Financial Services,Banks - Diversified,2026-11-06,1D,334.49,333.15,333.0,341.79,7818400,339.03,Downward,Below
+KDP,Consumer Defensive,Beverages - Non-Alcoholic,2026-11-06,1D,36.63,35.81,35.7,36.89,15802000,36.05,Upward,Above
+KEY,Financial Services,Banks - Regional,2026-11-06,1D,20.85,20.81,20.73,21.1,13912500,21.12,Downward,Below
+KEYS,Technology,Scientific & Technical Instruments,2026-11-06,1D,272.13,277.14,265.16,277.34,2547600,293.23,Downward,Below
+KMB,Consumer Defensive,Household & Personal Products,2026-11-06,1D,108.43,108.1,107.01,109.16,7505100,108.36,Upward,Above
+KIM,Real Estate,REIT - Retail,2026-11-06,1D,25.52,25.41,25.21,25.79,7443800,25.0,Upward,Above
+KMI,Energy,Oil & Gas Midstream,2026-11-06,1D,29.96,30.13,29.92,30.35,11582100,31.74,Downward,Below
+KKR,Financial Services,Asset Management,2026-11-06,1D,96.48,97.48,95.9,98.39,5738200,96.45,Upward,Above
+KLAC,Technology,Semiconductor Equipment & Materials,2026-11-06,1D,138.49,140.53,135.66,142.63,15337700,147.58,Downward,Below
+KHC,Consumer Defensive,Packaged Foods,2026-11-06,1D,24.61,24.66,24.31,24.94,16049800,24.71,Downward,Below
+KR,Consumer Defensive,Grocery Stores,2026-11-06,1D,67.7,67.31,66.8,68.6,4737000,67.55,Upward,Above
+LHX,Industrials,Aerospace & Defense,2026-11-06,1D,259.89,254.33,252.02,262.72,1797700,264.05,Downward,Below
+LH,Healthcare,Diagnostics & Research,2026-11-06,1D,366.57,357.25,355.63,369.06,610100,358.07,Upward,Above
+LRCX,Technology,Semiconductor Equipment & Materials,2026-11-06,1D,200.44,208.65,198.07,209.2,17947900,219.99,Downward,Below
+LVS,Consumer Cyclical,Resorts & Casinos,2026-11-06,1D,40.73,40.05,39.67,41.09,7040800,39.09,Upward,Above
+LDOS,Technology,Information Technology Services,2026-11-06,1D,132.68,132.49,130.25,133.67,841900,136.19,Downward,Below
+LEN,Consumer Cyclical,Residential Construction,2026-11-06,1D,88.74,88.8,88.28,90.9,2952900,88.19,Upward,Above
+LII,Industrials,Building Products & Equipment,2026-11-06,1D,341.97,344.17,337.62,346.92,471800,350.38,Downward,Below
+LLY,Healthcare,Drug Manufacturers - General,2026-11-06,1D,1354.0,1350.45,1333.22,1377.28,3803200,1365.77,Downward,Below
+LIN,Basic Materials,Specialty Chemicals,2026-11-06,1D,515.25,510.86,510.01,522.0,2394900,515.12,Upward,Above
+LYV,Communication Services,Entertainment,2026-11-06,1D,175.25,171.19,171.19,177.81,5811500,177.72,Downward,Below
+LMT,Industrials,Aerospace & Defense,2026-11-06,1D,567.08,569.0,561.85,572.5,1387400,599.48,Downward,Below
+L,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,109.71,109.09,107.39,110.58,757800,110.78,Downward,Below
+LOW,Consumer Cyclical,Home Improvement Retail,2026-11-06,1D,224.55,220.34,220.32,226.23,3530500,217.46,Upward,Above
+LULU,Consumer Cyclical,Apparel Retail,2026-11-06,1D,110.79,108.05,107.55,113.07,1916800,108.65,Upward,Above
+LITE,Technology,Communication Equipment,2026-11-06,1D,538.59,550.7,518.01,559.0,5393100,664.5,Downward,Below
+LYB,Basic Materials,Specialty Chemicals,2026-11-06,1D,60.72,61.13,60.64,62.0,3065400,63.82,Downward,Below
+MTB,Financial Services,Banks - Regional,2026-11-06,1D,217.75,217.28,217.28,220.44,859200,220.95,Downward,Below
+MPC,Energy,Oil & Gas Refining & Marketing,2026-11-06,1D,372.74,379.62,367.72,381.67,2478600,408.29,Downward,Below
+MAR,Consumer Cyclical,Lodging,2026-11-06,1D,416.47,410.34,405.5,420.42,1685400,411.49,Upward,Above
+MRSH,Financial Services,Insurance Brokers,2026-11-06,1D,204.82,202.35,202.35,207.8,2347900,203.35,Upward,Above
+MLM,Basic Materials,Building Materials,2026-11-06,1D,518.15,515.54,515.01,527.43,1003700,530.31,Downward,Below
+MRVL,Technology,Semiconductors,2026-11-06,1D,141.2,145.07,135.34,146.32,33456800,172.65,Downward,Below
+MAS,Industrials,Building Products & Equipment,2026-11-06,1D,82.22,81.92,81.41,83.25,2603100,81.53,Upward,Above
+MA,Financial Services,Credit Services,2026-11-06,1D,652.7,642.25,638.01,659.59,3293700,647.35,Upward,Above
+MKC,Consumer Defensive,Packaged Foods,2026-11-06,1D,48.4,48.12,47.51,48.8,3818000,48.55,Downward,Below
+MCD,Consumer Cyclical,Restaurants,2026-11-06,1D,276.52,270.02,269.11,278.45,6332100,267.96,Upward,Above
+MCK,Healthcare,Medical Distribution,2026-11-06,1D,1060.84,1051.67,1046.7,1070.15,812100,1031.07,Upward,Above
+MDT,Healthcare,Medical Devices,2026-11-06,1D,101.8,101.54,100.8,103.07,7451100,100.39,Upward,Above
+MRK,Healthcare,Drug Manufacturers - General,2026-11-06,1D,146.73,144.34,142.8,147.48,7626300,146.79,Downward,Below
+META,Communication Services,Internet Content & Information,2026-11-06,1D,610.15,607.33,606.66,625.6,15682300,620.88,Downward,Below
+MET,Financial Services,Insurance - Life,2026-11-06,1D,98.27,98.34,97.78,99.51,3332400,99.97,Downward,Below
+MTD,Healthcare,Diagnostics & Research,2026-11-06,1D,1722.15,1806.58,1685.63,1806.58,350600,1695.96,Upward,Above
+MGM,Consumer Cyclical,Resorts & Casinos,2026-11-06,1D,32.34,31.94,31.74,32.45,4742100,31.15,Upward,Above
+MCHP,Technology,Semiconductors,2026-11-06,1D,58.35,64.86,54.83,65.31,47393300,70.78,Downward,Below
+MU,Technology,Semiconductors,2026-11-06,1D,690.0,708.35,676.0,724.8,44765100,792.39,Downward,Below
+MSFT,Technology,Software - Infrastructure,2026-11-06,1D,530.61,525.69,524.47,538.33,26938400,531.36,Downward,Below
+MAA,Real Estate,REIT - Residential,2026-11-06,1D,118.93,119.21,118.52,121.43,1290400,119.33,Downward,Below
+MRNA,Healthcare,Biotechnology,2026-11-06,1D,254.19,245.4,237.86,267.5,16296200,236.43,Upward,Above
+MDLZ,Consumer Defensive,Confectioners,2026-11-06,1D,66.02,64.89,64.69,66.82,7215400,65.48,Upward,Above
+MPWR,Technology,Semiconductors,2026-11-06,1D,1190.44,1201.3,1153.34,1217.24,1201500,1214.27,Downward,Below
+MNST,Consumer Defensive,Beverages - Non-Alcoholic,2026-11-06,1D,45.72,44.04,43.93,46.84,15680200,47.0,Downward,Below
+MCO,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,505.67,501.68,501.68,510.64,682400,504.01,Upward,Above
+MS,Financial Services,Capital Markets,2026-11-06,1D,181.44,182.4,181.36,185.34,6016600,185.15,Downward,Below
+MOS,Basic Materials,Agricultural Inputs,2026-11-06,1D,22.36,22.0,21.78,22.8,12307600,20.41,Upward,Above
+MSI,Technology,Communication Equipment,2026-11-06,1D,514.51,513.46,508.4,518.58,1743700,498.76,Upward,Above
+MSCI,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,641.01,642.02,637.22,649.43,520400,638.46,Upward,Above
+NDAQ,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,107.12,105.08,105.0,107.75,3335000,106.42,Upward,Above
+NTAP,Technology,Software - Infrastructure,2026-11-06,1D,169.19,174.99,168.72,176.85,2139500,188.39,Downward,Below
+NFLX,Communication Services,Entertainment,2026-11-06,1D,63.41,63.86,63.31,64.35,35472200,64.24,Downward,Below
+NEM,Basic Materials,Gold,2026-11-06,1D,120.91,119.58,118.41,122.98,7884700,115.33,Upward,Above
+NWSA,Communication Services,Entertainment,2026-11-06,1D,26.39,26.31,26.0,26.7,7099600,28.52,Downward,Below
+NWS,Communication Services,Entertainment,2026-11-06,1D,28.96,28.97,28.79,29.38,2078100,31.18,Downward,Below
+NEE,Utilities,Utilities - Regulated Electric,2026-11-06,1D,86.95,86.27,85.64,87.79,11876900,85.45,Upward,Above
+NKE,Consumer Cyclical,Footwear & Accessories,2026-11-06,1D,38.59,38.27,37.96,39.18,20439400,38.82,Downward,Below
+NI,Utilities,Utilities - Regulated Gas,2026-11-06,1D,44.15,44.07,43.66,44.5,6467300,44.28,Downward,Below
+NDSN,Industrials,Specialty Industrial Machinery,2026-11-06,1D,309.86,311.5,308.88,314.5,405200,320.68,Downward,Below
+NSC,Industrials,Railroads,2026-11-06,1D,319.94,324.38,319.69,324.38,1280300,332.79,Downward,Below
+NTRS,Financial Services,Asset Management,2026-11-06,1D,172.76,170.0,170.0,174.5,1106800,172.14,Upward,Above
+NOC,Industrials,Aerospace & Defense,2026-11-06,1D,525.01,515.38,510.3,531.2,1192200,537.21,Downward,Below
+NCLH,Consumer Cyclical,Travel Services,2026-11-06,1D,17.92,17.56,17.52,18.04,16480300,17.52,Upward,Above
+NRG,Utilities,Utilities - Independent Power Producers,2026-11-06,1D,88.29,84.06,82.31,90.04,8716100,89.89,Downward,Below
+NUE,Basic Materials,Steel,2026-11-06,1D,244.97,248.69,244.64,252.94,1670600,260.28,Downward,Below
+NVDA,Technology,Semiconductors,2026-11-06,1D,186.64,191.1,185.22,194.9,179722400,198.59,Downward,Below
+NVR,Consumer Cyclical,Residential Construction,2026-11-06,1D,6298.29,6267.41,6217.21,6380.67,32500,6187.49,Upward,Above
+NXPI,Technology,Semiconductors,2026-11-06,1D,248.29,249.02,242.13,251.16,7155600,252.83,Downward,Below
+ORLY,Consumer Cyclical,Auto Parts,2026-11-06,1D,89.89,89.73,89.2,90.74,7235100,90.37,Downward,Below
+OXY,Energy,Oil & Gas E&P,2026-11-06,1D,56.38,55.96,55.61,57.17,9022200,59.2,Downward,Below
+OKTA,Technology,Software - Infrastructure,2026-11-06,1D,168.69,176.41,164.18,178.95,5290700,188.72,Downward,Below
+ODFL,Industrials,Trucking,2026-11-06,1D,164.92,167.55,164.52,169.61,2570600,174.04,Downward,Below
+OMC,Communication Services,Advertising Agencies,2026-11-06,1D,86.37,85.04,84.27,86.44,2284300,84.36,Upward,Above
+ON,Technology,Semiconductors,2026-11-06,1D,63.31,66.57,61.9,66.7,14215500,69.04,Downward,Below
+OKE,Energy,Oil & Gas Midstream,2026-11-06,1D,85.19,85.63,85.04,86.56,2992500,89.7,Downward,Below
+ORCL,Technology,Software - Infrastructure,2026-11-06,1D,116.1,119.54,109.21,119.7,47503200,123.21,Downward,Below
+OTIS,Industrials,Specialty Industrial Machinery,2026-11-06,1D,78.96,77.71,77.71,79.43,4422900,77.48,Upward,Above
+PCAR,Industrials,Farm & Heavy Construction Machinery,2026-11-06,1D,101.98,102.91,101.66,104.88,4214200,103.75,Downward,Below
+PKG,Consumer Cyclical,Packaging & Containers,2026-11-06,1D,249.7,245.71,243.46,250.96,727600,252.16,Downward,Below
+PLTR,Technology,Software - Infrastructure,2026-11-06,1D,160.38,158.68,157.24,163.97,24298100,173.66,Downward,Below
+PANW,Technology,Software - Infrastructure,2026-11-06,1D,313.84,331.5,312.7,331.9,6287000,343.62,Downward,Below
+PH,Industrials,Specialty Industrial Machinery,2026-11-06,1D,917.79,908.09,901.67,922.58,953200,915.36,Upward,Above
+PAYX,Technology,Software - Application,2026-11-06,1D,117.06,116.25,115.27,117.63,2508600,115.73,Upward,Above
+PYPL,Financial Services,Credit Services,2026-11-06,1D,59.24,57.64,57.57,59.82,7440300,58.43,Upward,Above
+PNR,Industrials,Specialty Industrial Machinery,2026-11-06,1D,68.12,68.33,67.98,69.2,1962000,67.28,Upward,Above
+PEP,Consumer Defensive,Beverages - Non-Alcoholic,2026-11-06,1D,141.34,138.31,138.0,142.17,8709300,139.28,Upward,Above
+PFE,Healthcare,Drug Manufacturers - General,2026-11-06,1D,29.39,29.07,28.54,29.43,48306600,29.64,Downward,Below
+PCG,Utilities,Utilities - Regulated Electric,2026-11-06,1D,12.97,12.97,12.87,13.17,20414900,13.16,Downward,Below
+PM,Consumer Defensive,Tobacco,2026-11-06,1D,197.88,197.68,193.62,200.66,5637800,204.02,Downward,Below
+PSX,Energy,Oil & Gas Refining & Marketing,2026-11-06,1D,245.72,248.69,243.02,250.24,3069000,262.72,Downward,Below
+PNW,Utilities,Utilities - Regulated Electric,2026-11-06,1D,104.22,102.37,101.66,104.28,2226600,104.89,Downward,Below
+PNC,Financial Services,Banks - Regional,2026-11-06,1D,225.38,224.81,224.36,228.21,1589100,227.97,Downward,Below
+PPG,Basic Materials,Specialty Chemicals,2026-11-06,1D,122.38,120.91,120.1,123.53,1458100,121.2,Upward,Above
+PPL,Utilities,Utilities - Regulated Electric,2026-11-06,1D,35.8,36.25,35.69,36.51,18188700,35.67,Upward,Above
+PFG,Financial Services,Asset Management,2026-11-06,1D,110.91,111.9,110.82,112.68,1160300,112.49,Downward,Below
+PG,Consumer Defensive,Household & Personal Products,2026-11-06,1D,165.4,162.36,162.13,166.83,7875300,163.8,Upward,Above
+PGR,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,227.77,228.68,225.78,231.09,2728700,230.11,Downward,Below
+PLD,Real Estate,REIT - Industrial,2026-11-06,1D,126.96,127.05,126.33,129.0,3333400,128.31,Downward,Below
+PRU,Financial Services,Insurance - Life,2026-11-06,1D,119.24,120.46,119.11,121.5,2082300,119.71,Downward,Below
+PTC,Technology,Software - Application,2026-11-06,1D,195.07,194.53,194.4,195.25,1354400,194.61,Upward,Above
+PEG,Utilities,Utilities - Regulated Electric,2026-11-06,1D,72.61,72.25,71.69,72.93,3294200,72.99,Downward,Below
+PSA,Real Estate,REIT - Industrial,2026-11-06,1D,337.46,337.05,331.7,340.74,1203600,330.66,Upward,Above
+PHM,Consumer Cyclical,Residential Construction,2026-11-06,1D,132.49,132.18,131.18,134.75,1606500,129.42,Upward,Above
+Q,Technology,Semiconductor Equipment & Materials,2026-11-06,1D,117.0,117.8,113.01,117.91,2531500,116.5,Upward,Above
+QCOM,Technology,Semiconductors,2026-11-06,1D,165.41,161.28,159.11,167.47,19680100,167.91,Downward,Below
+PWR,Industrials,Engineering & Construction,2026-11-06,1D,540.9,539.5,533.0,554.81,2775400,577.99,Downward,Below
+DGX,Healthcare,Diagnostics & Research,2026-11-06,1D,255.63,251.64,250.0,258.13,945200,251.35,Upward,Above
+RL,Consumer Cyclical,Apparel Manufacturing,2026-11-06,1D,376.56,375.0,373.31,382.81,877000,389.38,Downward,Below
+RJF,Financial Services,Asset Management,2026-11-06,1D,162.81,162.96,161.33,166.05,921000,162.44,Upward,Above
+RDDT,Communication Services,Internet Content & Information,2026-11-06,1D,95.1,95.11,93.5,96.81,6289700,105.38,Downward,Below
+O,Real Estate,REIT - Retail,2026-11-06,1D,59.04,58.39,58.27,59.6,5984700,58.12,Upward,Above
+REG,Real Estate,REIT - Retail,2026-11-06,1D,74.84,76.28,74.6,76.28,2136100,75.2,Downward,Below
+REGN,Healthcare,Biotechnology,2026-11-06,1D,904.35,887.22,887.04,911.64,1122800,899.65,Upward,Above
+RF,Financial Services,Banks - Regional,2026-11-06,1D,28.31,28.16,28.03,28.57,8325200,28.53,Downward,Below
+RSG,Industrials,Waste Management,2026-11-06,1D,246.85,243.19,242.66,247.49,1810200,243.8,Upward,Above
+RMD,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,235.3,234.0,231.95,236.67,1717900,238.39,Downward,Below
+RVTY,Healthcare,Diagnostics & Research,2026-11-06,1D,155.11,150.83,149.38,158.96,1683300,156.95,Downward,Below
+HOOD,Financial Services,Capital Markets,2026-11-06,1D,80.91,79.56,77.95,81.6,16457800,85.48,Downward,Below
+ROK,Industrials,Specialty Industrial Machinery,2026-11-06,1D,375.86,387.33,370.65,392.54,2211800,416.04,Downward,Below
+ROL,Consumer Cyclical,Personal Services,2026-11-06,1D,37.95,37.37,36.65,38.06,8397000,36.85,Upward,Above
+ROP,Technology,Software - Application,2026-11-06,1D,476.6,478.36,471.27,480.95,1059900,469.91,Upward,Above
+ROST,Consumer Cyclical,Apparel Retail,2026-11-06,1D,231.09,231.39,230.28,235.8,2277600,233.76,Downward,Below
+RCL,Consumer Cyclical,Travel Services,2026-11-06,1D,327.16,322.98,320.57,329.41,1534400,316.37,Upward,Above
+RTX,Industrials,Aerospace & Defense,2026-11-06,1D,189.53,189.29,187.71,193.15,5018900,195.54,Downward,Below
+SPGI,Financial Services,Financial Data & Stock Exchanges,2026-11-06,1D,467.8,461.67,460.1,470.74,1468700,466.23,Upward,Above
+CRM,Technology,Software - Application,2026-11-06,1D,213.65,216.71,211.0,218.77,6710100,225.82,Downward,Below
+SNDK,Technology,Computer Hardware,2026-11-06,1D,835.06,898.27,816.42,912.09,17692600,1038.91,Downward,Below
+SBAC,Real Estate,REIT - Specialty,2026-11-06,1D,189.42,189.71,188.61,193.19,1134900,188.48,Upward,Above
+SLB,Energy,Oil & Gas Equipment & Services,2026-11-06,1D,49.92,49.46,49.45,51.31,14547900,51.33,Downward,Below
+STX,Technology,Computer Hardware,2026-11-06,1D,460.99,505.53,449.28,508.0,8273200,561.27,Downward,Below
+SRE,Utilities,Utilities - Diversified,2026-11-06,1D,78.17,78.54,77.95,79.35,6946900,82.35,Downward,Below
+NOW,Technology,Software - Application,2026-11-06,1D,101.97,102.41,100.55,103.78,15094900,113.28,Downward,Below
+SHW,Basic Materials,Specialty Chemicals,2026-11-06,1D,344.1,340.7,338.2,347.09,2094900,344.13,Downward,Below
+SPG,Real Estate,REIT - Retail,2026-11-06,1D,228.42,222.28,222.28,229.8,1855300,222.36,Upward,Above
+SKYD,Communication Services,Entertainment,2026-11-06,1D,8.01,8.07,7.93,8.15,11809100,8.04,Downward,Below
+SWKS,Technology,Semiconductors,2026-11-06,1D,82.19,83.03,80.32,83.71,4007800,83.65,Downward,Below
+SJM,Consumer Defensive,Packaged Foods,2026-11-06,1D,130.55,130.0,128.48,131.88,1576600,130.27,Upward,Above
+SW,Consumer Cyclical,Packaging & Containers,2026-11-06,1D,44.09,43.85,43.66,44.69,4868300,43.61,Upward,Above
+SNA,Industrials,Tools & Accessories,2026-11-06,1D,367.22,362.54,361.6,369.68,327600,364.07,Upward,Above
+SOLV,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,90.38,86.45,85.04,93.1,3168900,86.76,Upward,Above
+SO,Utilities,Utilities - Regulated Electric,2026-11-06,1D,92.34,91.81,91.09,92.56,7595500,92.93,Downward,Below
+LUV,Industrials,Airlines,2026-11-06,1D,44.45,45.0,44.21,45.47,6105500,44.0,Upward,Above
+SWK,Industrials,Tools & Accessories,2026-11-06,1D,114.85,113.67,112.22,116.43,1894600,109.41,Upward,Above
+SBUX,Consumer Cyclical,Restaurants,2026-11-06,1D,105.41,103.52,102.69,106.62,7780600,105.1,Upward,Above
+STT,Financial Services,Asset Management,2026-11-06,1D,165.56,165.28,164.66,168.09,1201300,168.77,Downward,Below
+STLD,Basic Materials,Steel,2026-11-06,1D,222.9,224.66,222.53,229.75,970800,236.9,Downward,Below
+STE,Healthcare,Medical Devices,2026-11-06,1D,252.3,248.03,248.03,253.44,1389600,241.39,Upward,Above
+SYK,Healthcare,Medical Devices,2026-11-06,1D,325.87,324.41,322.56,328.02,3778600,319.09,Upward,Above
+SMCI,Technology,Computer Hardware,2026-11-06,1D,28.76,28.83,27.81,29.47,36999700,30.56,Downward,Below
+SYF,Financial Services,Credit Services,2026-11-06,1D,73.74,73.61,73.45,75.36,4899300,74.56,Downward,Below
+SNPS,Technology,Software - Infrastructure,2026-11-06,1D,450.46,449.78,438.01,453.6,2317800,457.87,Downward,Below
+SYY,Consumer Defensive,Food Distribution,2026-11-06,1D,76.86,75.07,74.74,77.51,6888700,78.24,Downward,Below
+TMUS,Communication Services,Telecom Services,2026-11-06,1D,162.01,155.61,155.58,163.3,5615300,157.46,Upward,Above
+TROW,Financial Services,Asset Management,2026-11-06,1D,108.41,107.45,107.45,109.77,2422500,107.33,Upward,Above
+TTWO,Communication Services,Electronic Gaming & Multimedia,2026-11-06,1D,214.87,210.63,209.72,217.7,3204400,205.1,Upward,Above
+TPR,Consumer Cyclical,Luxury Goods,2026-11-06,1D,132.8,131.35,131.09,135.13,3332600,124.63,Upward,Above
+TRGP,Energy,Oil & Gas Midstream,2026-11-06,1D,264.59,273.06,263.74,274.61,2608400,285.84,Downward,Below
+TGT,Consumer Defensive,Discount Stores,2026-11-06,1D,158.41,155.52,154.79,159.73,2991900,156.73,Upward,Above
+TEL,Technology,Electronic Components,2026-11-06,1D,207.01,208.44,205.44,209.98,1809200,213.64,Downward,Below
+TDY,Technology,Scientific & Technical Instruments,2026-11-06,1D,618.6,600.13,593.62,618.85,554600,633.03,Downward,Below
+TER,Technology,Semiconductor Equipment & Materials,2026-11-06,1D,218.22,231.73,211.91,234.48,5276500,256.28,Downward,Below
+TSLA,Consumer Cyclical,Auto Manufacturers,2026-11-06,1D,358.22,348.92,347.6,363.84,36642300,377.3,Downward,Below
+TXN,Technology,Semiconductors,2026-11-06,1D,277.36,282.78,271.23,285.1,10094200,293.68,Downward,Below
+TPL,Energy,Oil & Gas E&P,2026-11-06,1D,272.36,272.48,265.31,281.02,695200,302.98,Downward,Below
+TXT,Industrials,Aerospace & Defense,2026-11-06,1D,83.54,84.42,83.35,84.93,1691500,84.38,Downward,Below
+TMO,Healthcare,Diagnostics & Research,2026-11-06,1D,694.76,669.2,661.6,697.78,2090700,692.28,Upward,Above
+TJX,Consumer Cyclical,Apparel Retail,2026-11-06,1D,135.3,135.39,134.69,138.07,7159700,139.71,Downward,Below
+TKO,Communication Services,Entertainment,2026-11-06,1D,191.0,183.81,182.21,191.05,1670200,186.0,Upward,Above
+TSCO,Consumer Cyclical,Specialty Retail,2026-11-06,1D,36.35,35.38,35.13,36.64,8330800,35.29,Upward,Above
+TT,Industrials,Building Products & Equipment,2026-11-06,1D,401.76,402.56,395.87,405.49,1956800,415.25,Downward,Below
+TDG,Industrials,Aerospace & Defense,2026-11-06,1D,1197.01,1185.88,1178.98,1204.44,293300,1184.96,Upward,Above
+TRV,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,395.2,394.72,389.64,400.11,1415100,398.83,Downward,Below
+TRMB,Technology,Scientific & Technical Instruments,2026-11-06,1D,54.11,53.09,53.05,54.82,3163200,58.95,Downward,Below
+TFC,Financial Services,Banks - Regional,2026-11-06,1D,49.38,49.24,49.16,50.05,5760400,49.46,Downward,Below
+TWLO,Technology,Software - Infrastructure,2026-11-06,1D,202.02,205.01,197.57,206.14,2104700,217.13,Downward,Below
+TYL,Technology,Software - Application,2026-11-06,1D,420.56,415.77,413.39,421.72,738600,407.4,Upward,Above
+TSN,Consumer Defensive,Farm Products,2026-11-06,1D,59.68,58.72,58.16,60.31,3458600,58.27,Upward,Above
+USB,Financial Services,Banks - Regional,2026-11-06,1D,59.45,59.05,58.99,59.95,10667100,59.87,Downward,Below
+UBER,Technology,Software - Application,2026-11-06,1D,68.59,68.12,67.99,70.14,18279800,67.83,Upward,Above
+UDR,Real Estate,REIT - Residential,2026-11-06,1D,36.58,36.22,36.1,37.02,4790700,36.24,Upward,Above
+ULTA,Consumer Cyclical,Specialty Retail,2026-11-06,1D,644.76,640.05,637.64,649.7,396000,641.01,Upward,Above
+UNP,Industrials,Railroads,2026-11-06,1D,290.16,292.31,289.41,294.39,3034200,298.87,Downward,Below
+UAL,Industrials,Airlines,2026-11-06,1D,112.74,111.38,111.28,113.6,5081800,109.1,Upward,Above
+UPS,Industrials,Integrated Freight & Logistics,2026-11-06,1D,108.3,109.37,108.14,110.03,6391100,108.62,Downward,Below
+URI,Industrials,Rental & Leasing Services,2026-11-06,1D,1055.57,1049.8,1036.39,1064.4,562500,1109.65,Downward,Below
+UNH,Healthcare,Healthcare Plans,2026-11-06,1D,394.15,388.39,388.0,396.96,5902200,402.36,Downward,Below
+UHS,Healthcare,Medical Care Facilities,2026-11-06,1D,195.5,192.56,191.12,196.73,740100,188.34,Upward,Above
+VLO,Energy,Oil & Gas Refining & Marketing,2026-11-06,1D,346.45,353.23,342.0,355.26,3336700,373.78,Downward,Below
+VEEV,Healthcare,Health Information Services,2026-11-06,1D,303.73,296.96,294.99,305.58,1746400,308.95,Downward,Below
+VTR,Real Estate,REIT - Healthcare Facilities,2026-11-06,1D,88.75,87.3,87.23,89.44,2539300,87.28,Upward,Above
+VLTO,Industrials,Pollution & Treatment Controls,2026-11-06,1D,117.09,113.42,113.0,117.24,1899700,113.27,Upward,Above
+VRSN,Technology,Software - Infrastructure,2026-11-06,1D,308.67,307.6,303.62,311.0,1020300,310.16,Downward,Below
+VRSK,Industrials,Consulting Services,2026-11-06,1D,204.59,203.93,199.91,206.42,1596700,200.28,Upward,Above
+VZ,Communication Services,Telecom Services,2026-11-06,1D,45.69,45.13,45.0,46.35,24151600,45.26,Upward,Above
+VRTX,Healthcare,Biotechnology,2026-11-06,1D,547.09,531.53,531.53,548.76,1271500,541.19,Upward,Above
+VRT,Industrials,Electrical Equipment & Parts,2026-11-06,1D,182.86,190.47,178.25,192.14,9625500,205.53,Downward,Below
+VTRS,Healthcare,Drug Manufacturers - Specialty & Generic,2026-11-06,1D,19.91,18.79,18.79,19.94,14534000,19.11,Upward,Above
+VICI,Real Estate,REIT - Diversified,2026-11-06,1D,24.79,24.8,24.54,25.07,8542800,24.66,Upward,Above
+V,Financial Services,Credit Services,2026-11-06,1D,422.65,414.48,412.75,424.15,9219400,419.9,Upward,Above
+VST,Utilities,Utilities - Independent Power Producers,2026-11-06,1D,124.8,119.57,118.86,125.8,12511500,129.77,Downward,Below
+VMRK,Real Estate,REIT - Residential,2026-11-06,1D,65.51,64.25,63.7,65.66,6354900,63.58,Upward,Above
+VMC,Basic Materials,Building Materials,2026-11-06,1D,282.72,277.85,277.85,285.99,1051800,282.05,Upward,Above
+VYLR,Financial Services,Shell Companies,2026-11-06,1D,70.14,68.67,68.19,71.41,3488500,71.24,Downward,Below
+WRB,Financial Services,Insurance - Property & Casualty,2026-11-06,1D,75.23,75.36,74.76,75.83,1851100,75.15,Upward,Above
+GWW,Industrials,Industrial Distribution,2026-11-06,1D,1440.7,1441.79,1428.76,1451.54,219100,1413.9,Upward,Above
+WAB,Industrials,Railroads,2026-11-06,1D,283.59,279.97,278.32,284.78,1056800,284.71,Downward,Below
+WMT,Consumer Defensive,Discount Stores,2026-11-06,1D,125.52,124.0,123.03,126.64,24822500,124.98,Upward,Above
+DIS,Communication Services,Entertainment,2026-11-06,1D,116.75,114.44,113.79,117.81,8576900,114.81,Upward,Above
+WM,Industrials,Waste Management,2026-11-06,1D,236.26,235.25,233.95,236.86,2557800,236.08,Upward,Above
+WAT,Healthcare,Diagnostics & Research,2026-11-06,1D,457.6,450.61,450.61,463.91,695800,459.32,Downward,Below
+WEC,Utilities,Utilities - Regulated Electric,2026-11-06,1D,115.87,116.16,115.54,117.47,3901100,115.56,Upward,Above
+WFC,Financial Services,Banks - Diversified,2026-11-06,1D,83.94,83.34,83.04,84.9,11741500,84.3,Downward,Below
+WELL,Real Estate,REIT - Healthcare Facilities,2026-11-06,1D,245.01,242.28,241.19,246.97,2459200,241.2,Upward,Above
+WST,Healthcare,Medical Instruments & Supplies,2026-11-06,1D,399.81,389.62,386.88,402.4,625900,401.73,Downward,Below
+WDC,Technology,Computer Hardware,2026-11-06,1D,263.78,287.0,258.61,288.0,12103500,318.92,Downward,Below
+WY,Real Estate,REIT - Specialty,2026-11-06,1D,20.98,21.18,20.88,21.33,7682900,20.8,Upward,Above
+WSM,Consumer Cyclical,Specialty Retail,2026-11-06,1D,254.06,255.02,251.2,259.54,775600,257.03,Downward,Below
+WMB,Energy,Oil & Gas Midstream,2026-11-06,1D,64.08,64.59,64.04,65.63,8560600,68.71,Downward,Below
+WTW,Financial Services,Insurance Brokers,2026-11-06,1D,328.86,325.44,325.44,333.69,377100,328.67,Upward,Above
+WDAY,Technology,Software - Application,2026-11-06,1D,192.9,192.39,190.49,198.3,2034900,198.62,Downward,Below
+WYNN,Consumer Cyclical,Resorts & Casinos,2026-11-06,1D,83.11,78.1,78.03,84.4,5051000,78.76,Upward,Above
+XEL,Utilities,Utilities - Regulated Electric,2026-11-06,1D,79.67,78.47,78.28,80.29,6826800,79.33,Upward,Above
+XYL,Industrials,Specialty Industrial Machinery,2026-11-06,1D,97.83,97.92,97.3,99.22,2396500,98.14,Downward,Below
+YUM,Consumer Cyclical,Restaurants,2026-11-06,1D,161.14,161.2,160.96,164.84,2373500,159.35,Upward,Above
+ZBRA,Technology,Communication Equipment,2026-11-06,1D,322.02,324.08,321.51,329.63,777400,343.09,Downward,Below
+ZBH,Healthcare,Medical Devices,2026-11-06,1D,105.59,103.21,103.21,106.96,2660500,102.14,Upward,Above
+ZTS,Healthcare,Drug Manufacturers - Specialty & Generic,2026-11-06,1D,79.4,79.0,78.63,80.67,6023700,81.67,Downward,Below
+NBIS,Communication Services,Internet Content & Information,2026-11-06,1D,129.49,130.64,122.62,136.87,24528400,143.88,Downward,Below
+PINS,Communication Services,Internet Content & Information,2026-11-06,1D,18.96,19.6,18.92,19.69,10083500,20.19,Downward,Below
+RBLX,Communication Services,Electronic Gaming & Multimedia,2026-11-06,1D,49.3,47.64,46.86,49.4,8059400,48.45,Upward,Above
+ROKU,Communication Services,Entertainment,2026-11-06,1D,160.52,160.21,158.82,162.27,11519300,159.14,Upward,Above
+SPOT,Communication Services,Internet Content & Information,2026-11-06,1D,603.01,592.23,589.5,610.82,1842400,595.31,Upward,Above
+Z,Communication Services,Internet Content & Information,2026-11-06,1D,29.55,29.99,29.5,30.49,3724200,31.16,Downward,Below
+AA,Basic Materials,Aluminum,2026-11-06,1D,39.54,38.83,38.75,39.8,5195600,39.55,Downward,Below
+AEM,Basic Materials,Gold,2026-11-06,1D,191.57,184.53,183.22,191.8,1751000,181.56,Upward,Above
+AGI,Basic Materials,Gold,2026-11-06,1D,31.83,30.45,30.38,31.87,3737400,30.09,Upward,Above
+CE,Basic Materials,Chemicals,2026-11-06,1D,46.49,46.9,46.12,47.46,1310000,48.18,Downward,Below
+CENX,Basic Materials,Aluminum,2026-11-06,1D,33.47,32.82,31.33,33.73,3257700,32.88,Upward,Above
+CLF,Basic Materials,Steel,2026-11-06,1D,11.46,11.44,11.35,11.96,16772300,12.8,Downward,Below
+CTVA,Basic Materials,Agricultural Inputs,2026-11-06,1D,11.9,11.9,11.78,12.07,26441000,11.98,Downward,Below
+CSTM,Basic Materials,Aluminum,2026-11-06,1D,21.81,21.36,21.0,22.17,1516100,22.66,Downward,Below
+FNV,Basic Materials,Gold,2026-11-06,1D,254.95,247.81,245.68,255.2,621500,241.18,Upward,Above
+HUN,Basic Materials,Chemicals,2026-11-06,1D,9.45,9.64,9.39,9.84,2892900,9.5,Downward,Below
+MP,Basic Materials,Other Industrial Metals & Mining,2026-11-06,1D,35.41,34.93,33.82,35.8,8733400,37.04,Downward,Below
+SCCO,Basic Materials,Copper,2026-11-06,1D,167.27,168.26,164.77,168.83,1128000,175.53,Downward,Below
+TECK,Basic Materials,Copper,2026-11-06,1D,60.46,60.54,59.75,61.14,2007400,61.7,Downward,Below
+WPM,Basic Materials,Gold,2026-11-06,1D,136.31,129.97,129.5,136.5,2089400,128.12,Upward,Above
+AEO,Consumer Cyclical,Apparel Retail,2026-11-06,1D,19.92,20.0,19.76,20.6,4674100,19.9,Upward,Above
+ALSN,Consumer Cyclical,Auto Parts,2026-11-06,1D,116.88,117.08,115.22,117.44,1058900,114.94,Upward,Above
+ANF,Consumer Cyclical,Apparel Retail,2026-11-06,1D,149.54,155.74,148.73,157.08,1061100,159.4,Downward,Below
+BABA,Consumer Cyclical,Internet Retail,2026-11-06,1D,109.45,106.83,106.44,109.69,9550000,104.69,Upward,Above
+BIRK,Consumer Cyclical,Footwear & Accessories,2026-11-06,1D,37.32,36.34,36.11,37.47,1686700,35.69,Upward,Above
+BOOT,Consumer Cyclical,Apparel Retail,2026-11-06,1D,130.96,138.75,130.15,142.77,1026100,132.43,Downward,Below
+BURL,Consumer Cyclical,Apparel Retail,2026-11-06,1D,246.76,246.41,243.55,250.33,1003400,246.65,Upward,Above
+BROS,Consumer Cyclical,Restaurants,2026-11-06,1D,33.77,34.65,33.17,35.01,6821500,39.6,Downward,Below
+BWA,Consumer Cyclical,Auto Parts,2026-11-06,1D,48.81,48.31,47.81,49.23,2948900,51.06,Downward,Below
+CART,Consumer Cyclical,Internet Retail,2026-11-06,1D,58.12,57.79,57.63,58.25,3129500,57.63,Upward,Above
+CROX,Consumer Cyclical,Footwear & Accessories,2026-11-06,1D,151.86,150.37,149.5,155.58,1095900,147.7,Upward,Above
+CWH,Consumer Cyclical,Auto & Truck Dealerships,2026-11-06,1D,4.59,4.89,4.55,5.03,2597200,4.9,Downward,Below
+CZR,Consumer Cyclical,Resorts & Casinos,2026-11-06,1D,29.23,29.04,29.04,29.25,2361500,29.13,Upward,Above
+DKNG,Consumer Cyclical,Gambling,2026-11-06,1D,18.51,17.34,16.55,18.79,69880700,21.22,Downward,Below
+DKS,Consumer Cyclical,Specialty Retail,2026-11-06,1D,140.82,139.06,138.5,142.29,1397900,141.86,Downward,Below
+ETSY,Consumer Cyclical,Internet Retail,2026-11-06,1D,89.93,89.62,89.01,92.25,3098900,90.86,Downward,Below
+FND,Consumer Cyclical,Home Improvement Retail,2026-11-06,1D,51.25,50.45,49.86,52.18,1942600,50.08,Upward,Above
+GT,Consumer Cyclical,Auto Parts,2026-11-06,1D,4.36,4.35,4.22,4.4,13178600,4.42,Downward,Below
+H,Consumer Cyclical,Lodging,2026-11-06,1D,184.32,181.3,181.3,186.54,538800,182.98,Upward,Above
+KBH,Consumer Cyclical,Residential Construction,2026-11-06,1D,50.7,50.71,50.27,51.78,988600,49.86,Upward,Above
+KMX,Consumer Cyclical,Auto & Truck Dealerships,2026-11-06,1D,51.48,51.96,51.0,52.19,1963300,53.52,Downward,Below
+LKQ,Consumer Cyclical,Auto Parts,2026-11-06,1D,20.05,20.02,19.76,20.56,5314000,19.78,Upward,Above
+M,Consumer Cyclical,Department Stores,2026-11-06,1D,23.08,23.72,23.03,24.16,5614400,24.06,Downward,Below
+MELI,Consumer Cyclical,Internet Retail,2026-11-06,1D,1510.0,1542.5,1502.1,1558.01,882000,1630.14,Downward,Below
+ONON,Consumer Cyclical,Footwear & Accessories,2026-11-06,1D,37.36,36.47,36.13,38.1,7251500,36.15,Upward,Above
+PENN,Consumer Cyclical,Resorts & Casinos,2026-11-06,1D,17.43,17.06,16.48,17.51,4343200,16.71,Upward,Above
+PZZA,Consumer Cyclical,Restaurants,2026-11-06,1D,19.73,19.46,19.01,19.96,1708300,19.27,Upward,Above
+RIVN,Consumer Cyclical,Auto Manufacturers,2026-11-06,1D,13.61,13.41,13.09,13.65,20169600,13.08,Upward,Above
+RH,Consumer Cyclical,Specialty Retail,2026-11-06,1D,130.96,135.89,129.6,136.31,682800,138.11,Downward,Below
+SE,Consumer Cyclical,Internet Retail,2026-11-06,1D,75.73,74.21,72.48,76.47,8820000,76.84,Downward,Below
+SHAK,Consumer Cyclical,Restaurants,2026-11-06,1D,71.89,69.0,67.1,73.28,1434800,70.48,Upward,Above
+SN,Consumer Cyclical,"Furnishings, Fixtures & Appliances",2026-11-06,1D,222.95,218.76,216.18,224.55,1548300,213.13,Upward,Above
+TOL,Consumer Cyclical,Residential Construction,2026-11-06,1D,152.56,152.73,150.59,155.66,936000,150.38,Upward,Above
+VVV,Consumer Cyclical,Auto & Truck Dealerships,2026-11-06,1D,34.81,34.82,34.41,35.56,1595800,34.19,Upward,Above
+W,Consumer Cyclical,Internet Retail,2026-11-06,1D,111.74,112.67,111.23,115.96,1644100,114.47,Downward,Below
+WHR,Consumer Cyclical,"Furnishings, Fixtures & Appliances",2026-11-06,1D,30.54,31.0,30.26,31.37,3223900,30.43,Upward,Above
+WING,Consumer Cyclical,Restaurants,2026-11-06,1D,163.28,160.71,158.39,166.4,885000,156.05,Upward,Above
+CELH,Consumer Defensive,Beverages - Non-Alcoholic,2026-11-06,1D,32.16,29.03,28.8,32.47,8189100,30.14,Upward,Above
+ELF,Consumer Defensive,Household & Personal Products,2026-11-06,1D,116.14,108.08,105.36,120.21,2277300,112.91,Upward,Above
+HIMS,Healthcare,Drug Manufacturers - Specialty & Generic,2026-11-06,1D,26.0,25.78,24.41,26.24,13133800,26.39,Downward,Below
+CNX,Energy,Oil & Gas E&P,2026-11-06,1D,34.92,35.65,34.92,35.8,1526000,36.07,Downward,Below
+UEC,Energy,Uranium,2026-11-06,1D,6.92,6.73,6.6,7.0,10789800,7.28,Downward,Below
+IREN,Financial Services,Capital Markets,2026-11-06,1D,21.64,21.15,20.18,22.46,112515300,22.78,Downward,Below
+MARA,Financial Services,Capital Markets,2026-11-06,1D,6.35,6.21,5.81,6.42,34627100,6.69,Downward,Below
+ONB,Financial Services,Banks - Regional,2026-11-06,1D,24.93,24.96,24.82,25.13,2325400,25.23,Downward,Below
+RY,Financial Services,Banks - Diversified,2026-11-06,1D,201.16,202.21,200.8,203.68,1589000,203.62,Downward,Below
+SEZL,Financial Services,Credit Services,2026-11-06,1D,149.43,155.24,148.78,163.0,788800,139.08,Upward,Above
+SOFI,Financial Services,Credit Services,2026-11-06,1D,16.21,16.13,15.93,16.56,44066500,16.42,Downward,Below
+TD,Financial Services,Banks - Diversified,2026-11-06,1D,122.4,122.9,121.84,123.46,3004600,124.44,Downward,Below
+UPST,Financial Services,Credit Services,2026-11-06,1D,21.89,22.08,21.55,22.93,4574700,22.56,Downward,Below
+CRSP,Healthcare,Biotechnology,2026-11-06,1D,50.07,48.98,48.41,50.27,1234300,50.5,Downward,Below
+TEM,Healthcare,Health Information Services,2026-11-06,1D,76.05,70.94,70.22,76.85,6279600,74.23,Upward,Above
+AER,Industrials,Rental & Leasing Services,2026-11-06,1D,169.64,165.01,165.01,170.58,1924200,162.51,Upward,Above
+ARMK,Industrials,Specialty Business Services,2026-11-06,1D,52.54,50.58,50.12,53.07,4505300,53.13,Downward,Below
+BLDR,Industrials,Building Products & Equipment,2026-11-06,1D,62.54,63.93,62.3,64.16,2438300,63.51,Downward,Below
+SPCX,Industrials,Aerospace & Defense,2026-11-06,1D,134.27,130.94,128.57,135.32,114807000,136.52,Downward,Below
+UHAL,Industrials,Rental & Leasing Services,2026-11-06,1D,56.74,58.11,56.27,58.88,171200,58.05,Downward,Below
+ZIM,Industrials,Marine Shipping,2026-11-06,1D,27.95,27.5,27.5,28.38,1080200,28.45,Downward,Below
+AI,Technology,Software - Infrastructure,2026-11-06,1D,11.69,11.38,11.28,12.04,4214500,11.76,Downward,Below
+AFRM,Financial Services,Credit Services,2026-11-06,1D,68.11,66.05,66.02,71.78,9658600,71.66,Downward,Below
+ARM,Technology,Semiconductors,2026-11-06,1D,174.62,177.24,169.61,177.62,6507700,194.23,Downward,Below
+ASML,Technology,Semiconductor Equipment & Materials,2026-11-06,1D,1424.75,1446.08,1409.21,1447.49,1903600,1501.45,Downward,Below
+BULL,Technology,Software - Application,2026-11-06,1D,4.92,4.89,4.77,4.99,8842200,5.2,Downward,Below
+CORZ,Technology,Software - Infrastructure,2026-11-06,1D,11.76,12.15,11.2,12.42,29749500,12.78,Downward,Below
+CRUS,Technology,Semiconductors,2026-11-06,1D,113.58,111.59,110.12,114.93,865400,112.54,Upward,Above
+CRWV,Technology,Software - Infrastructure,2026-11-06,1D,46.4,46.92,43.1,47.7,59294700,51.07,Downward,Below
+CSIQ,Technology,Solar,2026-11-06,1D,11.12,10.42,10.1,11.52,2836500,10.22,Upward,Above
+DOCU,Technology,Software - Application,2026-11-06,1D,77.61,76.89,75.93,78.5,2215500,80.04,Downward,Below
+ENTG,Technology,Semiconductor Equipment & Materials,2026-11-06,1D,127.98,130.6,126.53,134.06,4659300,140.45,Downward,Below
+GTLB,Technology,Software - Infrastructure,2026-11-06,1D,48.09,49.16,47.46,50.1,4150200,51.76,Downward,Below
+INFY,Technology,Information Technology Services,2026-11-06,1D,12.5,12.53,12.37,12.7,18187500,12.41,Upward,Above
+JKS,Technology,Solar,2026-11-06,1D,10.97,10.89,10.4,11.55,1019400,9.85,Upward,Above
+LSCC,Technology,Semiconductors,2026-11-06,1D,105.02,105.79,102.7,107.03,2420900,102.38,Upward,Above
+LYFT,Technology,Software - Application,2026-11-06,1D,17.09,16.63,16.33,17.14,23907600,17.21,Downward,Below
+MDB,Technology,Software - Infrastructure,2026-11-06,1D,312.83,317.52,306.0,322.0,1219100,334.91,Downward,Below
+MSTR,Technology,Software - Application,2026-11-06,1D,128.93,127.83,125.59,130.64,13822700,135.07,Downward,Below
+NET,Technology,Software - Infrastructure,2026-11-06,1D,268.75,286.97,265.0,286.97,9415100,276.12,Downward,Below
+PSN,Technology,Information Technology Services,2026-11-06,1D,48.9,49.51,47.85,49.56,1186700,50.28,Downward,Below
+SAP,Technology,Software - Application,2026-11-06,1D,233.45,233.48,232.64,236.23,2404300,235.98,Downward,Below
+SHOP,Technology,Software - Application,2026-11-06,1D,148.91,143.45,142.62,151.38,7972800,153.38,Downward,Below
+SNOW,Technology,Software - Application,2026-11-06,1D,275.88,280.0,266.36,281.0,4898000,294.16,Downward,Below
+TOST,Technology,Software - Infrastructure,2026-11-06,1D,34.67,34.75,34.5,35.56,9490500,33.84,Upward,Above
+TSM,Technology,Semiconductors,2026-11-06,1D,375.44,380.56,367.95,380.72,23801300,393.43,Downward,Below
+U,Technology,Software - Application,2026-11-06,1D,51.49,51.13,49.07,52.91,23617700,44.29,Upward,Above
+ZM,Technology,Software - Application,2026-11-06,1D,89.88,88.2,87.73,90.35,2550300,92.43,Downward,Below
+ZS,Technology,Software - Infrastructure,2026-11-06,1D,197.66,209.53,197.1,210.52,2703600,220.52,Downward,Below
+CBRS,Technology,Semiconductors,2026-11-06,1D,89.68,85.3,83.5,90.29,9944700,97.44,Downward,Below
+CRDO,Technology,Semiconductors,2026-11-06,1D,120.51,124.73,114.73,125.8,9641600,138.41,Downward,Below
+GFS,Technology,Semiconductors,2026-11-06,1D,38.62,38.23,37.14,38.71,5023700,41.01,Downward,Below
+SKHY,Technology,Semiconductors,2026-11-06,1D,127.34,129.13,124.83,133.45,27857400,139.66,Downward,Below
+PATH,Technology,Software - Infrastructure,2026-11-06,1D,13.0,12.97,12.79,13.18,17846600,13.35,Downward,Below
+DUOL,Technology,Software - Application,2026-11-06,1D,160.42,156.78,153.97,161.48,1283300,147.98,Upward,Above
+FIG,Technology,Software - Application,2026-11-06,1D,18.81,18.7,18.18,19.03,12581000,20.8,Downward,Below
+HUBS,Technology,Software - Application,2026-11-06,1D,200.61,201.0,188.25,202.85,2127100,221.76,Downward,Below
+MNDY,Technology,Software - Application,2026-11-06,1D,87.93,91.82,86.77,93.21,1752100,94.13,Downward,Below
+SOUN,Technology,Software - Application,2026-11-06,1D,4.11,4.14,3.88,4.18,29172800,4.25,Downward,Below
+TEAM,Technology,Software - Application,2026-11-06,1D,153.68,154.92,151.5,165.32,7474700,186.55,Downward,Below
+RGTI,Technology,Computer Hardware,2026-11-06,1D,11.75,10.24,10.08,11.9,27233800,11.24,Upward,Above
+OUST,Technology,Electronic Components,2026-11-06,1D,34.79,31.94,31.71,34.8,3367000,31.75,Upward,Above
+ASTS,Technology,Communication Equipment,2026-11-06,1D,32.33,30.54,27.58,33.16,32666700,35.95,Downward,Below
+NOK,Technology,Communication Equipment,2026-11-06,1D,7.66,7.75,7.57,7.79,49037500,8.2,Downward,Below
+ENPH,Technology,Solar,2026-11-06,1D,28.47,29.21,28.04,30.0,7498400,29.02,Downward,Below
+RUN,Technology,Solar,2026-11-06,1D,9.98,9.83,9.56,10.57,16563600,8.82,Upward,Above
+SEDG,Technology,Solar,2026-11-06,1D,27.51,26.65,26.26,28.47,2787400,29.43,Downward,Below
+SHLS,Technology,Solar,2026-11-06,1D,10.08,9.26,9.03,10.31,11034500,8.66,Upward,Above
+WYFI,Technology,Information Technology Services,2026-11-06,1D,8.88,8.53,8.25,9.03,2068800,9.56,Downward,Below
+APLD,Technology,Information Technology Services,2026-11-06,1D,15.55,15.49,14.71,15.8,34306900,16.78,Downward,Below
+NXT,Technology,Solar,2026-11-06,1D,104.9,101.8,99.35,105.13,3625800,95.06,Upward,Above
+PURR,Financial Services,Capital Markets,2026-11-06,1D,8.81,8.96,8.52,9.26,10744400,9.57,Downward,Below
+BIDU,Communication Services,Internet Content & Information,2026-11-06,1D,81.87,79.5,79.41,82.53,2898500,79.38,Upward,Above
+SNAP,Communication Services,Internet Content & Information,2026-11-06,1D,4.96,5.04,4.9,5.09,40540400,5.49,Downward,Below
+IMAX,Communication Services,Entertainment,2026-11-06,1D,47.67,47.3,46.62,48.44,1421000,49.87,Downward,Below
+BHP,Basic Materials,Other Industrial Metals & Mining,2026-11-06,1D,79.89,79.08,78.65,80.52,2795100,79.81,Upward,Above
+RIO,Basic Materials,Other Industrial Metals & Mining,2026-11-06,1D,83.73,82.74,82.39,84.35,2803200,83.75,Downward,Below
+VALE,Basic Materials,Other Industrial Metals & Mining,2026-11-06,1D,11.59,11.38,11.34,11.73,38858300,11.54,Upward,Above
+SQM,Basic Materials,Specialty Chemicals,2026-11-06,1D,57.52,57.46,57.14,58.24,722500,56.72,Upward,Above
+AMR,Basic Materials,Coking Coal,2026-11-06,1D,147.93,155.51,145.62,160.0,292800,153.12,Downward,Below
+JD,Consumer Cyclical,Internet Retail,2026-11-06,1D,29.11,28.7,28.58,29.33,9752600,27.42,Upward,Above
+PDD,Consumer Cyclical,Internet Retail,2026-11-06,1D,83.03,82.83,82.25,84.61,6502100,81.49,Upward,Above
+CHPT,Consumer Cyclical,Specialty Retail,2026-11-06,1D,11.59,11.14,11.03,12.06,932300,10.44,Upward,Above
+CAVA,Consumer Cyclical,Restaurants,2026-11-06,1D,59.15,59.63,56.27,60.0,4412600,59.09,Upward,Above
+TXRH,Consumer Cyclical,Restaurants,2026-11-06,1D,183.88,183.61,183.53,191.42,1867600,184.55,Downward,Below
+NIO,Consumer Cyclical,Auto Manufacturers,2026-11-06,1D,3.39,3.28,3.27,3.42,50895900,3.28,Upward,Above
+NOMD,Consumer Defensive,Packaged Foods,2026-11-06,1D,11.75,11.72,11.64,11.84,1124200,12.04,Downward,Below
+BMNR,Financial Services,Capital Markets,2026-11-06,1D,18.76,18.93,18.26,19.14,23591300,20.28,Downward,Below
+CLSK,Financial Services,Capital Markets,2026-11-06,1D,6.16,6.11,5.66,6.2,23539600,7.05,Downward,Below
+CRCL,Financial Services,Capital Markets,2026-11-06,1D,67.88,68.73,65.71,69.43,9071000,73.9,Downward,Below
+GLXY,Financial Services,Capital Markets,2026-11-06,1D,13.66,14.32,13.18,14.49,13023500,14.95,Downward,Below
+HUT,Financial Services,Capital Markets,2026-11-06,1D,52.65,50.56,47.02,53.44,11546200,56.13,Downward,Below
+RIOT,Financial Services,Capital Markets,2026-11-06,1D,16.71,15.83,14.87,17.12,44993000,14.63,Upward,Above
+OSCR,Healthcare,Healthcare Plans,2026-11-06,1D,30.65,32.89,30.06,33.66,8875000,32.09,Downward,Below
+TWST,Healthcare,Biotechnology,2026-11-06,1D,120.79,123.83,116.5,130.9,2055200,136.61,Downward,Below
+BEAM,Healthcare,Biotechnology,2026-11-06,1D,26.41,26.07,25.84,26.77,1984900,26.45,Downward,Below
+BMRN,Healthcare,Biotechnology,2026-11-06,1D,56.03,55.25,55.0,56.08,2733200,56.45,Downward,Below
+BNTX,Healthcare,Biotechnology,2026-11-06,1D,87.51,85.6,84.89,87.94,724200,87.92,Downward,Below
+CYTK,Healthcare,Biotechnology,2026-11-06,1D,53.69,55.7,53.55,56.51,2561100,59.39,Downward,Below
+GMAB,Healthcare,Biotechnology,2026-11-06,1D,53.63,52.36,51.22,54.15,7827800,52.87,Upward,Above
+NTLA,Healthcare,Biotechnology,2026-11-06,1D,11.35,11.26,11.02,11.4,4403500,11.79,Downward,Below
+ELAN,Healthcare,Drug Manufacturers - Specialty & Generic,2026-11-06,1D,25.74,24.07,23.97,26.26,11505400,24.26,Upward,Above
+AVAV,Industrials,Aerospace & Defense,2026-11-06,1D,112.76,104.36,100.4,113.65,1599000,116.84,Downward,Below
+KTOS,Industrials,Aerospace & Defense,2026-11-06,1D,35.1,33.73,31.57,35.31,8007000,37.64,Downward,Below
+RKLB,Industrials,Aerospace & Defense,2026-11-06,1D,53.07,48.28,46.51,53.1,20675700,52.72,Upward,Above
+SWBI,Industrials,Aerospace & Defense,2026-11-06,1D,14.47,14.16,14.05,14.54,835800,14.03,Upward,Above
+POOL,Industrials,Industrial Distribution,2026-11-06,1D,211.7,209.3,207.47,212.83,437100,208.54,Upward,Above
+ALK,Industrials,Airlines,2026-11-06,1D,38.94,38.88,38.57,39.61,2348800,37.81,Upward,Above
+OPEN,Real Estate,Real Estate Services,2026-11-06,1D,1.4,1.8,1.37,1.8,67348300,1.76,Downward,Below
+BEPC,Utilities,Utilities - Renewable,2026-11-06,1D,31.74,31.45,31.01,31.81,2402300,30.75,Upward,Above
