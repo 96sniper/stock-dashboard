@@ -494,9 +494,9 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
+tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11, tab_crypto = st.tabs([
                                                           "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below",
-                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Notes"])
+                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Notes", "Crypto"])
 
 ###############################################################################################################################################################
 
@@ -668,7 +668,7 @@ with tab3:
     base_dir = DATA_DIR
     (
         cab_daily, cab_weekly, cab_monthly, cab_summary_tab1, cab_summary_tab2,
-        tab_sector_summary, tab_industry_summary,
+        tab_sector_summary, tab_industry_summary, cab_combined,
     ) = st.tabs([
         "Daily",
         "Weekly",
@@ -677,7 +677,19 @@ with tab3:
         "CURRENT_TREND_SUMMARY_ALL_STOCKS",
         "Sector Summary",
         "Industry Summary",
+        "Combined D-W-M",
     ])
+
+    with cab_combined:
+        combined_path = latest_valid_png(os.path.join(base_dir, "SPY_combined_dwm_close_above_shading_*.png"))
+        if combined_path:
+            st.image(combined_path, width=1500)
+            st.caption(
+                "Last 4 months. Green: Daily, Weekly and Monthly all Above; red: all Below; mixed states are unshaded. "
+                "Developing weekly/monthly candles are reassessed each day against the previous completed candle."
+            )
+        else:
+            st.warning("SPY combined D-W-M shading image not found. Run the combined analysis script to generate it.")
 
     with cab_daily:
         cab_tab0, cab_tab3, cab_tab6 = st.tabs([
@@ -1242,7 +1254,7 @@ with tab_8ema_study:
             ema_df = ema_df[ema_df["TICKER"].isin(selected_tickers)]
         st.dataframe(ema_df, use_container_width=True, hide_index=True)
 
-    ema_stocks_tab, ema_crypto_tab = st.tabs(["Stocks", "Crypto"])
+    ema_stocks_tab, = st.tabs(["Stocks"])
 
     with ema_stocks_tab:
         ema_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_8_ema_breadth_*_graph.png"))
@@ -1259,18 +1271,47 @@ with tab_8ema_study:
             st.warning("Daily stock 8 EMA chart not found. Run the combined analysis script to generate it.")
         show_8ema_csv("TICKERS_FULL_PRICE_DATA.csv", "stock", "ema_stocks")
 
-    with ema_crypto_tab:
-        show_8ema_csv("CRYPTO_FULL_PRICE_DATA.csv", "crypto", "ema_crypto")
+with tab_crypto:
+    st.header("Crypto")
+    crypto_summary_path = latest_valid_png(os.path.join(DATA_DIR, "crypto_trend_summary_*.png"))
+    if crypto_summary_path:
+        st.image(crypto_summary_path, use_container_width=True)
+    else:
+        st.warning("Crypto trend summary PNG not found. Run the combined analysis script to generate it.")
+    st.caption(
+        "BTC and ETH: Above holds until a close below the previous candle's low; Below holds until "
+        "a close above the previous candle's high. Weekly and monthly states include developing candles. "
+        "Weeks start Monday; daily 8 EMA uses the existing crypto price-data calculation."
+    )
+    crypto_summary_files = glob.glob(os.path.join(DATA_DIR, "crypto_trend_summary_*.csv"))
+    if crypto_summary_files:
+        try:
+            st.dataframe(
+                pd.read_csv(max(crypto_summary_files, key=os.path.getmtime)),
+                use_container_width=True, hide_index=True,
+            )
+        except Exception as e:
+            st.error(f"Failed to load crypto trend summary: {e}")
+    else:
+        st.warning("Crypto trend summary CSV not found.")
+    st.subheader("Crypto Price and 8 EMA Data")
+    show_8ema_csv("CRYPTO_FULL_PRICE_DATA.csv", "crypto", "ema_crypto")
 
 ###############################################################################################################################################################
 
 # Drawdown
 with tab_drawdown:
     st.header("Drawdown")
-    st.caption("Last 10 years: percentage below the running adjusted-close peak within the chart window. Zero marks a new or recovered peak.")
-    drawdown_tickers = ["SPY", "QQQ", "SMH", "IWM", "BTC"]
+    drawdown_tickers = ["SPY", "QQQ", "SMH", "IWM", "BTC", "UVXY"]
     for drawdown_ticker, drawdown_tab in zip(drawdown_tickers, st.tabs(drawdown_tickers)):
         with drawdown_tab:
+            if drawdown_ticker == "UVXY":
+                st.caption(
+                    "Last 10 years: percentage distance from the 200-day simple moving average of adjusted closes. "
+                    "Green is above the average; red is below."
+                )
+            else:
+                st.caption("Last 10 years: percentage below the running adjusted-close peak within the chart window. Zero marks a new or recovered peak.")
             drawdown_path = latest_valid_png(
                 os.path.join(DATA_DIR, f"{drawdown_ticker.lower()}_drawdown_*.png")
             )
@@ -1357,20 +1398,36 @@ with tab_spy_vix:
     ])
 
     with svix_tab1:
-        vix_weekday_matches = glob.glob(os.path.join(base_dir, "vix_weekday_*_graph.png"))
-        if vix_weekday_matches:
-            latest_vix_weekday = max(vix_weekday_matches, key=os.path.getmtime)
-            st.image(latest_vix_weekday, width=800)
+        st.subheader("Last 4 Years")
+        vix_weekday_path = latest_valid_png(
+            os.path.join(base_dir, "vix_weekday_*_graph.png"), exclude_substring="_last_five_",
+        )
+        if vix_weekday_path:
+            st.image(vix_weekday_path, width=800)
         else:
             st.warning("VIX Weekday Returns & Hit Rate image not found.")
+        st.subheader("Last 5 Occurrences per Weekday")
+        vix_recent_path = latest_valid_png(os.path.join(base_dir, "vix_weekday_last_five_*_graph.png"))
+        if vix_recent_path:
+            st.image(vix_recent_path, width=800)
+        else:
+            st.warning("VIX Last 5 weekday image not found.")
 
     with svix_tab2:
-        spy_weekday_matches = glob.glob(os.path.join(base_dir, "spy_weekday_*_graph.png"))
-        if spy_weekday_matches:
-            latest_spy_weekday = max(spy_weekday_matches, key=os.path.getmtime)
-            st.image(latest_spy_weekday, width=800)
+        st.subheader("Last 4 Years")
+        spy_weekday_path = latest_valid_png(
+            os.path.join(base_dir, "spy_weekday_*_graph.png"), exclude_substring="_last_five_",
+        )
+        if spy_weekday_path:
+            st.image(spy_weekday_path, width=800)
         else:
             st.warning("SPY Daily Returns & % Positive Rate image not found.")
+        st.subheader("Last 5 Occurrences per Weekday")
+        spy_recent_path = latest_valid_png(os.path.join(base_dir, "spy_weekday_last_five_*_graph.png"))
+        if spy_recent_path:
+            st.image(spy_recent_path, width=800)
+        else:
+            st.warning("SPY Last 5 weekday image not found.")
 
     with svix_tab3:
         matches = glob.glob(os.path.join(base_dir, "vix_analysis_*_graph.png"))
@@ -1666,7 +1723,6 @@ with tab_candle_strength:
     else:
         st.warning("Candle strength breadth chart not found. Run the combined analysis script to generate it.")
     etf_matches = glob.glob(os.path.join(base_dir, "ETF_CANDLE_STRENGTH*.xlsx"))
-    all_stocks_matches = glob.glob(os.path.join(base_dir, "ALL_STOCKS_CANDLE_STRENGTH*.xlsx"))
 
     st.markdown(
         """
@@ -1687,90 +1743,23 @@ with tab_candle_strength:
     )
 
     row_height = 24
-    candle_sub_etf, candle_sub_all = st.tabs(["ETF Candle Strength", "All Stocks Candle Strength"])
-
-    with candle_sub_etf:
-        st.subheader("ETF Candle Strength")
-        if etf_matches:
-            latest_etf_file = max(etf_matches, key=os.path.getmtime)
-            try:
-                etf_df = pd.read_excel(latest_etf_file)
-                render_daily_close_strength_donut(etf_df)
-                etf_table_height = min(900, max(360, row_height * (len(etf_df) + 1) + 12))
-                st.dataframe(
-                    etf_df,
-                    use_container_width=True,
-                    height=etf_table_height,
-                    hide_index=True,
-                    row_height=row_height,
-                )
-
-                # --- CLOSE_SCORE bar chart ---
-                if 'CLOSE_SCORE' in etf_df.columns and 'TICKER' in etf_df.columns:
-                    import matplotlib.pyplot as plt
-                    
-                    chart_df = etf_df[['TICKER', 'CLOSE_SCORE']].dropna().copy()
-                    if len(chart_df) > 0:
-                        chart_df['CLOSE_SCORE'] = pd.to_numeric(chart_df['CLOSE_SCORE'], errors='coerce')
-                        chart_df = chart_df.dropna(subset=['CLOSE_SCORE'])
-                        
-                        if len(chart_df) > 0:
-                            # Color bars based on score
-                            colors = []
-                            for score in chart_df['CLOSE_SCORE']:
-                                if score >= 75:
-                                    colors.append('#2ecc71')  # Green
-                                elif score <= 25:
-                                    colors.append('#e74c3c')  # Red
-                                else:
-                                    colors.append('#95a5a6')  # Gray
-                            
-                            fig, ax = plt.subplots(figsize=(max(10, len(chart_df) * 0.6), 6))
-                            ax.bar(chart_df['TICKER'], chart_df['CLOSE_SCORE'], color=colors, edgecolor='black', linewidth=0.5)
-                            ax.set_ylim(0, 100)
-                            ax.axhline(50, color='white', linestyle='--', linewidth=1.5, label='50 (Neutral)')
-                            ax.set_title('ETF Candle Strength - Close Score', fontsize=14, fontweight='bold')
-                            ax.set_xlabel('Ticker')
-                            ax.set_ylabel('Close Score (0-100)')
-                            ax.legend(fontsize=9)
-                            ax.tick_params(axis='x', rotation=45)
-                            
-                            fig.patch.set_facecolor('#0e1117')
-                            ax.set_facecolor('#0e1117')
-                            ax.title.set_color('white')
-                            ax.xaxis.label.set_color('white')
-                            ax.yaxis.label.set_color('white')
-                            ax.tick_params(colors='white')
-                            for spine in ax.spines.values():
-                                spine.set_edgecolor('#444')
-                            
-                            plt.tight_layout()
-                            st.pyplot(fig)
-                            plt.close(fig)
-            except Exception as e:
-                st.error(f"⚠️ Failed to load ETF candle strength XLSX file: {e}")
-        else:
-            st.warning("ETF candle strength file not found.")
-
-    with candle_sub_all:
-        st.subheader("All Stocks Candle Strength")
-        if all_stocks_matches:
-            latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
-            try:
-                all_stocks_df = pd.read_excel(latest_all_stocks_file)
-                render_daily_close_strength_donut(all_stocks_df)
-                all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
-                st.dataframe(
-                    all_stocks_df,
-                    use_container_width=True,
-                    height=all_stocks_table_height,
-                    hide_index=True,
-                    row_height=row_height,
-                )
-            except Exception as e:
-                st.error(f"⚠️ Failed to load all-stocks candle strength XLSX file: {e}")
-        else:
-            st.warning("All stocks candle strength file not found.")
+    st.subheader("ETF Candle Strength")
+    if etf_matches:
+        latest_etf_file = max(etf_matches, key=os.path.getmtime)
+        try:
+            etf_df = pd.read_excel(latest_etf_file)
+            etf_table_height = min(900, max(360, row_height * (len(etf_df) + 1) + 12))
+            st.dataframe(
+                etf_df,
+                use_container_width=True,
+                height=etf_table_height,
+                hide_index=True,
+                row_height=row_height,
+            )
+        except Exception as e:
+            st.error(f"⚠️ Failed to load ETF candle strength XLSX file: {e}")
+    else:
+        st.warning("ETF candle strength file not found.")
 
 #######################################################################################################################################################################
 
