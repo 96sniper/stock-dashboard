@@ -1,0 +1,402 @@
+Stock,Market Cap (B USD),Earnings Date,Sector,Industry,IN_SP500
+PURR,2.45,11/05/2026,Financial Services,Capital Markets,
+NET,96.32,11/05/2026,Technology,Software - Infrastructure,
+ZTS,32.26,11/05/2026,Healthcare,Drug Manufacturers - Specialty & Generic,SP500
+CENX,3.31,11/05/2026,Basic Materials,Aluminum,
+AXON,25.49,11/05/2026,Industrials,Aerospace & Defense,SP500
+MP,6.31,11/05/2026,Basic Materials,Other Industrial Metals & Mining,
+WPM,61.91,11/05/2026,Basic Materials,Gold,
+GPN,25.78,11/05/2026,Industrials,Specialty Business Services,SP500
+BDX,57.71,11/05/2026,Healthcare,Medical Instruments & Supplies,SP500
+DKNG,9.19,11/05/2026,Consumer Cyclical,Gambling,
+PENN,2.34,11/05/2026,Consumer Cyclical,Resorts & Casinos,
+PZZA,0.65,11/05/2026,Consumer Cyclical,Restaurants,
+EVRG,20.53,11/05/2026,Utilities,Utilities - Regulated Electric,SP500
+SOUN,2.01,11/05/2026,Technology,Software - Application,
+EOG,76.28,11/05/2026,Energy,Oil & Gas E&P,SP500
+SHAK,3.08,11/05/2026,Consumer Cyclical,Restaurants,
+DUK,99.63,11/05/2026,Utilities,Utilities - Regulated Electric,SP500
+DTE,28.12,11/05/2026,Utilities,Utilities - Regulated Electric,SP500
+CELH,8.06,11/05/2026,Consumer Defensive,Beverages - Non-Alcoholic,
+DVN,48.11,11/05/2026,Energy,Oil & Gas E&P,SP500
+U,22.85,11/05/2026,Technology,Software - Application,
+ED,44.0,11/05/2026,Utilities,Utilities - Regulated Electric,SP500
+CORZ,3.79,11/05/2026,Technology,Software - Infrastructure,
+LYFT,6.48,11/05/2026,Technology,Software - Application,
+WYNN,8.56,11/05/2026,Consumer Cyclical,Resorts & Casinos,SP500
+IMAX,2.63,11/05/2026,Communication Services,Entertainment,
+CF,17.46,11/05/2026,Basic Materials,Agricultural Inputs,SP500
+GMAB,32.98,11/05/2026,Healthcare,Biotechnology,
+NTLA,1.59,11/05/2026,Healthcare,Biotechnology,
+IRM,31.73,11/05/2026,Real Estate,REIT - Specialty,SP500
+SOLV,15.36,11/05/2026,Healthcare,Medical Instruments & Supplies,SP500
+OSCR,9.52,11/05/2026,Healthcare,Healthcare Plans,
+SRE,51.13,11/05/2026,Utilities,Utilities - Diversified,SP500
+AEE,31.24,11/05/2026,Utilities,Utilities - Regulated Electric,SP500
+KTOS,6.61,11/05/2026,Industrials,Aerospace & Defense,
+SO,107.51,11/05/2026,Utilities,Utilities - Regulated Electric,SP500
+ABNB,113.38,11/05/2026,Consumer Cyclical,Travel Services,SP500
+TRGP,56.77,11/05/2026,Energy,Oil & Gas Midstream,SP500
+TXRH,12.07,11/05/2026,Consumer Cyclical,Restaurants,
+LYV,41.31,11/05/2026,Communication Services,Entertainment,SP500
+MNST,89.5,11/05/2026,Consumer Defensive,Beverages - Non-Alcoholic,SP500
+VRSK,26.25,11/05/2026,Industrials,Consulting Services,SP500
+VTRS,22.83,11/05/2026,Healthcare,Drug Manufacturers - Specialty & Generic,SP500
+OPEN,1.3,11/05/2026,Real Estate,Real Estate Services,
+AKAM,11.94,11/05/2026,Technology,Software - Infrastructure,SP500
+PPL,26.94,11/06/2026,Utilities,Utilities - Regulated Electric,SP500
+MRNA,101.48,11/06/2026,Healthcare,Biotechnology,SP500
+AMR,1.87,11/06/2026,Basic Materials,Coking Coal,
+HUM,52.09,11/06/2026,Healthcare,Healthcare Plans,SP500
+VST,42.31,11/06/2026,Utilities,Utilities - Independent Power Producers,SP500
+ELAN,12.86,11/06/2026,Healthcare,Drug Manufacturers - Specialty & Generic,
+BRK-B,1222.11,11/07/2026,Financial Services,Insurance - Diversified,SP500
+SKYD,40.39,11/09/2026,Communication Services,Entertainment,SP500
+FERG,45.21,11/09/2026,Industrials,Industrial Distribution,SP500
+HIMS,6.07,11/09/2026,Healthcare,Drug Manufacturers - Specialty & Generic,
+MARA,2.45,11/09/2026,Financial Services,Capital Markets,
+TTWO,40.18,11/09/2026,Communication Services,Electronic Gaming & Multimedia,SP500
+CEG,88.56,11/09/2026,Utilities,Utilities - Independent Power Producers,SP500
+KKR,89.11,11/09/2026,Financial Services,Asset Management,SP500
+OXY,56.36,11/09/2026,Energy,Oil & Gas E&P,SP500
+NRG,18.56,11/09/2026,Utilities,Utilities - Independent Power Producers,SP500
+MNDY,3.72,11/09/2026,Technology,Software - Application,
+TECH,11.43,11/09/2026,Healthcare,Biotechnology,SP500
+RKLB,33.93,11/09/2026,Industrials,Aerospace & Defense,
+ASTS,12.58,11/09/2026,Technology,Communication Equipment,
+SE,46.38,11/10/2026,Consumer Cyclical,Internet Retail,
+ONON,12.49,11/10/2026,Consumer Cyclical,Footwear & Accessories,
+WYFI,0.34,11/10/2026,Technology,Information Technology Services,
+CRWV,25.59,11/10/2026,Technology,Software - Infrastructure,
+TDG,66.17,11/10/2026,Industrials,Aerospace & Defense,SP500
+RGTI,3.92,11/10/2026,Technology,Computer Hardware,
+CTVA,7.94,11/11/2026,Basic Materials,Agricultural Inputs,
+FNV,49.17,11/11/2026,Basic Materials,Gold,
+VYLR,46.8,11/11/2026,Financial Services,Shell Companies,SP500
+TWST,8.01,11/12/2026,Healthcare,Biotechnology,
+CSIQ,0.76,11/12/2026,Technology,Solar,
+CSCO,370.01,11/12/2026,Technology,Communication Equipment,SP500
+CBRS,21.3,11/12/2026,Technology,Semiconductors,
+NBIS,35.2,11/12/2026,Communication Services,Internet Content & Information,
+AMAT,264.04,11/12/2026,Technology,Semiconductor Equipment & Materials,SP500
+ARMK,13.85,11/16/2026,Industrials,Specialty Business Services,
+TSN,21.0,11/16/2026,Consumer Defensive,Farm Products,SP500
+BIDU,27.87,11/16/2026,Communication Services,Internet Content & Information,
+JD,39.31,11/17/2026,Consumer Cyclical,Internet Retail,
+SQM,16.43,11/17/2026,Basic Materials,Specialty Chemicals,
+NVDA,4506.8,11/17/2026,Technology,Semiconductors,SP500
+HD,342.68,11/17/2026,Consumer Cyclical,Home Improvement Retail,SP500
+DIS,201.59,11/17/2026,Communication Services,Entertainment,SP500
+PANW,256.86,11/18/2026,Technology,Software - Infrastructure,SP500
+WSM,29.92,11/18/2026,Consumer Cyclical,Specialty Retail,SP500
+PDD,118.18,11/18/2026,Consumer Cyclical,Internet Retail,
+ZIM,3.37,11/18/2026,Industrials,Marine Shipping,
+P,32.24,11/18/2026,Technology,Computer Hardware,SP500
+LOW,125.98,11/18/2026,Consumer Cyclical,Home Improvement Retail,SP500
+TGT,71.97,11/18/2026,Consumer Defensive,Discount Stores,SP500
+TJX,148.83,11/18/2026,Consumer Cyclical,Apparel Retail,SP500
+KEYS,46.33,11/19/2026,Technology,Scientific & Technical Instruments,SP500
+BABA,272.28,11/19/2026,Consumer Cyclical,Internet Retail,
+INTU,91.26,11/19/2026,Technology,Software - Application,SP500
+WMT,998.9,11/19/2026,Consumer Defensive,Discount Stores,SP500
+VVV,4.44,11/19/2026,Consumer Cyclical,Auto & Truck Dealerships,
+ROST,74.13,11/19/2026,Consumer Cyclical,Apparel Retail,SP500
+BULL,2.66,11/19/2026,Technology,Software - Application,
+CPRT,29.6,11/19/2026,Industrials,Specialty Business Services,SP500
+BMNR,11.32,11/20/2026,Financial Services,Capital Markets,
+HPE,59.43,11/23/2026,Technology,Communication Equipment,SP500
+ZM,26.23,11/23/2026,Technology,Software - Application,
+J,17.43,11/23/2026,Industrials,Engineering & Construction,SP500
+A,49.28,11/23/2026,Healthcare,Diagnostics & Research,SP500
+ADI,176.17,11/24/2026,Technology,Semiconductors,SP500
+HPQ,25.66,11/24/2026,Technology,Computer Hardware,SP500
+WDAY,46.49,11/24/2026,Technology,Software - Application,SP500
+ANF,6.35,11/24/2026,Consumer Cyclical,Apparel Retail,
+MDT,130.22,11/24/2026,Healthcare,Medical Devices,SP500
+BBY,20.9,11/24/2026,Consumer Cyclical,Specialty Retail,SP500
+SJM,13.95,11/24/2026,Consumer Defensive,Packaged Foods,SP500
+CLSK,1.58,11/24/2026,Financial Services,Capital Markets,
+DLTR,24.61,11/24/2026,Consumer Defensive,Discount Stores,SP500
+DELL,208.88,11/24/2026,Technology,Computer Hardware,SP500
+DKS,12.52,11/24/2026,Consumer Cyclical,Specialty Retail,
+NIO,8.49,11/24/2026,Consumer Cyclical,Auto Manufacturers,
+ADSK,54.7,11/24/2026,Technology,Software - Application,SP500
+DE,181.09,11/25/2026,Industrials,Farm & Heavy Construction Machinery,SP500
+VEEV,49.18,11/25/2026,Healthcare,Health Information Services,SP500
+BURL,15.5,11/27/2026,Consumer Cyclical,Apparel Retail,
+CRDO,22.65,11/30/2026,Technology,Semiconductors,
+AEO,3.34,12/01/2026,Consumer Cyclical,Apparel Retail,
+MRVL,127.05,12/01/2026,Technology,Semiconductors,SP500
+NTAP,33.23,12/01/2026,Technology,Software - Infrastructure,SP500
+MDB,25.16,12/01/2026,Technology,Software - Infrastructure,
+GTLB,8.01,12/01/2026,Technology,Software - Infrastructure,
+OKTA,29.49,12/01/2026,Technology,Software - Infrastructure,SP500
+CRWD,222.09,12/01/2026,Technology,Software - Infrastructure,SP500
+AVAV,5.73,12/02/2026,Industrials,Aerospace & Defense,
+CHPT,0.31,12/02/2026,Consumer Cyclical,Specialty Retail,
+CRM,175.83,12/02/2026,Technology,Software - Application,SP500
+SNOW,97.33,12/02/2026,Technology,Software - Application,
+M,6.03,12/02/2026,Consumer Cyclical,Department Stores,
+ZS,32.23,12/02/2026,Technology,Software - Infrastructure,
+HRL,12.08,12/03/2026,Consumer Defensive,Packaged Foods,SP500
+SWBI,0.65,12/03/2026,Industrials,Aerospace & Defense,
+DOCU,14.51,12/03/2026,Technology,Software - Application,
+COO,11.86,12/03/2026,Healthcare,Medical Instruments & Supplies,SP500
+TD,199.88,12/03/2026,Financial Services,Banks - Diversified,
+RY,278.49,12/03/2026,Financial Services,Banks - Diversified,
+DG,29.51,12/03/2026,Consumer Defensive,Discount Stores,SP500
+BF-B,14.03,12/03/2026,Consumer Defensive,Beverages - Wineries & Distilleries,SP500
+KR,39.98,12/03/2026,Consumer Defensive,Grocery Stores,SP500
+ULTA,27.57,12/03/2026,Consumer Cyclical,Specialty Retail,SP500
+PATH,6.78,12/03/2026,Technology,Software - Infrastructure,
+CASY,25.42,12/08/2026,Consumer Cyclical,Specialty Retail,SP500
+SNPS,86.32,12/08/2026,Technology,Software - Infrastructure,SP500
+UEC,3.43,12/08/2026,Energy,Uranium,
+AZO,51.77,12/08/2026,Consumer Cyclical,Auto Parts,SP500
+TOL,14.06,12/08/2026,Consumer Cyclical,Residential Construction,
+AI,1.88,12/09/2026,Technology,Software - Infrastructure,
+AVGO,1401.97,12/09/2026,Technology,Semiconductors,SP500
+ADBE,93.14,12/09/2026,Technology,Software - Application,SP500
+RH,2.48,12/10/2026,Consumer Cyclical,Specialty Retail,
+BIRK,6.16,12/10/2026,Consumer Cyclical,Footwear & Accessories,
+CIEN,34.51,12/10/2026,Technology,Communication Equipment,SP500
+COST,466.86,12/10/2026,Consumer Defensive,Discount Stores,SP500
+LULU,12.83,12/10/2026,Consumer Cyclical,Apparel Retail,SP500
+ORCL,361.97,12/14/2026,Technology,Software - Infrastructure,SP500
+NDSN,17.26,12/15/2026,Industrials,Specialty Industrial Machinery,SP500
+LEN,21.11,12/15/2026,Consumer Cyclical,Residential Construction,SP500
+JBL,24.62,12/16/2026,Technology,Electronic Components,SP500
+CTAS,88.29,12/17/2026,Industrials,Specialty Business Services,SP500
+KMX,7.31,12/17/2026,Consumer Cyclical,Auto & Truck Dealerships,
+KBH,3.08,12/17/2026,Consumer Cyclical,Residential Construction,
+ACN,153.89,12/17/2026,Technology,Information Technology Services,SP500
+FDS,11.56,12/17/2026,Financial Services,Financial Data & Stock Exchanges,SP500
+NKE,57.32,12/17/2026,Consumer Cyclical,Footwear & Accessories,SP500
+CCL,39.77,12/18/2026,Consumer Cyclical,Travel Services,SP500
+PAYX,41.67,12/18/2026,Technology,Software - Application,SP500
+DRI,25.61,12/18/2026,Consumer Cyclical,Restaurants,SP500
+MU,780.68,12/23/2026,Technology,Semiconductors,SP500
+GIS,18.99,12/23/2026,Consumer Defensive,Packaged Foods,SP500
+APLD,4.7,01/06/2027,Technology,Information Technology Services,
+STZ,24.02,01/07/2027,Consumer Defensive,Beverages - Brewers,SP500
+UNH,353.17,01/12/2027,Healthcare,Healthcare Plans,SP500
+DAL,57.37,01/13/2027,Industrials,Airlines,SP500
+INFY,50.63,01/13/2027,Technology,Information Technology Services,
+C,197.05,01/14/2027,Financial Services,Banks - Diversified,SP500
+TSM,1947.21,01/14/2027,Technology,Semiconductors,
+MS,283.6,01/14/2027,Financial Services,Capital Markets,SP500
+WFC,251.98,01/14/2027,Financial Services,Banks - Diversified,SP500
+BLK,182.05,01/14/2027,Financial Services,Asset Management,SP500
+JPM,888.27,01/14/2027,Financial Services,Banks - Diversified,SP500
+STT,45.05,01/15/2027,Financial Services,Asset Management,SP500
+JBHT,20.28,01/15/2027,Industrials,Integrated Freight & Logistics,SP500
+PNC,89.43,01/15/2027,Financial Services,Banks - Regional,SP500
+BNY,99.4,01/15/2027,Financial Services,Banks - Diversified,SP500
+BAC,341.01,01/15/2027,Financial Services,Banks - Diversified,SP500
+CFG,26.51,01/15/2027,Financial Services,Banks - Regional,SP500
+USB,92.64,01/19/2027,Financial Services,Banks - Regional,SP500
+MMM,95.67,01/19/2027,Industrials,Conglomerates,SP500
+FITB,47.93,01/19/2027,Financial Services,Banks - Regional,SP500
+COF,121.43,01/19/2027,Financial Services,Credit Services,SP500
+GS,249.73,01/19/2027,Financial Services,Capital Markets,SP500
+FAST,60.8,01/19/2027,Industrials,Industrial Distribution,SP500
+NFLX,260.38,01/19/2027,Communication Services,Entertainment,SP500
+MTB,31.23,01/19/2027,Financial Services,Banks - Regional,SP500
+DHI,41.33,01/19/2027,Consumer Cyclical,Residential Construction,SP500
+HAL,26.34,01/20/2027,Energy,Oil & Gas Equipment & Services,SP500
+ONB,9.43,01/20/2027,Financial Services,Banks - Regional,
+TDY,28.68,01/20/2027,Technology,Scientific & Technical Instruments,SP500
+TFC,59.18,01/20/2027,Financial Services,Banks - Regional,SP500
+KEY,22.02,01/20/2027,Financial Services,Banks - Regional,SP500
+TRV,80.98,01/20/2027,Financial Services,Insurance - Property & Casualty,SP500
+TEL,59.52,01/20/2027,Technology,Electronic Components,SP500
+PLD,123.44,01/20/2027,Real Estate,REIT - Industrial,SP500
+FCX,85.33,01/21/2027,Basic Materials,Copper,SP500
+SCHW,158.22,01/21/2027,Financial Services,Capital Markets,SP500
+NTRS,31.29,01/21/2027,Financial Services,Asset Management,SP500
+GE,335.38,01/21/2027,Industrials,Aerospace & Defense,SP500
+MKC,13.02,01/21/2027,Consumer Defensive,Packaged Foods,SP500
+ALK,4.35,01/21/2027,Industrials,Airlines,
+AA,10.44,01/21/2027,Basic Materials,Aluminum,
+HBAN,31.18,01/21/2027,Financial Services,Banks - Regional,SP500
+ISRG,159.96,01/21/2027,Healthcare,Medical Instruments & Supplies,SP500
+PG,383.36,01/21/2027,Consumer Defensive,Household & Personal Products,SP500
+SLB,73.68,01/22/2027,Energy,Oil & Gas Equipment & Services,SP500
+RF,24.06,01/22/2027,Financial Services,Banks - Regional,SP500
+STLD,31.7,01/25/2027,Basic Materials,Steel,SP500
+WRB,27.95,01/25/2027,Financial Services,Insurance - Property & Casualty,SP500
+NUE,55.58,01/25/2027,Basic Materials,Steel,SP500
+ARE,7.8,01/25/2027,Real Estate,REIT - Office,SP500
+BRO,23.92,01/25/2027,Financial Services,Insurance Brokers,SP500
+BKR,47.54,01/25/2027,Energy,Oil & Gas Equipment & Services,SP500
+ROP,47.2,01/26/2027,Technology,Software - Application,SP500
+FFIV,17.66,01/26/2027,Technology,Software - Infrastructure,SP500
+NOC,74.59,01/26/2027,Industrials,Aerospace & Defense,SP500
+SYF,23.99,01/26/2027,Financial Services,Credit Services,SP500
+IBKR,129.19,01/26/2027,Financial Services,Capital Markets,SP500
+PKG,22.25,01/26/2027,Consumer Cyclical,Packaging & Containers,SP500
+IVZ,11.9,01/26/2027,Financial Services,Asset Management,SP500
+V,788.58,01/26/2027,Financial Services,Credit Services,SP500
+JNJ,664.95,01/26/2027,Healthcare,Drug Manufacturers - General,SP500
+TXN,253.58,01/26/2027,Technology,Semiconductors,SP500
+LMT,131.0,01/26/2027,Industrials,Aerospace & Defense,SP500
+UPS,92.21,01/26/2027,Industrials,Integrated Freight & Logistics,SP500
+UAL,36.63,01/26/2027,Industrials,Airlines,SP500
+HCA,103.4,01/26/2027,Healthcare,Medical Care Facilities,SP500
+PPG,27.03,01/26/2027,Basic Materials,Specialty Chemicals,SP500
+BA,137.41,01/26/2027,Industrials,Aerospace & Defense,SP500
+MSCI,46.6,01/26/2027,Financial Services,Financial Data & Stock Exchanges,SP500
+RCL,87.51,01/26/2027,Consumer Cyclical,Travel Services,SP500
+RTX,255.76,01/26/2027,Industrials,Aerospace & Defense,SP500
+STX,105.83,01/26/2027,Technology,Computer Hardware,SP500
+GLW,91.42,01/26/2027,Technology,Electronic Components,SP500
+SCCO,142.73,01/26/2027,Basic Materials,Copper,
+SHW,83.13,01/26/2027,Basic Materials,Specialty Chemicals,SP500
+UNP,172.38,01/26/2027,Industrials,Railroads,SP500
+BXP,11.55,01/26/2027,Real Estate,REIT - Office,SP500
+ASML,549.12,01/27/2027,Technology,Semiconductor Equipment & Materials,
+FICO,15.22,01/27/2027,Technology,Software - Application,SP500
+SKHY,897.97,01/27/2027,Technology,Semiconductors,
+GM,73.15,01/27/2027,Consumer Cyclical,Auto Manufacturers,SP500
+URI,65.36,01/27/2027,Industrials,Rental & Leasing Services,SP500
+WHR,2.01,01/27/2027,Consumer Cyclical,"Furnishings, Fixtures & Appliances",
+KMI,66.74,01/27/2027,Energy,Oil & Gas Midstream,SP500
+APH,184.18,01/27/2027,Technology,Electronic Components,SP500
+DHR,161.86,01/27/2027,Healthcare,Diagnostics & Research,SP500
+GD,95.68,01/27/2027,Industrials,Aerospace & Defense,SP500
+T,145.71,01/27/2027,Communication Services,Telecom Services,SP500
+GEV,204.89,01/27/2027,Industrials,Specialty Industrial Machinery,SP500
+FLEX,25.78,01/27/2027,Technology,Electronic Components,SP500
+CHRW,14.53,01/27/2027,Industrials,Integrated Freight & Logistics,SP500
+ADP,119.75,01/27/2027,Technology,Software - Application,SP500
+WM,93.95,01/27/2027,Industrials,Waste Management,SP500
+NXT,16.0,01/27/2027,Technology,Solar,
+IBM,231.55,01/27/2027,Technology,Information Technology Services,SP500
+TXT,14.15,01/27/2027,Industrials,Aerospace & Defense,SP500
+NVR,16.66,01/27/2027,Consumer Cyclical,Residential Construction,SP500
+RJF,31.28,01/27/2027,Financial Services,Asset Management,SP500
+SBUX,120.18,01/27/2027,Consumer Cyclical,Restaurants,SP500
+PGR,131.96,01/27/2027,Financial Services,Insurance - Property & Casualty,SP500
+NEE,182.36,01/27/2027,Utilities,Utilities - Regulated Electric,SP500
+TER,34.07,01/27/2027,Technology,Semiconductor Equipment & Materials,SP500
+TSLA,1415.96,01/27/2027,Consumer Cyclical,Auto Manufacturers,SP500
+NOW,105.84,01/27/2027,Technology,Software - Application,SP500
+OTIS,30.06,01/27/2027,Industrials,Specialty Industrial Machinery,SP500
+META,1560.05,01/27/2027,Communication Services,Internet Content & Information,SP500
+LVS,26.38,01/27/2027,Consumer Cyclical,Resorts & Casinos,SP500
+LRCX,250.84,01/27/2027,Technology,Semiconductor Equipment & Materials,SP500
+LUV,21.76,01/27/2027,Industrials,Airlines,SP500
+MSFT,3940.41,01/27/2027,Technology,Software - Infrastructure,SP500
+AAPL,4975.38,01/28/2027,Technology,Consumer Electronics,SP500
+CMCSA,86.61,01/28/2027,Communication Services,Telecom Services,SP500
+AJG,72.21,01/28/2027,Financial Services,Insurance Brokers,SP500
+MA,568.62,01/28/2027,Financial Services,Credit Services,SP500
+BX,148.61,01/28/2027,Financial Services,Asset Management,SP500
+CSX,90.99,01/28/2027,Industrials,Railroads,SP500
+MO,126.62,01/28/2027,Consumer Defensive,Tobacco,SP500
+ELV,91.96,01/28/2027,Healthcare,Healthcare Plans,SP500
+LHX,48.39,01/28/2027,Industrials,Aerospace & Defense,SP500
+AMP,43.54,01/28/2027,Financial Services,Asset Management,SP500
+RMD,33.1,01/28/2027,Healthcare,Medical Instruments & Supplies,SP500
+DOW,22.73,01/28/2027,Basic Materials,Chemicals,SP500
+REGN,93.55,01/28/2027,Healthcare,Biotechnology,SP500
+DOV,27.11,01/28/2027,Industrials,Specialty Industrial Machinery,SP500
+NSC,71.86,01/28/2027,Industrials,Railroads,SP500
+HIG,35.83,01/28/2027,Financial Services,Insurance - Diversified,SP500
+ABT,190.39,01/28/2027,Healthcare,Medical Devices,SP500
+CAT,255.63,01/28/2027,Industrials,Farm & Heavy Construction Machinery,SP500
+KLAC,180.45,01/28/2027,Technology,Semiconductor Equipment & Materials,SP500
+TT,87.94,01/28/2027,Industrials,Building Products & Equipment,SP500
+TSCO,18.85,01/28/2027,Consumer Cyclical,Specialty Retail,SP500
+TMO,257.42,01/28/2027,Healthcare,Diagnostics & Research,SP500
+VLO,96.62,01/28/2027,Energy,Oil & Gas Refining & Marketing,SP500
+PH,115.73,01/28/2027,Industrials,Specialty Industrial Machinery,SP500
+VZ,189.37,01/28/2027,Communication Services,Telecom Services,SP500
+NDAQ,59.88,01/28/2027,Financial Services,Financial Data & Stock Exchanges,SP500
+NOK,43.35,01/28/2027,Technology,Communication Equipment,
+PHM,25.24,01/28/2027,Consumer Cyclical,Residential Construction,SP500
+IP,18.29,01/28/2027,Consumer Cyclical,Packaging & Containers,SP500
+MRSH,97.39,01/28/2027,Financial Services,Insurance Brokers,SP500
+DECK,11.57,01/28/2027,Consumer Cyclical,Footwear & Accessories,SP500
+WY,15.11,01/28/2027,Real Estate,REIT - Specialty,SP500
+INTC,299.13,01/28/2027,Technology,Semiconductors,SP500
+SAP,269.45,01/28/2027,Technology,Software - Application,
+AOS,8.67,01/28/2027,Industrials,Specialty Industrial Machinery,SP500
+SYK,124.06,01/28/2027,Healthcare,Medical Devices,SP500
+HON,69.74,01/28/2027,Industrials,Conglomerates,SP500
+CNX,4.99,01/28/2027,Energy,Oil & Gas E&P,
+WDC,98.74,01/28/2027,Technology,Computer Hardware,SP500
+AON,71.03,01/29/2027,Financial Services,Insurance Brokers,SP500
+SOFI,21.04,01/29/2027,Financial Services,Credit Services,
+CHTR,15.34,01/29/2027,Communication Services,Telecom Services,SP500
+CL,76.76,01/29/2027,Consumer Defensive,Household & Personal Products,SP500
+CHD,25.81,01/29/2027,Consumer Defensive,Household & Personal Products,SP500
+CVX,414.86,01/29/2027,Energy,Oil & Gas Integrated,SP500
+BEPC,5.89,01/29/2027,Utilities,Utilities - Renewable,
+XOM,676.62,01/29/2027,Energy,Oil & Gas Integrated,SP500
+LYB,19.63,01/29/2027,Basic Materials,Specialty Chemicals,SP500
+AXP,215.24,01/29/2027,Financial Services,Credit Services,SP500
+APD,67.88,01/29/2027,Basic Materials,Specialty Chemicals,SP500
+BEN,17.29,01/29/2027,Financial Services,Asset Management,SP500
+SPG,86.46,02/01/2027,Real Estate,REIT - Retail,SP500
+APTV,7.98,02/01/2027,Consumer Cyclical,Auto Parts,SP500
+RVTY,17.31,02/01/2027,Healthcare,Diagnostics & Research,SP500
+PLTR,386.44,02/01/2027,Technology,Software - Infrastructure,SP500
+IDXX,53.26,02/01/2027,Healthcare,Diagnostics & Research,SP500
+DOC,14.71,02/01/2027,Real Estate,REIT - Healthcare Facilities,SP500
+JKHY,12.15,02/02/2027,Technology,Information Technology Services,SP500
+LITE,48.84,02/02/2027,Technology,Communication Equipment,SP500
+PRU,40.9,02/02/2027,Financial Services,Insurance - Life,SP500
+BR,21.54,02/02/2027,Technology,Information Technology Services,SP500
+KMB,66.54,02/02/2027,Consumer Defensive,Household & Personal Products,SP500
+GWW,67.45,02/02/2027,Industrials,Industrial Distribution,SP500
+SYY,37.84,02/02/2027,Consumer Defensive,Food Distribution,SP500
+MPC,101.49,02/02/2027,Energy,Oil & Gas Refining & Marketing,SP500
+PFE,167.52,02/02/2027,Healthcare,Drug Manufacturers - General,SP500
+AMCR,20.72,02/02/2027,Consumer Cyclical,Packaging & Containers,SP500
+CLX,12.09,02/02/2027,Consumer Defensive,Household & Personal Products,SP500
+ADM,33.3,02/02/2027,Consumer Defensive,Farm Products,SP500
+CRUS,5.66,02/02/2027,Technology,Semiconductors,
+SWKS,19.33,02/02/2027,Technology,Semiconductors,SP500
+IT,11.99,02/02/2027,Technology,Information Technology Services,SP500
+AMGN,249.05,02/02/2027,Healthcare,Drug Manufacturers - General,SP500
+AME,52.44,02/02/2027,Industrials,Specialty Industrial Machinery,SP500
+BALL,17.16,02/02/2027,Consumer Cyclical,Packaging & Containers,SP500
+EMR,90.56,02/02/2027,Industrials,Specialty Industrial Machinery,SP500
+ETN,132.76,02/02/2027,Industrials,Specialty Industrial Machinery,SP500
+SMCI,18.96,02/02/2027,Technology,Computer Hardware,SP500
+AMD,736.46,02/02/2027,Technology,Semiconductors,SP500
+SNAP,8.56,02/03/2027,Communication Services,Internet Content & Information,
+ATO,29.27,02/03/2027,Utilities,Utilities - Regulated Gas,SP500
+AFL,61.36,02/03/2027,Financial Services,Insurance - Life,SP500
+ALL,63.05,02/03/2027,Financial Services,Insurance - Property & Casualty,SP500
+UBER,140.05,02/03/2027,Technology,Software - Application,SP500
+CPAY,29.12,02/03/2027,Technology,Software - Infrastructure,SP500
+UHAL,11.01,02/03/2027,Industrials,Rental & Leasing Services,
+ARM,186.84,02/03/2027,Technology,Semiconductors,
+MCK,122.48,02/03/2027,Healthcare,Medical Distribution,SP500
+EL,39.88,02/03/2027,Consumer Defensive,Household & Personal Products,SP500
+SWK,17.08,02/03/2027,Industrials,Tools & Accessories,SP500
+COHR,37.98,02/03/2027,Technology,Scientific & Technical Instruments,SP500
+STE,24.5,02/03/2027,Healthcare,Medical Devices,SP500
+COR,63.65,02/03/2027,Healthcare,Medical Distribution,SP500
+CDW,19.6,02/03/2027,Technology,Information Technology Services,SP500
+YUM,43.35,02/03/2027,Consumer Cyclical,Restaurants,SP500
+QCOM,176.99,02/03/2027,Technology,Semiconductors,SP500
+ELF,6.87,02/03/2027,Consumer Defensive,Household & Personal Products,
+MTD,34.25,02/04/2027,Healthcare,Diagnostics & Research,SP500
+MCHP,31.76,02/04/2027,Technology,Semiconductors,SP500
+TPR,26.1,02/04/2027,Consumer Cyclical,Luxury Goods,SP500
+ROK,41.82,02/04/2027,Industrials,Specialty Industrial Machinery,SP500
+CPT,10.13,02/04/2027,Real Estate,REIT - Residential,SP500
+REG,13.99,02/04/2027,Real Estate,REIT - Retail,SP500
+TEAM,38.9,02/04/2027,Technology,Software - Application,
+COP,161.12,02/04/2027,Energy,Oil & Gas E&P,SP500
+AFRM,23.09,02/04/2027,Financial Services,Credit Services,
+RL,22.26,02/04/2027,Consumer Cyclical,Apparel Manufacturing,SP500
+CI,77.36,02/04/2027,Healthcare,Healthcare Plans,SP500
+NWS,15.55,02/04/2027,Communication Services,Entertainment,SP500
+CAH,62.8,02/04/2027,Healthcare,Medical Distribution,SP500
+NWSA,14.16,02/04/2027,Communication Services,Entertainment,SP500
+IREN,9.18,02/04/2027,Financial Services,Capital Markets,
+CMI,61.69,02/04/2027,Industrials,Specialty Industrial Machinery,SP500
