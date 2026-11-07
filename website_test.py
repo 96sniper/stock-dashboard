@@ -279,79 +279,6 @@ def render_daily_close_strength_donut(df: pd.DataFrame) -> None:
         st.caption(f"Excluded {excluded_count} rows with missing tickers or missing/invalid daily close strength.")
 
 
-def render_ath_drawdown_donut(df: pd.DataFrame, threshold: float = -19.99) -> None:
-    ath_column = find_matching_column(df, ["%_FROM_ATH", "PCT_FROM_ATH", "% From ATH"])
-    if ath_column is None:
-        st.info("No `%_FROM_ATH` column found for the drawdown graphic.")
-        return
-
-    from html import escape as html_escape
-
-    def donut_html(values: pd.Series, title: str, size: int) -> str:
-        total = len(values)
-        below_count = int((values < threshold).sum())
-        other_count = total - below_count
-        below_pct = below_count / total * 100
-        other_pct = other_count / total * 100
-        safe_title = html_escape(title)
-        return f"""
-        <div style="font-family:Arial,sans-serif; text-align:center; color:#111111;">
-          <div style="font-size:{15 if size > 180 else 13}px; font-weight:700; margin:0 0 4px 0;">{safe_title}</div>
-          <svg width="{size}" height="{size}" viewBox="0 0 180 180" role="img"
-               aria-label="{safe_title}: {below_count} of {total} stocks have %_FROM_ATH below {threshold}">
-            <circle cx="90" cy="90" r="64" fill="none" stroke="#2ECC71" stroke-width="26" />
-            <circle cx="90" cy="90" r="64" fill="none" stroke="#E74C3C" stroke-width="26"
-                    pathLength="100" stroke-dasharray="{below_pct:.6f} {100 - below_pct:.6f}"
-                    transform="rotate(-90 90 90)" />
-            <text x="90" y="88" text-anchor="middle" font-size="22" font-weight="700">{below_pct:.1f}%</text>
-            <text x="90" y="106" text-anchor="middle" font-size="11">of {total} stocks</text>
-          </svg>
-          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:2px 16px; font-size:{14 if size > 180 else 12}px;">
-            <span><span style="color:#E74C3C;">&#9679;</span>
-              Below {threshold}%: <b>{below_count}</b> ({below_pct:.1f}%)</span>
-            <span><span style="color:#2ECC71;">&#9679;</span>
-              {threshold}% or higher: <b>{other_count}</b> ({other_pct:.1f}%)</span>
-          </div>
-        </div>
-        """
-
-    ath_values = pd.to_numeric(df[ath_column], errors="coerce")
-    valid_mask = ath_values.notna()
-    excluded_count = int((~valid_mask).sum())
-    if not valid_mask.any():
-        st.info("No valid `%_FROM_ATH` values to chart.")
-        return
-
-    components.html(
-        donut_html(ath_values[valid_mask], f"All Stocks - More Than 20% Below ATH (%_FROM_ATH < {threshold})", 220),
-        height=320,
-        scrolling=False,
-    )
-    if excluded_count:
-        st.caption(f"Excluded {excluded_count} rows with missing/invalid `%_FROM_ATH`.")
-
-    sector_column = find_matching_column(df, ["Sector"])
-    if sector_column is None:
-        return
-
-    sector_labels = df[sector_column].astype("string").str.strip()
-    sector_mask = valid_mask & sector_labels.notna() & sector_labels.ne("")
-    sectors = sorted(sector_labels[sector_mask].unique())
-    if not sectors:
-        return
-
-    columns_per_row = 4
-    for row_start in range(0, len(sectors), columns_per_row):
-        row_columns = st.columns(columns_per_row)
-        for column, sector in zip(row_columns, sectors[row_start:row_start + columns_per_row]):
-            with column:
-                components.html(
-                    donut_html(ath_values[sector_mask & sector_labels.eq(sector)], sector, 160),
-                    height=280,
-                    scrolling=False,
-                )
-
-
 def render_trend_pie_charts(df: pd.DataFrame) -> None:
     """Render pie charts for DAILY, WEEKLY, and MONTHLY BULL vs BEAR counts."""
     def polar_to_cartesian(center_x: float, center_y: float, radius: float, angle_in_degrees: float) -> tuple[float, float]:
@@ -1609,65 +1536,32 @@ with tab_ytd:
 
     with ytd_sub_all:
         st.subheader("All Stocks")
+        ath_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_ath_breadth_*_graph.png"))
+        if ath_breadth_path:
+            st.image(ath_breadth_path, use_container_width=True)
+            st.caption(
+                "Percentages use stocks with valid % from ATH values in each group. "
+                "Recorded highs use up to 20 years of available price history."
+            )
+        else:
+            st.warning("Stock ATH breadth chart not found. Run the combined analysis script to generate it.")
+        ath_history_path = latest_valid_png(os.path.join(base_dir, "stocks_ath_history_*_graph.png"))
+        if ath_history_path:
+            st.image(ath_history_path, use_container_width=True)
+            st.caption(
+                "Last four years: percentage of the current tracked stocks with an available daily close "
+                "below -19.99% from their recorded high as of that day. "
+                "Available stocks vary by date; highs use up to 20 years of downloaded history."
+            )
+        else:
+            st.warning("Historical stock ATH breadth chart not found. Run the combined analysis script to generate it.")
         if all_stocks_matches:
             latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
             try:
                 all_stocks_df = pd.read_excel(latest_all_stocks_file)
-
-                sector_col = find_matching_column(all_stocks_df, ["Sector"])
-                industry_col = find_matching_column(all_stocks_df, ["Industry"])
-                filtered_df = all_stocks_df.copy()
-
-                if sector_col or industry_col:
-                    filter_container = getattr(st, "popover", None)
-                    if callable(filter_container):
-                        filter_context = filter_container("🔎 Filter Table")
-                    else:
-                        filter_context = st.expander("🔎 Filter Table", expanded=False)
-
-                    with filter_context:
-                        selected_sectors = []
-                        selected_industries = []
-                        filter_col1, filter_col2 = st.columns(2)
-
-                        if sector_col:
-                            sector_options = sorted(
-                                value for value in all_stocks_df[sector_col].dropna().astype(str).unique() if value.strip()
-                            )
-                            selected_sectors = filter_col1.multiselect(
-                                "Sector",
-                                sector_options,
-                                key="ytd_all_stocks_sector_filter",
-                            )
-                            if selected_sectors:
-                                filtered_df = filtered_df[filtered_df[sector_col].astype(str).isin(selected_sectors)]
-                        else:
-                            filter_col1.caption("No `Sector` column found")
-
-                        if industry_col:
-                            industry_source_df = filtered_df if sector_col and selected_sectors else all_stocks_df
-                            industry_options = sorted(
-                                value for value in industry_source_df[industry_col].dropna().astype(str).unique() if value.strip()
-                            )
-                            selected_industries = filter_col2.multiselect(
-                                "Industry",
-                                industry_options,
-                                key="ytd_all_stocks_industry_filter",
-                            )
-                            if selected_industries:
-                                filtered_df = filtered_df[filtered_df[industry_col].astype(str).isin(selected_industries)]
-                        else:
-                            filter_col2.caption("No `Industry` column found")
-
-                    st.caption(f"Showing {len(filtered_df):,} of {len(all_stocks_df):,} rows")
-                else:
-                    st.caption("No `Sector` or `Industry` columns were found in this file.")
-
-                render_ath_drawdown_donut(filtered_df)
-
-                all_stocks_table_height = min(900, max(360, row_height * (len(filtered_df) + 1) + 12))
+                all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
                 st.dataframe(
-                    filtered_df,
+                    all_stocks_df,
                     use_container_width=True,
                     height=all_stocks_table_height,
                     hide_index=True,
@@ -1762,6 +1656,15 @@ with tab_candle_strength:
     st.header("Candle Strength")
 
     base_dir = DATA_DIR
+    candle_breadth_path = latest_valid_png(os.path.join(base_dir, "candle_strength_breadth_*_graph.png"))
+    if candle_breadth_path:
+        st.image(candle_breadth_path, use_container_width=True)
+        st.caption(
+            "Each bar uses unique tickers with a valid value for that measure. "
+            "Green is above 50%; red includes exactly 50% and below."
+        )
+    else:
+        st.warning("Candle strength breadth chart not found. Run the combined analysis script to generate it.")
     etf_matches = glob.glob(os.path.join(base_dir, "ETF_CANDLE_STRENGTH*.xlsx"))
     all_stocks_matches = glob.glob(os.path.join(base_dir, "ALL_STOCKS_CANDLE_STRENGTH*.xlsx"))
 
