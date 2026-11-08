@@ -494,11 +494,26 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11, tab_crypto = st.tabs([
-                                                          "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below",
-                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Notes", "Crypto"])
+tab_trend_summary, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab_crypto, tab11 = st.tabs([
+                                                          "Trend Summary", "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below",
+                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Crypto", "Notes"])
 
 ###############################################################################################################################################################
+
+with tab_trend_summary:
+    st.header("Trend Summary")
+    summary_groups = [
+        ("SPY / QQQ / IWM", "indices_trend_summary"),
+        ("Sector ETFs", "sector_etfs_trend_summary"),
+        ("Favorites", "favorites_trend_summary"),
+    ]
+    for summary_tab, (label, prefix) in zip(st.tabs([label for label, _ in summary_groups]), summary_groups):
+        with summary_tab:
+            summary_path = latest_valid_png(os.path.join(DATA_DIR, f"{prefix}_*.png"))
+            if summary_path:
+                st.image(summary_path, use_container_width=True)
+            else:
+                st.warning(f"{label} trend summary PNG not found. Run the combined analysis script to generate it.")
 
 # Home Page
 with tab1:
@@ -1278,24 +1293,6 @@ with tab_crypto:
         st.image(crypto_summary_path, use_container_width=True)
     else:
         st.warning("Crypto trend summary PNG not found. Run the combined analysis script to generate it.")
-    st.caption(
-        "BTC and ETH: Above holds until a close below the previous candle's low; Below holds until "
-        "a close above the previous candle's high. Weekly and monthly states include developing candles. "
-        "Weeks start Monday; daily 8 EMA uses the existing crypto price-data calculation."
-    )
-    crypto_summary_files = glob.glob(os.path.join(DATA_DIR, "crypto_trend_summary_*.csv"))
-    if crypto_summary_files:
-        try:
-            st.dataframe(
-                pd.read_csv(max(crypto_summary_files, key=os.path.getmtime)),
-                use_container_width=True, hide_index=True,
-            )
-        except Exception as e:
-            st.error(f"Failed to load crypto trend summary: {e}")
-    else:
-        st.warning("Crypto trend summary CSV not found.")
-    st.subheader("Crypto Price and 8 EMA Data")
-    show_8ema_csv("CRYPTO_FULL_PRICE_DATA.csv", "crypto", "ema_crypto")
 
 ###############################################################################################################################################################
 
@@ -1398,36 +1395,38 @@ with tab_spy_vix:
     ])
 
     with svix_tab1:
-        st.subheader("Last 4 Years")
+        vix_four_year_col, vix_last_five_col = st.columns(2)
+        vix_four_year_col.subheader("Last 4 Years")
         vix_weekday_path = latest_valid_png(
             os.path.join(base_dir, "vix_weekday_*_graph.png"), exclude_substring="_last_five_",
         )
         if vix_weekday_path:
-            st.image(vix_weekday_path, width=800)
+            vix_four_year_col.image(vix_weekday_path, use_container_width=True)
         else:
-            st.warning("VIX Weekday Returns & Hit Rate image not found.")
-        st.subheader("Last 5 Occurrences per Weekday")
+            vix_four_year_col.warning("VIX Weekday Returns & Hit Rate image not found.")
+        vix_last_five_col.subheader("Last 5 Occurrences per Weekday")
         vix_recent_path = latest_valid_png(os.path.join(base_dir, "vix_weekday_last_five_*_graph.png"))
         if vix_recent_path:
-            st.image(vix_recent_path, width=800)
+            vix_last_five_col.image(vix_recent_path, use_container_width=True)
         else:
-            st.warning("VIX Last 5 weekday image not found.")
+            vix_last_five_col.warning("VIX Last 5 weekday image not found.")
 
     with svix_tab2:
-        st.subheader("Last 4 Years")
+        spy_four_year_col, spy_last_five_col = st.columns(2)
+        spy_four_year_col.subheader("Last 4 Years")
         spy_weekday_path = latest_valid_png(
             os.path.join(base_dir, "spy_weekday_*_graph.png"), exclude_substring="_last_five_",
         )
         if spy_weekday_path:
-            st.image(spy_weekday_path, width=800)
+            spy_four_year_col.image(spy_weekday_path, use_container_width=True)
         else:
-            st.warning("SPY Daily Returns & % Positive Rate image not found.")
-        st.subheader("Last 5 Occurrences per Weekday")
+            spy_four_year_col.warning("SPY Daily Returns & % Positive Rate image not found.")
+        spy_last_five_col.subheader("Last 5 Occurrences per Weekday")
         spy_recent_path = latest_valid_png(os.path.join(base_dir, "spy_weekday_last_five_*_graph.png"))
         if spy_recent_path:
-            st.image(spy_recent_path, width=800)
+            spy_last_five_col.image(spy_recent_path, use_container_width=True)
         else:
-            st.warning("SPY Last 5 weekday image not found.")
+            spy_last_five_col.warning("SPY Last 5 weekday image not found.")
 
     with svix_tab3:
         matches = glob.glob(os.path.join(base_dir, "vix_analysis_*_graph.png"))
@@ -1494,12 +1493,14 @@ with tab_spy_analysis:
             st.warning("SPY Last 10 Weeks image not found.")
 
     with day_tab6:
-        for ticker in ["SPY", "QQQ", "IWM"]:
-            trend_chart_path = os.path.join(base_dir, f"{ticker}_Price_vs_Avg_Trend.png")
-            if os.path.exists(trend_chart_path):
-                st.image(trend_chart_path, use_container_width=True)
-            else:
-                st.warning(f"{ticker} Price vs Avg Trend image not found.")
+        trend_tickers = ["SPY", "QQQ", "IWM"]
+        for ticker, trend_tab in zip(trend_tickers, st.tabs(trend_tickers)):
+            with trend_tab:
+                trend_chart_path = os.path.join(base_dir, f"{ticker}_Price_vs_Avg_Trend.png")
+                if os.path.exists(trend_chart_path):
+                    st.image(trend_chart_path, width=1000)
+                else:
+                    st.warning(f"{ticker} Price vs Avg Trend image not found.")
 
 #######################################################################################################################################################################
 
@@ -1530,9 +1531,13 @@ with tab_ytd:
     )
 
     row_height = 24
-    ytd_sub_sector, ytd_sub_all, sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_favorites, sub_tab_groups = st.tabs(
-        ["Sector ETFs", "All Stocks", "Yearly Table", "Year-to-Date", "Quarter-to-Date", "Favorites", "Industry/Group YTD"]
+    ytd_sub_sector, ytd_sub_all, sub_tab_yearly, sub_tab_ytd, sub_tab_qtd = st.tabs(
+        ["Sector ETFs", "All Stocks", "Yearly Table", "Year-to-Date", "Quarter-to-Date"]
     )
+    with sub_tab_ytd:
+        sub_tab_ytd_sector, sub_tab_favorites, sub_tab_groups = st.tabs(
+            ["Sector ETFs", "Favorites", "Industry/Group YTD"]
+        )
 
     with ytd_sub_sector:
         st.subheader("Sector ETFs")
@@ -1652,7 +1657,7 @@ with tab_ytd:
         else:
             st.warning("Yearly gain table image not found.")
 
-    with sub_tab_ytd:
+    with sub_tab_ytd_sector:
         latest_file = latest_sector_chart(
             "etf_ytd_bar_chart_*.png",
             "etf_ytd_bar_chart.png",
@@ -1715,7 +1720,7 @@ with tab_candle_strength:
     base_dir = DATA_DIR
     candle_breadth_path = latest_valid_png(os.path.join(base_dir, "candle_strength_breadth_*_graph.png"))
     if candle_breadth_path:
-        st.image(candle_breadth_path, use_container_width=True)
+        st.image(candle_breadth_path, width=1000)
         st.caption(
             "Each bar uses unique tickers with a valid value for that measure. "
             "Green is above 50%; red includes exactly 50% and below."
