@@ -506,9 +506,33 @@ with tab_trend_summary:
         ("SPY / QQQ / IWM", "indices_trend_summary"),
         ("Sector ETFs", "sector_etfs_trend_summary"),
         ("Favorites", "favorites_trend_summary"),
+        ("Additional ETFs", "additional_ETFS_trend_summary"),
+        ("All Stocks", "all_stocks_trend_summary"),
     ]
     for summary_tab, (label, prefix) in zip(st.tabs([label for label, _ in summary_groups]), summary_groups):
         with summary_tab:
+            if prefix == "all_stocks_trend_summary":
+                csv_matches = glob.glob(os.path.join(DATA_DIR, f"{prefix}_*.csv"))
+                if not csv_matches:
+                    st.warning("All Stocks trend summary CSV not found. Run the combined analysis script to generate it.")
+                    continue
+                try:
+                    stock_trends = pd.read_csv(max(csv_matches, key=os.path.getmtime), keep_default_na=False)
+                    trend_columns = [
+                        "8_EMA_ABOVE_BELOW", "8_EMA_SLOPE", "DAILY_CLOSE_STATE",
+                        "WEEKLY_CLOSE_STATE", "MONTHLY_CLOSE_STATE",
+                    ]
+                    stock_trends = stock_trends[["TICKER", "DATE", *trend_columns]]
+                    if stock_trends.empty:
+                        raise ValueError("The all-stock trend summary contains no ticker rows.")
+                    unavailable = stock_trends[trend_columns].eq("Unavailable").any(axis=1)
+                    if unavailable.any():
+                        st.warning(f"Trend data unavailable for {int(unavailable.sum())} tickers; those rows are marked Unavailable.")
+                    st.caption("Short term: 8 EMA Above/Below, 8 EMA Slope, Daily. Longer term: Weekly, Monthly.")
+                    st.dataframe(stock_trends, use_container_width=True, hide_index=True)
+                except (OSError, ValueError, KeyError, pd.errors.ParserError) as e:
+                    st.error(f"Unable to load All Stocks trend summary: {e}")
+                continue
             summary_path = latest_valid_png(os.path.join(DATA_DIR, f"{prefix}_*.png"))
             if summary_path:
                 st.image(summary_path, use_container_width=True)
@@ -1388,11 +1412,19 @@ with tab_spy_vix:
 
     base_dir = DATA_DIR
 
-    svix_tab1, svix_tab2, svix_tab3 = st.tabs([
+    svix_tab1, svix_tab2, svix_tab3, svix_expected_move_tab = st.tabs([
         "VIX Daily Returns & % Positive Rate",
         "SPY Daily Returns & % Positive Rate",
         "VIX Avg Price & STD Dev Bands",
+        "SPY Expected Move",
     ])
+
+    with svix_expected_move_tab:
+        expected_move_path = latest_valid_png(os.path.join(base_dir, "spy_expected_move_d_w_*.png"))
+        if expected_move_path:
+            st.image(expected_move_path, use_container_width=True)
+        else:
+            st.warning("SPY expected-move PNG not found. Run the combined analysis script to generate it.")
 
     with svix_tab1:
         vix_four_year_col, vix_last_five_col = st.columns(2)
@@ -1531,9 +1563,21 @@ with tab_ytd:
     )
 
     row_height = 24
-    ytd_sub_sector, ytd_sub_all, sub_tab_yearly, sub_tab_ytd, sub_tab_qtd = st.tabs(
-        ["Sector ETFs", "All Stocks", "Yearly Table", "Year-to-Date", "Quarter-to-Date"]
+    ytd_sub_sector, ytd_sub_all, sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_ytd_lines = st.tabs(
+        ["Sector ETFs", "All Stocks", "Yearly Table", "Year-to-Date", "Quarter-to-Date", "YTD Line Charts"]
     )
+    with sub_tab_ytd_lines:
+        ytd_line_symbols = [
+            "HOOD", "SPCX", "ORCL", "TSLA", "META", "MSFT", "NVDA", "GOOGL",
+            "AMZN", "QQQ", "SPY", "AAPL", "IWM", "SMH", "NFLX", "AMD", "BTC",
+        ]
+        for ticker_tab, symbol in zip(st.tabs(ytd_line_symbols), ytd_line_symbols):
+            with ticker_tab:
+                line_path = latest_valid_png(os.path.join(base_dir, f"{symbol}_ytd_line_chart_*.png"))
+                if line_path:
+                    st.image(line_path, use_container_width=True)
+                else:
+                    st.warning(f"{symbol} YTD line chart not found. Run the combined analysis script to generate it.")
     with sub_tab_ytd:
         sub_tab_ytd_sector, sub_tab_favorites, sub_tab_groups = st.tabs(
             ["Sector ETFs", "Favorites", "Industry/Group YTD"]
