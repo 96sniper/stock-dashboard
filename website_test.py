@@ -641,16 +641,18 @@ with tab2:
     st.write("Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     base_dir = DATA_DIR
 
-    def show_latest_png(file_pattern: str, not_found_message: str, width: int = 1500, exclude_substring: str | None = None) -> None:
+    def show_latest_png(file_pattern: str, not_found_message: str, width: int = 1500,
+                        exclude_substring: str | None = None, container=None) -> None:
+        target = st if container is None else container
         matches = glob.glob(os.path.join(base_dir, file_pattern))
         if exclude_substring:
             matches = [path for path in matches if exclude_substring not in os.path.basename(path)]
 
         if matches:
             latest_file = max(matches, key=os.path.getmtime)
-            show_chart(latest_file, width=width)
+            show_chart(latest_file, width=width, container=target)
         else:
-            st.warning(not_found_message)
+            target.warning(not_found_message)
 
     def show_wick_table(file_pattern: str, signal: str, heading: str, not_found_message: str) -> None:
         matches = glob.glob(os.path.join(base_dir, file_pattern))
@@ -673,24 +675,24 @@ with tab2:
     for timeframe, timeframe_tab in zip(("Daily", "Weekly", "Monthly"), timeframe_tabs):
         period = timeframe.lower()
         with timeframe_tab:
-            count_tab, separate_tab, bullish_tab, bearish_tab = st.tabs([
+            count_tab, bullish_tab, bearish_tab = st.tabs([
                 f"{timeframe} Count",
-                f"{timeframe} Count (Separate)",
                 f"{timeframe} Bullish Wick",
                 f"{timeframe} Bearish Wick",
             ])
 
             with count_tab:
+                net_column, separate_column = st.columns(2)
                 show_latest_png(
                     f"{period}_tail_candle_count_*.png",
                     f"{timeframe} Tail Candle Count image not found.",
                     exclude_substring=f"{period}_tail_candle_count_separate_",
+                    container=net_column,
                 )
-
-            with separate_tab:
                 show_latest_png(
                     f"{period}_tail_candle_count_separate_*.png",
                     f"{timeframe} Tail Candle Count (Separate) image not found.",
+                    container=separate_column,
                 )
 
             with bullish_tab:
@@ -742,16 +744,16 @@ with tab3:
             st.warning("SPY combined D-W-M shading image not found. Run the combined analysis script to generate it.")
 
     with cab_daily:
-        cab_tab0, cab_tab3, cab_tab6 = st.tabs([
-            "Daily", "Daily Close Trend", "Daily Close Trend - All Stocks",
+        cab_tab0, cab_tab3 = st.tabs([
+            "Daily", "BULL % Trend Over Time",
         ])
     with cab_weekly:
-        cab_tab1, cab_tab4, cab_tab7 = st.tabs([
-            "Weekly", "Weekly Close Trend", "Weekly Close Trend - All Stocks",
+        cab_tab1, cab_tab4 = st.tabs([
+            "Weekly", "BULL % Trend Over Time",
         ])
     with cab_monthly:
-        cab_tab2, cab_tab5, cab_tab8 = st.tabs([
-            "Monthly", "Monthly Close Trend", "Monthly Close Trend - All Stocks",
+        cab_tab2, cab_tab5 = st.tabs([
+            "Monthly", "BULL % Trend Over Time",
         ])
 
     with cab_tab0:
@@ -802,56 +804,21 @@ with tab3:
         else:
             st.warning("SPY monthly close above/below shading image not found.")
 
-    with cab_tab3:
-        matches = [
-            p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_*.png"))
-            if "_ALL_STOCKS_" not in os.path.basename(p)
-        ]
-        if matches:
-            show_chart(max(matches, key=os.path.getmtime), width=850)
-        else:
-            st.warning("Daily Close Trend image not found.")
-
-    with cab_tab4:
-        matches = [
-            p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_*.png"))
-            if "_ALL_STOCKS_" not in os.path.basename(p)
-        ]
-        if matches:
-            show_chart(max(matches, key=os.path.getmtime), width=850)
-        else:
-            st.warning("Weekly Close Trend image not found.")
-
-    with cab_tab5:
-        matches = [
-            p for p in glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_*.png"))
-            if "_ALL_STOCKS_" not in os.path.basename(p)
-        ]
-        if matches:
-            show_chart(max(matches, key=os.path.getmtime), width=850)
-        else:
-            st.warning("Monthly Close Trend image not found.")
-
-    with cab_tab6:
-        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_ALL_STOCKS_*.png"))
-        if matches:
-            show_chart(max(matches, key=os.path.getmtime), width=850)
-        else:
-            st.warning("Daily Close Trend - All Stocks image not found.")
-
-    with cab_tab7:
-        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_ALL_STOCKS_*.png"))
-        if matches:
-            show_chart(max(matches, key=os.path.getmtime), width=850)
-        else:
-            st.warning("Weekly Close Trend - All Stocks image not found.")
-
-    with cab_tab8:
-        matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_ALL_STOCKS_*.png"))
-        if matches:
-            show_chart(max(matches, key=os.path.getmtime), width=850)
-        else:
-            st.warning("Monthly Close Trend - All Stocks image not found.")
+    for timeframe, trend_tab in zip(("Daily", "Weekly", "Monthly"), (cab_tab3, cab_tab4, cab_tab5)):
+        with trend_tab:
+            etf_column, stocks_column = st.columns(2)
+            for group, column, all_stocks in (
+                ("SECTOR ETFs", etf_column, False), ("ALL STOCKS", stocks_column, True),
+            ):
+                column.subheader(group.upper())
+                matches = [
+                    path for path in glob.glob(os.path.join(base_dir, f"BULL_Percentage_Trend_{timeframe}_*.png"))
+                    if ("_ALL_STOCKS_" in os.path.basename(path)) == all_stocks
+                ]
+                if matches:
+                    show_chart(max(matches, key=os.path.getmtime), width=850, container=column)
+                else:
+                    column.warning(f"{timeframe} BULL % Trend - {group.upper()} image not found.")
 
 ###############################################################################################################################################################
 
