@@ -11,14 +11,15 @@ from PIL import Image
 # Set to Wide Mode
 st.set_page_config(layout="wide")
 
-def show_chart(image_path: str, width: int | None = None, container=None) -> None:
+def show_chart(image_path: str, width: int | None = None, container=None,
+               max_width: int = 1100, max_height: int = 520) -> None:
     """Fit charts within 1,100 x 520 pixels without changing PNGs or table sizing."""
     target = st if container is None else container
     try:
         with Image.open(image_path) as image:
             image_width, image_height = image.size
-        width_limit = min(1100, width) if width is not None else 1100
-        scale = min(1, width_limit / image_width, 520 / image_height)
+        width_limit = min(max_width, width) if width is not None else max_width
+        scale = min(1, width_limit / image_width, max_height / image_height)
         display_width = max(1, int(image_width * scale))
         target.image(image_path, width=display_width)
     except (OSError, ValueError) as error:
@@ -515,7 +516,6 @@ tab_trend_summary, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_stre
 ###############################################################################################################################################################
 
 with tab_trend_summary:
-    st.header("Trend Summary")
     summary_groups = [
         ("SPY / QQQ / IWM", "indices_trend_summary"),
         ("Sector ETFs", "sector_etfs_trend_summary"),
@@ -555,7 +555,6 @@ with tab_trend_summary:
 
 # Home Page
 with tab1:
-    st.header("Seasonality")
 
     base_dir = DATA_DIR
     season_tab1, season_tab2, season_tab3, season_tab4, season_tab_mercury = st.tabs([
@@ -639,7 +638,6 @@ with tab1:
 
 # Tail Candles (Daily/Weekly/Monthly)
 with tab2:
-    st.header("Tail Candles (D-W-M)")
     st.write("Bottoming Tail Candles minus Topping Tail Candles. Helps to identify the institutional distribution in stocks.")
     base_dir = DATA_DIR
 
@@ -715,7 +713,6 @@ with tab2:
 
 # Close Above/Below
 with tab3:
-    st.header("Close Above/Below")
     st.write("Close Above Candles minus Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
 
     base_dir = DATA_DIR
@@ -953,7 +950,6 @@ with tab3:
 
 # Close Above/Below Sector Summary
 with tab_sector_summary:
-    st.header("Close Above/Below Sector Summary")
     st.write("Sector-specific trend summaries with detailed tables.")
 
     base_dir = DATA_DIR
@@ -1072,7 +1068,6 @@ with tab_sector_summary:
 
 # Close Above/Below Industry Summary
 with tab_industry_summary:
-    st.header("Close Above/Below Industry Summary")
     st.write("Industry-specific trend summaries with detailed tables.")
 
     base_dir = DATA_DIR
@@ -1155,7 +1150,6 @@ with tab_industry_summary:
 
 # Upcoming Earnings
 with tab8:
-    st.header("Upcoming Earnings")
     
     base_dir = DATA_DIR
 
@@ -1205,7 +1199,6 @@ with tab8:
 
 # Market Cap
 with tab_market_cap:
-    st.header("Market Cap")
 
     sector_market_cap_tab, industry_market_cap_tab, top_stock_market_cap_tab = st.tabs([
         "Sector Market Cap %",
@@ -1229,19 +1222,11 @@ with tab_market_cap:
 
 # Moving Average Studies
 with tab9:
-    st.header("Moving Average Studies")
     tab_20_50_crossover, tab_8ema_study = st.tabs(["20/50 Crossover", "8_EMA Study"])
 
 with tab_20_50_crossover:
-    st.header("20/50 Crossover")
-    st.write("SPY daily candlestick pages with MA 20/50 crossover zones and summary stats.")
-    st.write("Green Zones show where the 20MA flips above the 50MA. Red Zones show where the 20MA flips below the 50MA.")
-    st.write("This chart shows that when a 20/50ma crossover, the odds of price action to a certain direction increases.")
-    st.write("This should help me in my short term trading by knowing what price should do.")
-    st.write("The price action following a 20/50ma crossover is not guaranteed but the odds increase for a certain direction.")
-    st.write("The zones were calculated by looking for the maximum price gain or decline within the zone. This simply gives an idea to what direction price should be heading short term.")
-    
     base_dir = DATA_DIR
+    crossover_recent_tab, crossover_historical_tab = st.tabs(["Recent", "Historical"])
 
     # Search for files starting with "spy_daily_data" and ending in "_graph.png"
     pattern = os.path.join(base_dir, "spy_daily_data_*_page_*_graph.png")
@@ -1266,17 +1251,33 @@ with tab_20_50_crossover:
                 return 999999
 
         latest_run_pages = sorted(latest_run_pages, key=extract_page_number, reverse=True)
-        for page_path in latest_run_pages:
-            st.subheader(f"Page {extract_page_number(page_path)}")
-            show_chart(page_path)
+        with crossover_recent_tab:
+            recent_columns = st.columns(2)
+            for column, page_path in zip(recent_columns, latest_run_pages[:2]):
+                column.subheader(f"Page {extract_page_number(page_path)}")
+                show_chart(page_path, container=column)
+            st.write("SPY daily candlestick pages with MA 20/50 crossover zones and summary stats.")
+            st.write("Green Zones show where the 20MA flips above the 50MA. Red Zones show where the 20MA flips below the 50MA.")
+            st.write("This chart shows that when a 20/50ma crossover, the odds of price action to a certain direction increases.")
+            st.write("This should help me in my short term trading by knowing what price should do.")
+            st.write("The price action following a 20/50ma crossover is not guaranteed but the odds increase for a certain direction.")
+            st.write("The zones were calculated by looking for the maximum price gain or decline within the zone. This simply gives an idea to what direction price should be heading short term.")
+        with crossover_historical_tab:
+            for page_path in latest_run_pages[2:]:
+                st.subheader(f"Page {extract_page_number(page_path)}")
+                show_chart(page_path)
+            if len(latest_run_pages) <= 2:
+                st.info("No historical crossover pages available for this run.")
     else:
-        st.warning("20/50ma crossover graph images not found.")
+        with crossover_recent_tab:
+            st.warning("20/50ma crossover graph images not found.")
+        with crossover_historical_tab:
+            st.info("No historical crossover pages available.")
 
 ###############################################################################################################################################################
 
 # 8_EMA Study
 with tab_8ema_study:
-    st.header("8_EMA Study")
 
     base_dir = DATA_DIR
 
@@ -1325,7 +1326,6 @@ with tab_8ema_study:
         show_8ema_csv("TICKERS_FULL_PRICE_DATA.csv", "stock", "ema_stocks")
 
 with tab_crypto:
-    st.header("Crypto")
     crypto_summary_path = latest_valid_png(os.path.join(DATA_DIR, "crypto_trend_summary_*.png"))
     if crypto_summary_path:
         st.image(crypto_summary_path, use_container_width=True)
@@ -1336,7 +1336,6 @@ with tab_crypto:
 
 # Drawdown
 with tab_drawdown:
-    st.header("Drawdown")
     drawdown_tickers = ["SPY", "QQQ", "SMH", "IWM", "BTC", "UVXY"]
     for drawdown_ticker, drawdown_tab in zip(drawdown_tickers, st.tabs(drawdown_tickers)):
         with drawdown_tab:
@@ -1357,7 +1356,6 @@ with tab_drawdown:
 
 # 52-Week Highs/Lows
 with tab_52_week:
-    st.header("All Stocks: New 52-Week Highs vs Lows")
     highs_lows_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*_graph.png"))
     if highs_lows_path:
         show_chart(highs_lows_path)
@@ -1374,7 +1372,6 @@ with tab_52_week:
 
 # Notes
 with tab11:
-    st.header("Notes")
     notes_mindset_tab, notes_fomo_tab, notes_spy_options_tab = st.tabs(["Mindset", "FOMO", "SPY Options"])
 
     with notes_mindset_tab:
@@ -1422,7 +1419,6 @@ with tab11:
 
 # SPY/VIX Analysis
 with tab_spy_vix:
-    st.header("SPY/VIX Analysis")
 
     base_dir = DATA_DIR
 
@@ -1485,7 +1481,6 @@ with tab_spy_vix:
 
 # Index Analysis
 with tab_spy_analysis:
-    st.header("Index Analysis")
 
     base_dir = DATA_DIR
 
@@ -1552,7 +1547,6 @@ with tab_spy_analysis:
 
 # YTD Analysis
 with tab_ytd:
-    st.header("YTD Analysis")
 
     base_dir = DATA_DIR
     sector_matches = glob.glob(os.path.join(base_dir, "ytd_analysis_*.xlsx"))
@@ -1658,7 +1652,7 @@ with tab_ytd:
         st.subheader("All Stocks")
         ath_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_ath_breadth_*_graph.png"))
         if ath_breadth_path:
-            show_chart(ath_breadth_path)
+            show_chart(ath_breadth_path, max_width=1600, max_height=640)
             st.caption(
                 "Percentages use stocks with valid % from ATH values in each group. "
                 "Recorded highs use up to 20 years of available price history."
@@ -1711,7 +1705,7 @@ with tab_ytd:
             "sector_etf_yearly_gain_table.png",
         )
         if latest_file:
-            show_chart(latest_file, width=yearly_chart_width)
+            show_chart(latest_file, width=yearly_chart_width, max_width=1600, max_height=700)
         else:
             st.warning("Yearly gain table image not found.")
 
@@ -1773,18 +1767,21 @@ with tab_ytd:
 
 # Candle Strength
 with tab_candle_strength:
-    st.header("Candle Strength")
 
     base_dir = DATA_DIR
-    candle_breadth_path = latest_valid_png(os.path.join(base_dir, "candle_strength_breadth_*_graph.png"))
-    if candle_breadth_path:
-        show_chart(candle_breadth_path, width=1000)
-        st.caption(
-            "Each bar uses unique tickers with a valid value for that measure. "
-            "Green is above 50%; red includes exactly 50% and below."
-        )
-    else:
-        st.warning("Candle strength breadth chart not found. Run the combined analysis script to generate it.")
+    candle_chart_tab, candle_dataset_tab = st.tabs(["Chart", "Full Dataset"])
+    with candle_chart_tab:
+        candle_breadth_path = latest_valid_png(os.path.join(base_dir, "candle_strength_breadth_*_graph.png"))
+        if candle_breadth_path:
+            show_chart(candle_breadth_path, width=1000)
+            st.caption(
+                "Each bar uses unique tickers with a valid value for that measure. "
+                "Green is above 50%; red includes exactly 50% and below."
+            )
+        else:
+            st.warning("Candle strength breadth chart not found. Run the combined analysis script to generate it.")
+
+with candle_dataset_tab:
     etf_matches = glob.glob(os.path.join(base_dir, "ETF_CANDLE_STRENGTH*.xlsx"))
 
     st.markdown(
@@ -1828,7 +1825,6 @@ with tab_candle_strength:
 
 # Price and Volume Stats
 with tab_beta:
-    st.header("Price and Volume Stats")
 
     beta_tab, volume_stats_tab = st.tabs(["Beta", "Volume Stats"])
 
@@ -1884,7 +1880,6 @@ with tab_beta:
 
 # Fed Funds Rate - SPY
 with tab_fed_funds_spy:
-    st.header("Fed Funds Rate - SPY")
 
     base_dir = DATA_DIR
 
