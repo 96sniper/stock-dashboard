@@ -6,9 +6,23 @@ import os
 from datetime import date, timedelta
 import glob
 import re
+from PIL import Image
 
 # Set to Wide Mode
 st.set_page_config(layout="wide")
+
+def show_chart(image_path: str, width: int | None = None, container=None) -> None:
+    """Fit charts within 1,100 x 520 pixels without changing PNGs or table sizing."""
+    target = st if container is None else container
+    try:
+        with Image.open(image_path) as image:
+            image_width, image_height = image.size
+        width_limit = min(1100, width) if width is not None else 1100
+        scale = min(1, width_limit / image_width, 520 / image_height)
+        display_width = max(1, int(image_width * scale))
+        target.image(image_path, width=display_width)
+    except (OSError, ValueError) as error:
+        target.error(f"Unable to display chart {os.path.basename(image_path)}: {error}")
 
 # Inject light gray theme with markdown
 
@@ -556,7 +570,7 @@ with tab1:
         pattern = os.path.join(base_dir, "spy_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            st.image(latest_file, width=1500)
+            show_chart(latest_file, width=1500)
         else:
             st.warning("SPY seasonality image not found.")
 
@@ -564,7 +578,7 @@ with tab1:
         pattern = os.path.join(base_dir, "qqq_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            st.image(latest_file, width=1500)
+            show_chart(latest_file, width=1500)
         else:
             st.warning("QQQ seasonality image not found.")
 
@@ -572,7 +586,7 @@ with tab1:
         pattern = os.path.join(base_dir, "iwm_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            st.image(latest_file, width=1500)
+            show_chart(latest_file, width=1500)
         else:
             st.warning("IWM seasonality image not found.")
 
@@ -580,7 +594,7 @@ with tab1:
         pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            st.image(latest_file, width=1500)
+            show_chart(latest_file, width=1500)
         else:
             st.warning("VIX seasonality image not found.")
 
@@ -617,7 +631,7 @@ with tab1:
         page_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_spy_page_*_graph.png"))
         if page_matches:
             for page_path in sorted(page_matches, key=extract_mercury_page_number, reverse=True):
-                st.image(page_path, use_container_width=True)
+                show_chart(page_path)
         else:
             st.warning("Mercury retrograde SPY page images not found.")
 
@@ -636,7 +650,7 @@ with tab2:
 
         if matches:
             latest_file = max(matches, key=os.path.getmtime)
-            st.image(latest_file, width=width)
+            show_chart(latest_file, width=width)
         else:
             st.warning(not_found_message)
 
@@ -722,7 +736,7 @@ with tab3:
     with cab_combined:
         combined_path = latest_valid_png(os.path.join(base_dir, "SPY_combined_dwm_close_above_shading_*.png"))
         if combined_path:
-            st.image(combined_path, width=1500)
+            show_chart(combined_path, width=1500)
             st.caption(
                 "Last 4 months. Green: Daily, Weekly and Monthly all Above; red: all Below; mixed states are unshaded. "
                 "Developing weekly/monthly candles are reassessed each day against the previous completed candle."
@@ -749,13 +763,13 @@ with tab3:
         matching_files = glob.glob(pattern)
         if matching_files:
             latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, width=1500)
+            show_chart(latest_file, width=1500)
         else:
             st.warning("Daily Close Above Below Count image not found.")
         st.subheader("SPY Candles Shaded by Daily Close Above/Below (Last 4 Months)")
         shading_files = glob.glob(os.path.join(base_dir, "SPY_daily_close_above_shading_*.png"))
         if shading_files:
-            st.image(max(shading_files, key=os.path.getmtime), width=1500)
+            show_chart(max(shading_files, key=os.path.getmtime), width=1500)
         else:
             st.warning("SPY close above/below shading image not found.")
 
@@ -765,13 +779,13 @@ with tab3:
         matching_files = glob.glob(pattern)
         if matching_files:
             latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, width=1500)
+            show_chart(latest_file, width=1500)
         else:
             st.warning("Weekly Close Above Below Count image not found.")
         st.subheader("SPY Candles Shaded by Weekly Close Above/Below")
         shading_files = glob.glob(os.path.join(base_dir, "SPY_weekly_close_above_shading_*.png"))
         if shading_files:
-            st.image(max(shading_files, key=os.path.getmtime), width=1500)
+            show_chart(max(shading_files, key=os.path.getmtime), width=1500)
         else:
             st.warning("SPY weekly close above/below shading image not found.")
 
@@ -781,13 +795,13 @@ with tab3:
         matching_files = glob.glob(pattern)
         if matching_files:
             latest_file = max(matching_files, key=os.path.getmtime)
-            st.image(latest_file, width=1500)
+            show_chart(latest_file, width=1500)
         else:
             st.warning("Monthly Close Above Below Count image not found.")
         st.subheader("SPY Candles Shaded by Monthly Close Above/Below")
         shading_files = glob.glob(os.path.join(base_dir, "SPY_monthly_close_above_shading_*.png"))
         if shading_files:
-            st.image(max(shading_files, key=os.path.getmtime), width=1500)
+            show_chart(max(shading_files, key=os.path.getmtime), width=1500)
         else:
             st.warning("SPY monthly close above/below shading image not found.")
 
@@ -797,7 +811,7 @@ with tab3:
             if "_ALL_STOCKS_" not in os.path.basename(p)
         ]
         if matches:
-            st.image(max(matches, key=os.path.getmtime), width=850)
+            show_chart(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Daily Close Trend image not found.")
 
@@ -807,7 +821,7 @@ with tab3:
             if "_ALL_STOCKS_" not in os.path.basename(p)
         ]
         if matches:
-            st.image(max(matches, key=os.path.getmtime), width=850)
+            show_chart(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Weekly Close Trend image not found.")
 
@@ -817,28 +831,28 @@ with tab3:
             if "_ALL_STOCKS_" not in os.path.basename(p)
         ]
         if matches:
-            st.image(max(matches, key=os.path.getmtime), width=850)
+            show_chart(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Monthly Close Trend image not found.")
 
     with cab_tab6:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Daily_ALL_STOCKS_*.png"))
         if matches:
-            st.image(max(matches, key=os.path.getmtime), width=850)
+            show_chart(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Daily Close Trend - All Stocks image not found.")
 
     with cab_tab7:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Weekly_ALL_STOCKS_*.png"))
         if matches:
-            st.image(max(matches, key=os.path.getmtime), width=850)
+            show_chart(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Weekly Close Trend - All Stocks image not found.")
 
     with cab_tab8:
         matches = glob.glob(os.path.join(base_dir, "BULL_Percentage_Trend_Monthly_ALL_STOCKS_*.png"))
         if matches:
-            st.image(max(matches, key=os.path.getmtime), width=850)
+            show_chart(max(matches, key=os.path.getmtime), width=850)
         else:
             st.warning("Monthly Close Trend - All Stocks image not found.")
 
@@ -1159,7 +1173,7 @@ with tab8:
     def show_earnings_png(suffix: str, label: str) -> None:
         png_path = latest_earnings_output(suffix)
         if png_path:
-            st.image(png_path, use_container_width=True)
+            show_chart(png_path)
         else:
             st.warning(f"{label} image not found.")
 
@@ -1254,7 +1268,7 @@ with tab_20_50_crossover:
         latest_run_pages = sorted(latest_run_pages, key=extract_page_number, reverse=True)
         for page_path in latest_run_pages:
             st.subheader(f"Page {extract_page_number(page_path)}")
-            st.image(page_path, use_container_width=True)
+            show_chart(page_path)
     else:
         st.warning("20/50ma crossover graph images not found.")
 
@@ -1298,13 +1312,13 @@ with tab_8ema_study:
     with ema_stocks_tab:
         ema_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_8_ema_breadth_*_graph.png"))
         if ema_breadth_path:
-            st.image(ema_breadth_path, use_container_width=True)
+            show_chart(ema_breadth_path)
             st.caption("Latest row per stock, grouped overall and by sector. This chart is not changed by the ticker filter below.")
         else:
             st.warning("Stock 8 EMA breadth chart not found. Run the combined analysis script to generate it.")
         ema_daily_path = latest_valid_png(os.path.join(base_dir, "stocks_8_ema_daily_net_*_graph.png"))
         if ema_daily_path:
-            st.image(ema_daily_path, use_container_width=True)
+            show_chart(ema_daily_path)
             st.caption("Daily net breadth = Upward + Above count minus Downward + Below count. The ticker filter below does not change this chart.")
         else:
             st.warning("Daily stock 8 EMA chart not found. Run the combined analysis script to generate it.")
@@ -1337,7 +1351,7 @@ with tab_drawdown:
                 os.path.join(DATA_DIR, f"{drawdown_ticker.lower()}_drawdown_*.png")
             )
             if drawdown_path:
-                st.image(drawdown_path, use_container_width=True)
+                show_chart(drawdown_path)
             else:
                 st.warning(f"{drawdown_ticker} drawdown chart not found. Run the combined analysis script to generate it.")
 
@@ -1346,7 +1360,7 @@ with tab_52_week:
     st.header("All Stocks: New 52-Week Highs vs Lows")
     highs_lows_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*_graph.png"))
     if highs_lows_path:
-        st.image(highs_lows_path, use_container_width=True)
+        show_chart(highs_lows_path)
         st.caption("Last 100 trading days. Daily net = new 52-week highs minus new 52-week lows (intraday records vs the prior 252 sessions). Green dot = positive, red dot = negative.")
     else:
         st.warning("52-week highs/lows chart not found. Run the combined analysis script to generate it.")
@@ -1422,7 +1436,7 @@ with tab_spy_vix:
     with svix_expected_move_tab:
         expected_move_path = latest_valid_png(os.path.join(base_dir, "spy_expected_move_d_w_*.png"))
         if expected_move_path:
-            st.image(expected_move_path, use_container_width=True)
+            show_chart(expected_move_path)
         else:
             st.warning("SPY expected-move PNG not found. Run the combined analysis script to generate it.")
 
@@ -1433,13 +1447,13 @@ with tab_spy_vix:
             os.path.join(base_dir, "vix_weekday_*_graph.png"), exclude_substring="_last_five_",
         )
         if vix_weekday_path:
-            vix_four_year_col.image(vix_weekday_path, use_container_width=True)
+            show_chart(vix_weekday_path, container=vix_four_year_col)
         else:
             vix_four_year_col.warning("VIX Weekday Returns & Hit Rate image not found.")
         vix_last_five_col.subheader("Last 5 Occurrences per Weekday")
         vix_recent_path = latest_valid_png(os.path.join(base_dir, "vix_weekday_last_five_*_graph.png"))
         if vix_recent_path:
-            vix_last_five_col.image(vix_recent_path, use_container_width=True)
+            show_chart(vix_recent_path, container=vix_last_five_col)
         else:
             vix_last_five_col.warning("VIX Last 5 weekday image not found.")
 
@@ -1450,20 +1464,20 @@ with tab_spy_vix:
             os.path.join(base_dir, "spy_weekday_*_graph.png"), exclude_substring="_last_five_",
         )
         if spy_weekday_path:
-            spy_four_year_col.image(spy_weekday_path, use_container_width=True)
+            show_chart(spy_weekday_path, container=spy_four_year_col)
         else:
             spy_four_year_col.warning("SPY Daily Returns & % Positive Rate image not found.")
         spy_last_five_col.subheader("Last 5 Occurrences per Weekday")
         spy_recent_path = latest_valid_png(os.path.join(base_dir, "spy_weekday_last_five_*_graph.png"))
         if spy_recent_path:
-            spy_last_five_col.image(spy_recent_path, use_container_width=True)
+            show_chart(spy_recent_path, container=spy_last_five_col)
         else:
             spy_last_five_col.warning("SPY Last 5 weekday image not found.")
 
     with svix_tab3:
         matches = glob.glob(os.path.join(base_dir, "vix_analysis_*_graph.png"))
         if matches:
-            st.image(max(matches, key=os.path.getmtime), width=1200)
+            show_chart(max(matches, key=os.path.getmtime), width=1200)
         else:
             st.warning("VIX Avg Price & STD Dev Bands image not found.")
 
@@ -1530,7 +1544,7 @@ with tab_spy_analysis:
             with trend_tab:
                 trend_chart_path = os.path.join(base_dir, f"{ticker}_Price_vs_Avg_Trend.png")
                 if os.path.exists(trend_chart_path):
-                    st.image(trend_chart_path, width=1000)
+                    show_chart(trend_chart_path, width=1000)
                 else:
                     st.warning(f"{ticker} Price vs Avg Trend image not found.")
 
@@ -1575,7 +1589,7 @@ with tab_ytd:
             with ticker_tab:
                 line_path = latest_valid_png(os.path.join(base_dir, f"{symbol}_ytd_line_chart_*.png"))
                 if line_path:
-                    st.image(line_path, use_container_width=True)
+                    show_chart(line_path)
                 else:
                     st.warning(f"{symbol} YTD line chart not found. Run the combined analysis script to generate it.")
     with sub_tab_ytd:
@@ -1644,7 +1658,7 @@ with tab_ytd:
         st.subheader("All Stocks")
         ath_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_ath_breadth_*_graph.png"))
         if ath_breadth_path:
-            st.image(ath_breadth_path, use_container_width=True)
+            show_chart(ath_breadth_path)
             st.caption(
                 "Percentages use stocks with valid % from ATH values in each group. "
                 "Recorded highs use up to 20 years of available price history."
@@ -1653,7 +1667,7 @@ with tab_ytd:
             st.warning("Stock ATH breadth chart not found. Run the combined analysis script to generate it.")
         ath_history_path = latest_valid_png(os.path.join(base_dir, "stocks_ath_history_*_graph.png"))
         if ath_history_path:
-            st.image(ath_history_path, use_container_width=True)
+            show_chart(ath_history_path)
             st.caption(
                 "Last four years: percentage of the current tracked stocks with an available daily close "
                 "below -19.99% from their recorded high as of that day. "
@@ -1697,7 +1711,7 @@ with tab_ytd:
             "sector_etf_yearly_gain_table.png",
         )
         if latest_file:
-            st.image(latest_file, width=yearly_chart_width)
+            show_chart(latest_file, width=yearly_chart_width)
         else:
             st.warning("Yearly gain table image not found.")
 
@@ -1707,7 +1721,7 @@ with tab_ytd:
             "etf_ytd_bar_chart.png",
         )
         if latest_file:
-            st.image(latest_file, width=sector_chart_width)
+            show_chart(latest_file, width=sector_chart_width)
         else:
             st.warning("YTD bar chart image not found.")
 
@@ -1717,7 +1731,7 @@ with tab_ytd:
             "etf_qtd_bar_chart.png",
         )
         if latest_file:
-            st.image(latest_file, width=sector_chart_width)
+            show_chart(latest_file, width=sector_chart_width)
         else:
             st.warning("QTD bar chart image not found.")
 
@@ -1727,7 +1741,7 @@ with tab_ytd:
             "favorite_trading_tickers_ytd_bar_chart.png",
         )
         if latest_file:
-            st.image(latest_file, width=sector_chart_width)
+            show_chart(latest_file, width=sector_chart_width)
         else:
             st.warning("Favorites YTD bar chart image not found.")
 
@@ -1751,7 +1765,7 @@ with tab_ytd:
             with group_tab:
                 latest_file = latest_sector_chart(f"{group_prefix}_*.png", f"{group_prefix}.png")
                 if latest_file:
-                    st.image(latest_file, width=sector_chart_width)
+                    show_chart(latest_file, width=sector_chart_width)
                 else:
                     st.warning(f"{group_label} YTD bar chart image not found.")
 
@@ -1764,7 +1778,7 @@ with tab_candle_strength:
     base_dir = DATA_DIR
     candle_breadth_path = latest_valid_png(os.path.join(base_dir, "candle_strength_breadth_*_graph.png"))
     if candle_breadth_path:
-        st.image(candle_breadth_path, width=1000)
+        show_chart(candle_breadth_path, width=1000)
         st.caption(
             "Each bar uses unique tickers with a valid value for that measure. "
             "Green is above 50%; red includes exactly 50% and below."
