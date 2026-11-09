@@ -715,12 +715,10 @@ with tab2:
 
 # Close Above/Below
 with tab3:
-    st.write("Close Above Candles minus Close Below Candles. Helps to identify the institutional distribution in stocks and overall trend.")
-
     base_dir = DATA_DIR
     (
         cab_daily, cab_weekly, cab_monthly, cab_summary_tab1, cab_summary_tab2,
-        tab_sector_summary, tab_industry_summary, cab_combined,
+        tab_sector_summary, tab_industry_summary, cab_shaded,
     ) = st.tabs([
         "Daily",
         "Weekly",
@@ -729,10 +727,18 @@ with tab3:
         "CURRENT_TREND_SUMMARY_ALL_STOCKS",
         "Sector Summary",
         "Industry Summary",
-        "Combined D-W-M",
+        "Shaded Charts",
     ])
 
-    with cab_combined:
+    with cab_shaded:
+        for timeframe in ("Daily", "Weekly", "Monthly"):
+            st.subheader(f"SPY Candles Shaded by {timeframe} Close Above/Below")
+            shading_files = glob.glob(os.path.join(base_dir, f"SPY_{timeframe.lower()}_close_above_shading_*.png"))
+            if shading_files:
+                show_chart(max(shading_files, key=os.path.getmtime), width=1500)
+            else:
+                st.warning(f"SPY {timeframe.lower()} close above/below shading image not found.")
+        st.subheader("SPY Candles Shaded by Combined Daily, Weekly and Monthly Close Above/Below")
         combined_path = latest_valid_png(os.path.join(base_dir, "SPY_combined_dwm_close_above_shading_*.png"))
         if combined_path:
             show_chart(combined_path, width=1500)
@@ -757,7 +763,6 @@ with tab3:
         ])
 
     with cab_tab0:
-        st.subheader("Daily Close Above/Below")
         pattern = os.path.join(base_dir, "daily_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
         if matching_files:
@@ -765,15 +770,8 @@ with tab3:
             show_chart(latest_file, width=1500)
         else:
             st.warning("Daily Close Above Below Count image not found.")
-        st.subheader("SPY Candles Shaded by Daily Close Above/Below (Last 4 Months)")
-        shading_files = glob.glob(os.path.join(base_dir, "SPY_daily_close_above_shading_*.png"))
-        if shading_files:
-            show_chart(max(shading_files, key=os.path.getmtime), width=1500)
-        else:
-            st.warning("SPY close above/below shading image not found.")
 
     with cab_tab1:
-        st.subheader("Weekly Close Above/Below")
         pattern = os.path.join(base_dir, "weekly_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
         if matching_files:
@@ -781,15 +779,8 @@ with tab3:
             show_chart(latest_file, width=1500)
         else:
             st.warning("Weekly Close Above Below Count image not found.")
-        st.subheader("SPY Candles Shaded by Weekly Close Above/Below")
-        shading_files = glob.glob(os.path.join(base_dir, "SPY_weekly_close_above_shading_*.png"))
-        if shading_files:
-            show_chart(max(shading_files, key=os.path.getmtime), width=1500)
-        else:
-            st.warning("SPY weekly close above/below shading image not found.")
 
     with cab_tab2:
-        st.subheader("Monthly Close Above/Below")
         pattern = os.path.join(base_dir, "monthly_close_above_below_count_*.png")
         matching_files = glob.glob(pattern)
         if matching_files:
@@ -797,12 +788,6 @@ with tab3:
             show_chart(latest_file, width=1500)
         else:
             st.warning("Monthly Close Above Below Count image not found.")
-        st.subheader("SPY Candles Shaded by Monthly Close Above/Below")
-        shading_files = glob.glob(os.path.join(base_dir, "SPY_monthly_close_above_shading_*.png"))
-        if shading_files:
-            show_chart(max(shading_files, key=os.path.getmtime), width=1500)
-        else:
-            st.warning("SPY monthly close above/below shading image not found.")
 
     for timeframe, trend_tab in zip(("Daily", "Weekly", "Monthly"), (cab_tab3, cab_tab4, cab_tab5)):
         with trend_tab:
@@ -1150,13 +1135,25 @@ with tab8:
     (
         earnings_calendar_tab,
         earnings_market_cap_tab,
+        earnings_full_data_tab,
     ) = st.tabs([
         "Earnings Calendar",
         "Market Cap",
+        "Full Data",
     ])
 
     with earnings_calendar_tab:
-        show_earnings_png("_graph.png", "Earnings calendar graph")
+        calendar_column, week_column = st.columns([3, 2])
+        with calendar_column:
+            show_earnings_png("_graph.png", "Earnings calendar graph")
+        with week_column:
+            weekly_png = latest_earnings_output("_this_week.png")
+            if weekly_png:
+                st.image(weekly_png, use_container_width=True)
+            else:
+                st.warning("Earnings This Week image not found. Run the combined analysis script to generate it.")
+
+    with earnings_full_data_tab:
         show_csv(latest_earnings_output(".csv"), "Earnings calendar")
 
     with earnings_market_cap_tab:
@@ -1248,7 +1245,7 @@ with tab_8ema_study:
 
     base_dir = DATA_DIR
 
-    def show_8ema_csv(file_name: str, label: str, key: str) -> None:
+    def show_8ema_csv(file_name: str, label: str) -> None:
         csv_path = os.path.join(base_dir, file_name)
         if not os.path.exists(csv_path):
             st.warning(f"{file_name} not found.")
@@ -1265,32 +1262,23 @@ with tab_8ema_study:
             st.error(f"⚠️ Failed to load {label} CSV file: {e}")
             return
 
-        tickers = sorted(ema_df["TICKER"].dropna().unique()) if "TICKER" in ema_df.columns else []
-        selected_tickers = st.multiselect(
-            f"Filter {label} tickers (leave empty for all)",
-            tickers,
-            key=f"{key}_ticker_filter",
-        )
-        if selected_tickers:
-            ema_df = ema_df[ema_df["TICKER"].isin(selected_tickers)]
         st.dataframe(ema_df, use_container_width=True, hide_index=True)
 
-    ema_stocks_tab, = st.tabs(["Stocks"])
+    ema_stocks_tab, ema_full_data_tab = st.tabs(["Stocks", "Full Data"])
 
     with ema_stocks_tab:
         ema_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_8_ema_breadth_*_graph.png"))
         if ema_breadth_path:
-            show_chart(ema_breadth_path)
-            st.caption("Latest row per stock, grouped overall and by sector. This chart is not changed by the ticker filter below.")
+            show_chart(ema_breadth_path, max_width=1600, max_height=520)
         else:
             st.warning("Stock 8 EMA breadth chart not found. Run the combined analysis script to generate it.")
         ema_daily_path = latest_valid_png(os.path.join(base_dir, "stocks_8_ema_daily_net_*_graph.png"))
         if ema_daily_path:
             show_chart(ema_daily_path)
-            st.caption("Daily net breadth = Upward + Above count minus Downward + Below count. The ticker filter below does not change this chart.")
         else:
             st.warning("Daily stock 8 EMA chart not found. Run the combined analysis script to generate it.")
-        show_8ema_csv("TICKERS_FULL_PRICE_DATA.csv", "stock", "ema_stocks")
+    with ema_full_data_tab:
+        show_8ema_csv("TICKERS_FULL_PRICE_DATA.csv", "stock")
 
 with tab_crypto:
     crypto_summary_path = latest_valid_png(os.path.join(DATA_DIR, "crypto_trend_summary_*.png"))
@@ -1323,19 +1311,22 @@ with tab_drawdown:
 
 # 52-Week Highs/Lows
 with tab_52_week:
-    highs_lows_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*_graph.png"))
-    if highs_lows_path:
-        show_chart(highs_lows_path)
-        st.caption("Last 100 trading days. Daily net = new 52-week highs minus new 52-week lows (intraday records vs the prior 252 sessions). Green dot = positive, red dot = negative.")
-    else:
-        st.warning("52-week highs/lows chart not found. Run the combined analysis script to generate it.")
-    highs_lows_csvs = glob.glob(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*.csv"))
-    if highs_lows_csvs:
-        try:
-            highs_lows_df = pd.read_csv(max(highs_lows_csvs, key=os.path.getmtime))
-            st.dataframe(highs_lows_df.iloc[::-1], use_container_width=True, hide_index=True)
-        except Exception as e:
-            st.error(f"Could not read 52-week highs/lows data: {e}")
+    highs_lows_chart_tab, highs_lows_dataset_tab = st.tabs(["Chart", "Full Dataset"])
+    with highs_lows_chart_tab:
+        highs_lows_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*_graph.png"))
+        if highs_lows_path:
+            show_chart(highs_lows_path, max_width=1800, max_height=520)
+            st.caption("Last 252 trading sessions (one trading year). Daily net = new 52-week highs minus new 52-week lows (intraday records vs the prior 252 sessions). Green dot = positive, red dot = negative.")
+        else:
+            st.warning("52-week highs/lows chart not found. Run the combined analysis script to generate it.")
+    with highs_lows_dataset_tab:
+        highs_lows_csvs = glob.glob(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*.csv"))
+        if highs_lows_csvs:
+            try:
+                highs_lows_df = pd.read_csv(max(highs_lows_csvs, key=os.path.getmtime))
+                st.dataframe(highs_lows_df.iloc[::-1], use_container_width=True, hide_index=True)
+            except Exception as e:
+                st.error(f"Could not read 52-week highs/lows data: {e}")
 
 # Notes
 with tab11:
@@ -1475,13 +1466,14 @@ with tab_spy_analysis:
             st.warning("SPY Daily Positive Count Ghart image not found.")
 
     with day_tab3:
-        monthly_cols = st.columns(3)
-        for col, ticker in zip(monthly_cols, ["SPY", "QQQ", "IWM"]):
-            monthly_gain_path = os.path.join(base_dir, f"MONTHLY_{ticker}_Gain_Chart.png")
-            if os.path.exists(monthly_gain_path):
-                col.image(monthly_gain_path, use_container_width=True)
-            else:
-                col.warning(f"Monthly {ticker} Gain Chart image not found.")
+        for monthly_row in (["SPY", "QQQ", "IWM"], ["BTC"]):
+            monthly_cols = st.columns(3)
+            for col, ticker in zip(monthly_cols, monthly_row):
+                monthly_gain_path = os.path.join(base_dir, f"MONTHLY_{ticker}_Gain_Chart.png")
+                if os.path.exists(monthly_gain_path):
+                    col.image(monthly_gain_path, use_container_width=True)
+                else:
+                    col.warning(f"Monthly {ticker} Gain Chart image not found.")
 
     with day_tab4:
         yearly_cols = st.columns(3)
