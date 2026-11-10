@@ -1,0 +1,25 @@
+TICKER,DESCRIPTION,DATE,CLOSE,DAILY_CLOSE_STATE,WEEKLY_CLOSE_STATE,MONTHLY_CLOSE_STATE,8_EMA,8_EMA_ABOVE_BELOW,8_EMA_SLOPE
+KWEB,China Internet,2026-11-09,24.2549991607666,Below,Above,Below,24.06,Above,Upward
+FXI,China Large-Caps,2026-11-09,34.60499954223633,Above,Above,Above,34.11,Above,Upward
+SLV,Silver,2026-11-09,47.6349983215332,Above,Below,Below,47.15,Above,Upward
+GLD,Gold,2026-11-09,376.1600036621094,Above,Below,Below,371.08,Above,Upward
+URA,Uranium,2026-11-09,34.165000915527344,Above,Below,Below,33.33,Above,Upward
+TAN,Solar,2026-11-09,45.13999938964844,Below,Above,Above,43.93,Above,Upward
+EEM,Emerging Markets,2026-11-09,60.80500030517578,Above,Below,Below,60.69,Above,Upward
+GDX,Gold Miners,2026-11-09,91.05000305175781,Above,Above,Above,85.17,Above,Upward
+ICLN,Clean Energy,2026-11-09,16.545000076293945,Below,Above,Below,16.23,Above,Upward
+COPX,Copper Miners,2026-11-09,74.58000183105469,Above,Below,Below,73.29,Above,Upward
+TNX,10-Year Yield,2026-11-09,4.872000217437744,Below,Below,Below,4.91,Below,Downward
+TBT,Short Treasuries,2026-11-09,37.90409851074219,Below,Below,Below,38.22,Below,Downward
+MJ,Marijuana,2026-11-09,23.290000915527344,Below,Above,Below,23.17,Above,Upward
+UGA,Gasoline,2026-11-09,124.30999755859375,Below,Below,Below,131.65,Below,Downward
+EWJ,Japan,2026-11-09,91.12999725341797,Above,Below,Below,91.52,Below,Downward
+TLT,Long Treasuries,2026-11-09,81.94000244140625,Above,Above,Below,81.67,Above,Upward
+HYG,High-Yield Bonds,2026-11-09,77.44999694824219,Above,Above,Below,77.3,Above,Upward
+JNK,High-Yield Bonds,2026-11-09,92.93499755859375,Above,Above,Below,92.79,Above,Upward
+DJP,Commodities,2026-11-09,48.58000183105469,Below,Below,Below,49.52,Below,Downward
+IBIT,Bitcoin,2026-11-09,42.154998779296875,Below,Below,Below,43.69,Below,Downward
+DRAM,Memory Chips,2026-11-09,41.48500061035156,Above,Below,Below,43.57,Below,Downward
+MAGS,Magnificent Seven,2026-11-09,68.94499969482422,Above,Below,Above,68.83,Above,Upward
+QQQE,Equal-Weight Nasdaq,2026-11-09,115.41999816894531,Above,Below,Below,115.23,Above,Upward
+RSP,Equal-Weight S&P,2026-11-09,221.4250030517578,Above,Below,Above,218.95,Above,Upward
