@@ -1,0 +1,30 @@
+TICKER,DESCRIPTION,DATE,CLOSE,DAILY_CLOSE_STATE,WEEKLY_CLOSE_STATE,MONTHLY_CLOSE_STATE,8_EMA,8_EMA_ABOVE_BELOW,8_EMA_SLOPE
+KWEB,China Internet,2026-11-10,24.047000885009766,Below,Above,Below,24.07,Below,Downward
+FXI,China Large-Caps,2026-11-10,34.410099029541016,Below,Above,Above,34.19,Above,Upward
+SLV,Silver,2026-11-10,46.31999969482422,Below,Below,Below,47.05,Below,Downward
+GLD,Gold,2026-11-10,368.53509521484375,Below,Below,Below,371.1,Below,Downward
+URA,Uranium,2026-11-10,32.900001525878906,Below,Below,Below,33.26,Below,Downward
+TAN,Solar,2026-11-10,43.43000030517578,Below,Above,Below,43.83,Below,Downward
+EEM,Emerging Markets,2026-11-10,60.415000915527344,Above,Below,Below,60.67,Below,Downward
+GDX,Gold Miners,2026-11-10,86.31999969482422,Below,Above,Below,85.5,Above,Upward
+ICLN,Clean Energy,2026-11-10,16.104999542236328,Below,Above,Below,16.22,Below,Downward
+COPX,Copper Miners,2026-11-10,72.31999969482422,Below,Below,Below,73.19,Below,Downward
+TNX,10-Year Yield,2026-11-10,5.013000011444092,Above,Above,Above,4.93,Above,Upward
+TBT,Short Treasuries,2026-11-10,39.16999816894531,Above,Above,Above,38.42,Above,Upward
+MJ,Marijuana,2026-11-10,22.600000381469727,Below,Above,Below,23.04,Below,Downward
+UGA,Gasoline,2026-11-10,121.55999755859375,Below,Below,Below,129.18,Below,Downward
+EWJ,Japan,2026-11-10,90.19999694824219,Above,Below,Below,91.29,Below,Downward
+TLT,Long Treasuries,2026-11-10,80.59500122070312,Below,Below,Below,81.43,Below,Downward
+HYG,High-Yield Bonds,2026-11-10,77.11499786376953,Below,Above,Below,77.27,Below,Downward
+JNK,High-Yield Bonds,2026-11-10,92.52999877929688,Below,Above,Below,92.74,Below,Downward
+DJP,Commodities,2026-11-10,48.15399932861328,Below,Below,Below,49.2,Below,Downward
+IBIT,Bitcoin,2026-11-10,41.26499938964844,Below,Below,Below,43.18,Below,Downward
+DRAM,Memory Chips,2026-11-10,40.12009811401367,Above,Below,Below,42.86,Below,Downward
+MAGS,Magnificent Seven,2026-11-10,68.43000030517578,Above,Below,Above,68.77,Below,Downward
+QQQE,Equal-Weight Nasdaq,2026-11-10,114.44499969482422,Above,Below,Below,115.08,Below,Downward
+RSP,Equal-Weight S&P,2026-11-10,220.1300048828125,Above,Below,Below,219.13,Above,Upward
+BUG,Cybersecurity,2026-11-10,44.5099983215332,Above,Below,Above,45.86,Below,Downward
+EWZ,Brazil,2026-11-10,32.17499923706055,Above,Below,Below,32.79,Below,Downward
+HACK,Cybersecurity,2026-11-10,114.5,Above,Below,Below,117.1,Below,Downward
+IFRA,Infrastructure,2026-11-10,57.43519973754883,Above,Below,Below,57.32,Above,Upward
+NCLD,Neocloud,2026-11-10,13.760000228881836,Above,Below,Below,14.26,Below,Downward
