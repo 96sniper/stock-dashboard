@@ -1291,7 +1291,7 @@ with tab_crypto:
 
 # Drawdown
 with tab_drawdown:
-    drawdown_tickers = ["SPY", "QQQ", "SMH", "IWM", "BTC", "UVXY"]
+    drawdown_tickers = ["SPY", "QQQ", "SMH", "IWM", "BTC", "UVXY", "GLD"]
     for drawdown_ticker, drawdown_tab in zip(drawdown_tickers, st.tabs(drawdown_tickers)):
         with drawdown_tab:
             if drawdown_ticker == "UVXY":
@@ -1388,11 +1388,17 @@ with tab_spy_vix:
     ])
 
     with svix_expected_move_tab:
-        expected_move_path = latest_valid_png(os.path.join(base_dir, "spy_expected_move_d_w_*.png"))
-        if expected_move_path:
-            show_chart(expected_move_path)
-        else:
-            st.warning("SPY expected-move PNG not found. Run the combined analysis script to generate it.")
+        current_session_tab, next_session_tab = st.tabs(["Current Session", "Next Session"])
+        for session_tab, prefix, label in (
+            (current_session_tab, "spy_expected_move_d_w", "Current Session"),
+            (next_session_tab, "spy_expected_move_next_session", "Next Session"),
+        ):
+            with session_tab:
+                expected_move_path = latest_valid_png(os.path.join(base_dir, f"{prefix}_*.png"))
+                if expected_move_path:
+                    show_chart(expected_move_path)
+                else:
+                    st.warning(f"SPY {label} expected-move PNG not found. Run the combined analysis script to generate it.")
 
     with svix_tab1:
         vix_four_year_col, vix_last_five_col = st.columns(2)
@@ -1442,14 +1448,22 @@ with tab_spy_analysis:
 
     base_dir = DATA_DIR
 
-    day_tab1, day_tab2, day_tab3, day_tab4, day_tab5, day_tab6 = st.tabs([
+    day_tab1, day_tab2, day_tab3, day_tab4, day_tab5, day_tab6, spy_top_month_tab = st.tabs([
         "Daily SPY Gain Chart",
         "SPY Daily Positive Count Ghart",
         "Monthly Gain Chart",
         "Yearly Gain Chart",
         "SPY Last 10 Weeks",
         "Price vs Avg Trend",
+        "SPY_Top_Month",
     ])
+
+    with spy_top_month_tab:
+        top_month_path = latest_valid_png(os.path.join(base_dir, "spy_top_month_*.png"))
+        if top_month_path:
+            show_chart(top_month_path)
+        else:
+            st.warning("SPY top-month chart not found. Run the combined analysis script to generate it.")
 
     with day_tab1:
         gain_chart_path = os.path.join(base_dir, "Daily_SPY_Gain_Chart.png")
@@ -1466,7 +1480,7 @@ with tab_spy_analysis:
             st.warning("SPY Daily Positive Count Ghart image not found.")
 
     with day_tab3:
-        for monthly_row in (["SPY", "QQQ", "IWM"], ["BTC"]):
+        for monthly_row in (["SPY", "QQQ", "IWM"], ["BTC", "CL1!"]):
             monthly_cols = st.columns(3)
             for col, ticker in zip(monthly_cols, monthly_row):
                 monthly_gain_path = os.path.join(base_dir, f"MONTHLY_{ticker}_Gain_Chart.png")
@@ -1476,13 +1490,14 @@ with tab_spy_analysis:
                     col.warning(f"Monthly {ticker} Gain Chart image not found.")
 
     with day_tab4:
-        yearly_cols = st.columns(3)
-        for col, ticker in zip(yearly_cols, ["SPY", "QQQ", "IWM"]):
-            yearly_gain_path = os.path.join(base_dir, f"YEARLY_{ticker}_Gain_Chart.png")
-            if os.path.exists(yearly_gain_path):
-                col.image(yearly_gain_path, use_container_width=True)
-            else:
-                col.warning(f"Yearly {ticker} Gain Chart image not found.")
+        for yearly_row in (["SPY", "QQQ", "IWM"], ["CL1!"]):
+            yearly_cols = st.columns(3)
+            for col, ticker in zip(yearly_cols, yearly_row):
+                yearly_gain_path = os.path.join(base_dir, f"YEARLY_{ticker}_Gain_Chart.png")
+                if os.path.exists(yearly_gain_path):
+                    col.image(yearly_gain_path, use_container_width=True)
+                else:
+                    col.warning(f"Yearly {ticker} Gain Chart image not found.")
 
     with day_tab5:
         spy_10wk_matches = glob.glob(os.path.join(base_dir, "spy_last_10_weeks_*_graph.png"))
@@ -1536,7 +1551,7 @@ with tab_ytd:
     with sub_tab_ytd_lines:
         ytd_line_symbols = [
             "HOOD", "SPCX", "ORCL", "TSLA", "META", "MSFT", "NVDA", "GOOGL",
-            "AMZN", "QQQ", "SPY", "AAPL", "IWM", "SMH", "NFLX", "AMD", "BTC",
+            "AMZN", "QQQ", "SPY", "AAPL", "IWM", "SMH", "NFLX", "AMD", "BTC", "CL1!",
         ]
         for ticker_tab, symbol in zip(st.tabs(ytd_line_symbols), ytd_line_symbols):
             with ticker_tab:
@@ -1842,19 +1857,27 @@ with tab_fed_funds_spy:
 
     base_dir = DATA_DIR
 
-    st.subheader("Fed Meeting Dates")
-    fed_meeting_matches = glob.glob(os.path.join(base_dir, "fed_meeting_dates_*.csv"))
-    if fed_meeting_matches:
-        latest_fed_meetings = max(fed_meeting_matches, key=os.path.getmtime)
-        try:
-            fed_meetings_df = pd.read_csv(latest_fed_meetings)
-            upcoming_meetings = fed_meetings_df[fed_meetings_df["STATUS"] == "Upcoming"]
-            prior_meetings = fed_meetings_df[fed_meetings_df["STATUS"] == "Prior"].iloc[::-1]
-            st.write("Upcoming meetings")
-            st.dataframe(upcoming_meetings, use_container_width=True, hide_index=True)
-            st.write("Prior meetings (most recent first)")
-            st.dataframe(prior_meetings, use_container_width=True, hide_index=True)
-        except Exception as e:
-            st.error(f"⚠️ Failed to load Fed meeting dates CSV file: {e}")
-    else:
-        st.warning("Fed meeting dates CSV file not found.")
+    fed_calendar_tab, fed_datasets_tab = st.tabs(["Calendar", "Full Datasets"])
+    with fed_calendar_tab:
+        fed_calendar_path = latest_valid_png(os.path.join(base_dir, "fed_meeting_calendar_*.png"))
+        if fed_calendar_path:
+            show_chart(fed_calendar_path, max_width=1800, max_height=720)
+        else:
+            st.warning("Fed meeting calendar PNG not found. Run the combined analysis script to generate it.")
+
+    with fed_datasets_tab:
+        fed_meeting_matches = glob.glob(os.path.join(base_dir, "fed_meeting_dates_*.csv"))
+        if fed_meeting_matches:
+            latest_fed_meetings = max(fed_meeting_matches, key=os.path.getmtime)
+            try:
+                fed_meetings_df = pd.read_csv(latest_fed_meetings)
+                upcoming_meetings = fed_meetings_df[fed_meetings_df["STATUS"] == "Upcoming"]
+                prior_meetings = fed_meetings_df[fed_meetings_df["STATUS"] == "Prior"].iloc[::-1]
+                st.write("Upcoming meetings")
+                st.dataframe(upcoming_meetings, use_container_width=True, hide_index=True)
+                st.write("Prior meetings (most recent first)")
+                st.dataframe(prior_meetings, use_container_width=True, hide_index=True)
+            except Exception as e:
+                st.error(f"⚠️ Failed to load Fed meeting dates CSV file: {e}")
+        else:
+            st.warning("Fed meeting dates CSV file not found.")
