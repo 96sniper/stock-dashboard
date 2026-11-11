@@ -894,7 +894,12 @@ with tab3:
         ]
         valid_matches = [path for path in matches if is_valid_png(path)]
         if valid_matches:
-            st.image(max(valid_matches, key=os.path.getmtime), width=1500)
+            try:
+                st.image(max(valid_matches, key=os.path.getmtime), width=1500)
+            except Image.DecompressionBombError:
+                st.error("The all-stock summary PNG is too large to display safely. "
+                         "Regenerate it with the updated combined script and upload the new PNG. "
+                         "The full dataset remains available in the table above.")
         else:
             st.warning("Close Above/Below Summary - All Stocks image not found.")
 
