@@ -1513,12 +1513,12 @@ with tab_spy_analysis:
             st.warning("SPY Last 10 Weeks image not found.")
 
     with day_tab6:
-        trend_tickers = ["SPY", "QQQ", "IWM"]
+        trend_tickers = ["SPY", "QQQ", "IWM", "BTC"]
         for ticker, trend_tab in zip(trend_tickers, st.tabs(trend_tickers)):
             with trend_tab:
                 trend_chart_path = os.path.join(base_dir, f"{ticker}_Monthly_Regression_Chart.png")
                 if os.path.exists(trend_chart_path):
-                    show_chart(trend_chart_path, width=1000)
+                    show_chart(trend_chart_path, max_width=1850, max_height=620)
                 else:
                     st.warning(f"{ticker} Monthly Regression chart not found.")
 
@@ -1556,7 +1556,7 @@ with tab_ytd:
     with sub_tab_ytd_lines:
         ytd_line_symbols = [
             "HOOD", "SPCX", "ORCL", "TSLA", "META", "MSFT", "NVDA", "GOOGL",
-            "AMZN", "QQQ", "SPY", "AAPL", "IWM", "SMH", "NFLX", "AMD", "BTC", "CL1!",
+            "AMZN", "QQQ", "SPY", "AAPL", "IWM", "SMH", "NFLX", "AMD", "LLY", "BTC", "CL1!",
         ]
         for ticker_tab, symbol in zip(st.tabs(ytd_line_symbols), ytd_line_symbols):
             with ticker_tab:
@@ -1862,7 +1862,13 @@ with tab_fed_funds_spy:
 
     base_dir = DATA_DIR
 
-    fed_calendar_tab, fed_datasets_tab = st.tabs(["Calendar", "Full Datasets"])
+    fed_calendar_tab, yield_curve_tab, fed_datasets_tab = st.tabs(["Calendar", "Yield Curve", "Full Datasets"])
+    with yield_curve_tab:
+        yield_curve_path = latest_valid_png(os.path.join(base_dir, "treasury_yield_curve_*.png"))
+        if yield_curve_path:
+            show_chart(yield_curve_path, max_width=1600, max_height=720)
+        else:
+            st.warning("Treasury yield curve PNG not found. Run the combined analysis script to generate it.")
     with fed_calendar_tab:
         fed_calendar_path = latest_valid_png(os.path.join(base_dir, "fed_meeting_calendar_*.png"))
         if fed_calendar_path:
