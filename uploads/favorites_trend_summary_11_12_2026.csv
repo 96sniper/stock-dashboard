@@ -1,0 +1,15 @@
+TICKER,DATE,CLOSE,DAILY_CLOSE_STATE,WEEKLY_CLOSE_STATE,MONTHLY_CLOSE_STATE,8_EMA,8_EMA_ABOVE_BELOW,8_EMA_SLOPE
+HOOD,2026-11-12,81.35,Below,Below,Below,83.62,Below,Downward
+SPCX,2026-11-12,139.94,Above,Below,Below,139.3,Above,Upward
+ORCL,2026-11-12,127.11,Above,Below,Below,123.91,Above,Upward
+TSLA,2026-11-12,397.45,Above,Below,Above,384.53,Above,Upward
+META,2026-11-12,623.61,Below,Below,Above,627.75,Below,Downward
+MSFT,2026-11-12,523.0,Below,Above,Above,529.42,Below,Downward
+NVDA,2026-11-12,166.19,Below,Below,Below,181.02,Below,Downward
+GOOGL,2026-11-12,298.7,Above,Above,Below,292.35,Above,Upward
+AMZN,2026-11-12,267.44,Above,Above,Above,263.23,Above,Upward
+AAPL,2026-11-12,354.88,Above,Above,Above,349.39,Above,Upward
+SMH,2026-11-12,501.7300109863281,Above,Below,Below,498.0,Above,Upward
+NFLX,2026-11-12,62.69,Below,Below,Below,63.79,Below,Downward
+AMD,2026-11-12,585.3,Above,Above,Above,523.26,Above,Upward
+LLY,2026-11-12,1427.28,Above,Above,Above,1405.57,Above,Upward
