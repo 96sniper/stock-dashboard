@@ -1401,7 +1401,7 @@ with tab_spy_vix:
             with session_tab:
                 expected_move_path = latest_valid_png(os.path.join(base_dir, f"{prefix}_*.png"))
                 if expected_move_path:
-                    show_chart(expected_move_path)
+                    show_chart(expected_move_path, max_width=1850, max_height=520)
                 else:
                     st.warning(f"SPY {label} expected-move PNG not found. Run the combined analysis script to generate it.")
 
@@ -1412,13 +1412,13 @@ with tab_spy_vix:
             os.path.join(base_dir, "vix_weekday_*_graph.png"), exclude_substring="_last_five_",
         )
         if vix_weekday_path:
-            show_chart(vix_weekday_path, container=vix_four_year_col)
+            show_chart(vix_weekday_path, container=vix_four_year_col, max_width=850, max_height=620)
         else:
             vix_four_year_col.warning("VIX Weekday Returns & Hit Rate image not found.")
         vix_last_five_col.subheader("Last 5 Occurrences per Weekday")
         vix_recent_path = latest_valid_png(os.path.join(base_dir, "vix_weekday_last_five_*_graph.png"))
         if vix_recent_path:
-            show_chart(vix_recent_path, container=vix_last_five_col)
+            show_chart(vix_recent_path, container=vix_last_five_col, max_width=850, max_height=620)
         else:
             vix_last_five_col.warning("VIX Last 5 weekday image not found.")
 
@@ -1429,13 +1429,13 @@ with tab_spy_vix:
             os.path.join(base_dir, "spy_weekday_*_graph.png"), exclude_substring="_last_five_",
         )
         if spy_weekday_path:
-            show_chart(spy_weekday_path, container=spy_four_year_col)
+            show_chart(spy_weekday_path, container=spy_four_year_col, max_width=850, max_height=620)
         else:
             spy_four_year_col.warning("SPY Daily Returns & % Positive Rate image not found.")
         spy_last_five_col.subheader("Last 5 Occurrences per Weekday")
         spy_recent_path = latest_valid_png(os.path.join(base_dir, "spy_weekday_last_five_*_graph.png"))
         if spy_recent_path:
-            show_chart(spy_recent_path, container=spy_last_five_col)
+            show_chart(spy_recent_path, container=spy_last_five_col, max_width=850, max_height=620)
         else:
             spy_last_five_col.warning("SPY Last 5 weekday image not found.")
 
@@ -1459,7 +1459,7 @@ with tab_spy_analysis:
         "Monthly Gain Chart",
         "Yearly Gain Chart",
         "SPY Last 10 Weeks",
-        "Price vs Avg Trend",
+        "Monthly Regression",
         "SPY_Top_Month",
     ])
 
@@ -1516,11 +1516,11 @@ with tab_spy_analysis:
         trend_tickers = ["SPY", "QQQ", "IWM"]
         for ticker, trend_tab in zip(trend_tickers, st.tabs(trend_tickers)):
             with trend_tab:
-                trend_chart_path = os.path.join(base_dir, f"{ticker}_Price_vs_Avg_Trend.png")
+                trend_chart_path = os.path.join(base_dir, f"{ticker}_Monthly_Regression_Chart.png")
                 if os.path.exists(trend_chart_path):
                     show_chart(trend_chart_path, width=1000)
                 else:
-                    st.warning(f"{ticker} Price vs Avg Trend image not found.")
+                    st.warning(f"{ticker} Monthly Regression chart not found.")
 
 #######################################################################################################################################################################
 
