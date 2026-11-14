@@ -1191,14 +1191,16 @@ with tab_market_cap:
 
 # Moving Average Studies
 with tab9:
-    tab_20_50_crossover, tab_8ema_study = st.tabs(["20/50 Crossover", "8_EMA Study"])
+    tab_20_50_crossover, tab_8_20_crossover, tab_8ema_study = st.tabs(
+        ["20/50 Crossover", "8 EMA / 20 SMA Crossover", "8_EMA Study"]
+    )
 
-with tab_20_50_crossover:
+
+def show_crossover_study(file_prefix: str, study_label: str) -> None:
     base_dir = DATA_DIR
     crossover_recent_tab, crossover_historical_tab = st.tabs(["Recent", "Historical"])
 
-    # Search for files starting with "spy_daily_data" and ending in "_graph.png"
-    pattern = os.path.join(base_dir, "spy_daily_data_*_page_*_graph.png")
+    pattern = os.path.join(base_dir, f"{file_prefix}_*_page_*_graph.png")
     matching_files = glob.glob(pattern)
 
     if matching_files:
@@ -1225,11 +1227,15 @@ with tab_20_50_crossover:
             for column, page_path in zip(recent_columns, latest_run_pages[:2]):
                 column.subheader(f"Page {extract_page_number(page_path)}")
                 show_chart(page_path, container=column)
-            st.write("SPY daily candlestick pages with MA 20/50 crossover zones and summary stats.")
-            st.write("Green Zones show where the 20MA flips above the 50MA. Red Zones show where the 20MA flips below the 50MA.")
-            st.write("This chart shows that when a 20/50ma crossover, the odds of price action to a certain direction increases.")
-            st.write("This should help me in my short term trading by knowing what price should do.")
-            st.write("The price action following a 20/50ma crossover is not guaranteed but the odds increase for a certain direction.")
+            st.write(f"SPY daily candlestick pages with {study_label} crossover zones and summary stats.")
+            if study_label == "MA 20/50":
+                st.write("Green Zones show where the 20MA flips above the 50MA. Red Zones show where the 20MA flips below the 50MA.")
+                st.write("This chart shows that when a 20/50ma crossover, the odds of price action to a certain direction increases.")
+                st.write("This should help me in my short term trading by knowing what price should do.")
+                st.write("The price action following a 20/50ma crossover is not guaranteed but the odds increase for a certain direction.")
+            else:
+                st.write("Green zones begin when the daily 8 EMA crosses above the 20 SMA; red zones begin when it crosses below.")
+                st.write("Uses unadjusted daily closes since 2000. Summary stats show historical zone ranges and trading-day lengths, including the developing latest zone; they are not a forecast.")
             st.write("The zones were calculated by looking for the maximum price gain or decline within the zone. This simply gives an idea to what direction price should be heading short term.")
         with crossover_historical_tab:
             for page_path in latest_run_pages[2:]:
@@ -1239,9 +1245,16 @@ with tab_20_50_crossover:
                 st.info("No historical crossover pages available for this run.")
     else:
         with crossover_recent_tab:
-            st.warning("20/50ma crossover graph images not found.")
+            st.warning(f"{study_label} crossover graph images not found.")
         with crossover_historical_tab:
             st.info("No historical crossover pages available.")
+
+
+with tab_20_50_crossover:
+    show_crossover_study("spy_daily_data", "MA 20/50")
+
+with tab_8_20_crossover:
+    show_crossover_study("spy_daily_8ema_20sma", "8 EMA / 20 SMA")
 
 ###############################################################################################################################################################
 
@@ -1862,7 +1875,15 @@ with tab_fed_funds_spy:
 
     base_dir = DATA_DIR
 
-    fed_calendar_tab, yield_curve_tab, fed_datasets_tab = st.tabs(["Calendar", "Yield Curve", "Full Datasets"])
+    fed_calendar_tab, yield_curve_tab, gdp_growth_tab, fed_datasets_tab = st.tabs(
+        ["Calendar", "Yield Curve", "GDP Growth", "Full Datasets"]
+    )
+    with gdp_growth_tab:
+        gdp_growth_path = latest_valid_png(os.path.join(base_dir, "gdp_quarterly_growth_*.png"))
+        if gdp_growth_path:
+            show_chart(gdp_growth_path, max_width=1850, max_height=650)
+        else:
+            st.warning("GDP growth PNG not found. Run the combined analysis script to generate it.")
     with yield_curve_tab:
         yield_curve_path = latest_valid_png(os.path.join(base_dir, "treasury_yield_curve_*.png"))
         if yield_curve_path:
