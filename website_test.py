@@ -607,32 +607,59 @@ with tab1:
             except Exception:
                 return -1
 
-        summary_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_summary_*_graph.png"))
-        if summary_matches:
-            st.image(max(summary_matches, key=os.path.getmtime), use_container_width=True)
-        else:
-            st.warning("Mercury retrograde summary image not found.")
-
-        period_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_*.xlsx"))
-        if period_matches:
-            try:
-                st.write("Mercury retrograde periods")
-                st.dataframe(
-                    pd.read_excel(max(period_matches, key=os.path.getmtime)),
-                    use_container_width=True,
-                    hide_index=True,
-                )
-            except Exception as e:
-                st.error(f"⚠️ Failed to load Mercury retrograde periods file: {e}")
-        else:
-            st.warning("Mercury retrograde periods file not found.")
-
-        page_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_spy_page_*_graph.png"))
+        mercury_recent_tab, mercury_historical_tab = st.tabs(["Recent", "Historical"])
+        summary_path = latest_valid_png(os.path.join(base_dir, "mercury_retrograde_summary_*_graph.png"))
+        page_matches = [
+            path for path in glob.glob(os.path.join(base_dir, "mercury_retrograde_spy_page_*_graph.png"))
+            if re.fullmatch(r"mercury_retrograde_spy_page_\d+_\d{2}_\d{2}_\d{4}_graph\.png",
+                            os.path.basename(path))
+        ]
         if page_matches:
-            for page_path in sorted(page_matches, key=extract_mercury_page_number, reverse=True):
-                show_chart(page_path)
+            latest_page = max(page_matches, key=os.path.getmtime)
+            run_suffix = os.path.basename(latest_page).split("_page_", 1)[1].split("_", 1)[1]
+            latest_pages = sorted(
+                [path for path in page_matches
+                 if os.path.basename(path).split("_page_", 1)[1].split("_", 1)[-1] == run_suffix],
+                key=extract_mercury_page_number, reverse=True,
+            )
         else:
-            st.warning("Mercury retrograde SPY page images not found.")
+            latest_pages = []
+
+        with mercury_recent_tab:
+            summary_column, recent_column = st.columns(2)
+            with summary_column:
+                st.subheader("Summary Stats")
+                if summary_path:
+                    show_chart(summary_path)
+                else:
+                    st.warning("Mercury retrograde summary image not found.")
+            with recent_column:
+                if latest_pages:
+                    st.subheader(f"Page {extract_mercury_page_number(latest_pages[0])}")
+                    show_chart(latest_pages[0])
+                else:
+                    st.warning("Mercury retrograde SPY page images not found.")
+
+            period_matches = glob.glob(os.path.join(base_dir, "mercury_retrograde_*.xlsx"))
+            if period_matches:
+                try:
+                    st.write("Mercury retrograde periods")
+                    st.dataframe(
+                        pd.read_excel(max(period_matches, key=os.path.getmtime)),
+                        use_container_width=True,
+                        hide_index=True,
+                    )
+                except Exception as e:
+                    st.error(f"⚠️ Failed to load Mercury retrograde periods file: {e}")
+            else:
+                st.warning("Mercury retrograde periods file not found.")
+
+        with mercury_historical_tab:
+            for page_path in latest_pages[1:]:
+                st.subheader(f"Page {extract_mercury_page_number(page_path)}")
+                show_chart(page_path)
+            if len(latest_pages) <= 1:
+                st.info("No historical Mercury retrograde pages available.")
 
 ###############################################################################################################################################################
 
@@ -1318,18 +1345,38 @@ with tab_drawdown:
                     "Green is above the average; red is below."
                 )
             else:
-                st.caption("Last 10 years: percentage below the running adjusted-close peak within the chart window. Zero marks a new or recovered peak.")
+                st.caption("Up to 17 years (or available history if shorter): percentage below the running adjusted-close peak within the chart window. Zero marks a new or recovered peak.")
             drawdown_path = latest_valid_png(
                 os.path.join(DATA_DIR, f"{drawdown_ticker.lower()}_drawdown_*.png")
             )
             if drawdown_path:
-                show_chart(drawdown_path)
+                if drawdown_ticker == "UVXY":
+                    show_chart(drawdown_path)
+                else:
+                    show_chart(drawdown_path, max_width=1850, max_height=620)
             else:
                 st.warning(f"{drawdown_ticker} drawdown chart not found. Run the combined analysis script to generate it.")
 
 # 52-Week Highs/Lows
 with tab_52_week:
-    highs_lows_chart_tab, highs_lows_dataset_tab = st.tabs(["Chart", "Full Dataset"])
+    highs_lows_chart_tab, latest_ath_tab, highs_lows_dataset_tab = st.tabs(
+        ["Chart", "Latest ATH Dates", "Full Dataset"]
+    )
+    with latest_ath_tab:
+        latest_ath_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_latest_ath_*_graph.png"))
+        if latest_ath_path:
+            show_chart(latest_ath_path, max_width=1850, max_height=650)
+        else:
+            st.warning("Latest ATH dates chart not found. Run the combined analysis script to generate it.")
+        st.caption(
+            "Each ticker contributes once, in the month of its most recent all-time intraday high."
+            " Uses Yahoo's full available split-adjusted daily history; tied highs use the latest date."
+            " ATH dates before 2020 remain in the table but are excluded from the chart."
+            " Blank dates indicate unavailable data."
+        )
+        latest_ath_csvs = glob.glob(os.path.join(DATA_DIR, "stocks_latest_ath_dates_*.csv"))
+        show_csv(max(latest_ath_csvs, key=os.path.getmtime) if latest_ath_csvs else None,
+                 "Latest ATH Dates")
     with highs_lows_chart_tab:
         highs_lows_path = latest_valid_png(os.path.join(DATA_DIR, "stocks_52_week_highs_lows_*_graph.png"))
         if highs_lows_path:
