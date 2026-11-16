@@ -533,16 +533,17 @@ with tab_trend_summary:
                 try:
                     stock_trends = pd.read_csv(max(csv_matches, key=os.path.getmtime), keep_default_na=False)
                     trend_columns = [
-                        "8_EMA_ABOVE_BELOW", "8_EMA_SLOPE", "DAILY_CLOSE_STATE",
-                        "WEEKLY_CLOSE_STATE", "MONTHLY_CLOSE_STATE",
+                        "8_EMA_ABOVE_BELOW", "8_EMA_SLOPE", "8_EMA_20_SMA_CROSS",
+                        "DAILY_CLOSE_ABV_BLW", "WEEKLY_8_EMA_20_SMA_CROSS",
+                        "WEEKLY_CLOSE_ABV_BLW", "MONTHLY_CLOSE_ABV_BLW",
                     ]
-                    stock_trends = stock_trends[["TICKER", "DATE", *trend_columns]]
+                    stock_trends = stock_trends[["TICKER", "DATE", *trend_columns, "TOTAL_SCORE"]]
                     if stock_trends.empty:
                         raise ValueError("The all-stock trend summary contains no ticker rows.")
                     unavailable = stock_trends[trend_columns].eq("Unavailable").any(axis=1)
                     if unavailable.any():
                         st.warning(f"Trend data unavailable for {int(unavailable.sum())} tickers; those rows are marked Unavailable.")
-                    st.caption("Short term: 8 EMA Above/Below, 8 EMA Slope, Daily. Longer term: Weekly, Monthly.")
+                    st.caption("Short term: 8 EMA Above/Below, 8 EMA Slope, daily 8 EMA / 20 SMA, Daily. Longer term: weekly 8 EMA / 20 SMA, Weekly, Monthly. Total score is the percentage of available indicators that are Above or Upward; the current weekly candle may still be developing.")
                     st.dataframe(stock_trends, use_container_width=True, hide_index=True)
                 except (OSError, ValueError, KeyError, pd.errors.ParserError) as e:
                     st.error(f"Unable to load All Stocks trend summary: {e}")
@@ -702,11 +703,19 @@ with tab2:
     for timeframe, timeframe_tab in zip(("Daily", "Weekly", "Monthly"), timeframe_tabs):
         period = timeframe.lower()
         with timeframe_tab:
-            count_tab, bullish_tab, bearish_tab = st.tabs([
+            count_tab, bullish_tab, bearish_tab, sector_tab = st.tabs([
                 f"{timeframe} Count",
                 f"{timeframe} Bullish Wick",
                 f"{timeframe} Bearish Wick",
+                "By Sector",
             ])
+
+            with sector_tab:
+                show_latest_png(
+                    f"{period}_tail_candle_by_sector_*.png",
+                    f"{timeframe} Tail Candle Count by Sector image not found.",
+                    width=1200,
+                )
 
             with count_tab:
                 net_column, separate_column = st.columns(2)
@@ -981,23 +990,11 @@ with tab_sector_summary:
 
     with sector_tabs[0]:
         st.subheader("BULL_PCT per Sector")
-        donut_columns = st.columns(4)
-        for index, entry in enumerate(sector_entries):
-            with donut_columns[index % 4]:
-                sector_name = entry["name"]
-                st.markdown(
-                    f'<div style="text-align:center; font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">{sector_name}</div>',
-                    unsafe_allow_html=True,
-                )
-                latest_xlsx = entry["xlsx"]
-                if latest_xlsx:
-                    try:
-                        df = pd.read_excel(latest_xlsx)
-                        render_bull_pct_donut(df)
-                    except Exception:
-                        st.warning(f"{sector_name} data unreadable.")
-                else:
-                    st.warning(f"{sector_name} XLSX not found.")
+        breadth_matches = glob.glob(os.path.join(base_dir, "BULL_PCT_per_SECTOR_*.png"))
+        if breadth_matches:
+            show_chart(max(breadth_matches, key=os.path.getmtime), width=1500)
+        else:
+            st.warning("BULL_PCT per Sector image not found. Run the combined analysis script to generate it.")
 
     for sector_tab, sector_name in zip(sector_tabs[1:], sorted_sectors):
         with sector_tab:
@@ -1086,23 +1083,11 @@ with tab_industry_summary:
 
         with industry_tabs[0]:
             st.subheader("BULL_PCT per Industry")
-            donut_columns = st.columns(4)
-            for index, entry in enumerate(industry_entries):
-                with donut_columns[index % 4]:
-                    label = entry["label"]
-                    st.markdown(
-                        f'<div style="text-align:center; font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">{label}</div>',
-                        unsafe_allow_html=True,
-                    )
-                    latest_xlsx = entry["xlsx"]
-                    if latest_xlsx:
-                        try:
-                            df = pd.read_excel(latest_xlsx)
-                            render_bull_pct_donut(df)
-                        except Exception:
-                            st.warning(f"{label} data unreadable.")
-                    else:
-                        st.warning(f"{label} XLSX not found.")
+            breadth_matches = glob.glob(os.path.join(base_dir, "BULL_PCT_per_INDUSTRY_*.png"))
+            if breadth_matches:
+                show_chart(max(breadth_matches, key=os.path.getmtime), width=1800)
+            else:
+                st.warning("BULL_PCT per Industry image not found. Run the combined analysis script to generate it.")
 
         for industry_tab, entry in zip(industry_tabs[1:], industry_entries):
             with industry_tab:
@@ -1513,15 +1498,24 @@ with tab_spy_analysis:
 
     base_dir = DATA_DIR
 
-    day_tab1, day_tab2, day_tab3, day_tab4, day_tab5, day_tab6, spy_top_month_tab = st.tabs([
+    day_tab1, day_tab2, spy_projection_tab, day_tab3, day_tab4, day_tab5, day_tab6, spy_top_month_tab, spy_ath_tab = st.tabs([
         "Daily SPY Gain Chart",
         "SPY Daily Positive Count Ghart",
+        "Two-Week Projection",
         "Monthly Gain Chart",
         "Yearly Gain Chart",
         "SPY Last 10 Weeks",
         "Monthly Regression",
         "SPY_Top_Month",
+        "SPY All-Time Highs",
     ])
+
+    with spy_ath_tab:
+        spy_ath_path = os.path.join(base_dir, "SPY_Yearly_All_Time_Highs.png")
+        if os.path.exists(spy_ath_path):
+            show_chart(spy_ath_path, max_width=1850, max_height=650)
+        else:
+            st.warning("SPY yearly all-time-high chart not found. Run the combined analysis script to generate it.")
 
     with spy_top_month_tab:
         top_month_path = latest_valid_png(os.path.join(base_dir, "spy_top_month_*.png"))
@@ -1543,6 +1537,18 @@ with tab_spy_analysis:
             st.image(positive_count_path, use_container_width=True)
         else:
             st.warning("SPY Daily Positive Count Ghart image not found.")
+
+    with spy_projection_tab:
+        projection_path = os.path.join(base_dir, "SPY_Two_Week_Seasonality_Projection.png")
+        if os.path.exists(projection_path):
+            show_chart(projection_path, max_width=1850, max_height=650)
+            st.caption(
+                "Two calendar weeks of NYSE sessions. Blue dots compound the displayed historical "
+                "calendar-date average gains from the current SPY baseline; past-date dots are hypothetical. "
+                "Completed regular-hours hourly candles show actual prices. Historical patterns are not forecasts."
+            )
+        else:
+            st.warning("SPY two-week projection not found. Run the combined analysis script to generate it.")
 
     with day_tab3:
         for monthly_row in (["SPY", "QQQ", "IWM"], ["BTC", "CL1!"]):
@@ -1688,7 +1694,6 @@ with tab_ytd:
             st.warning("Sector ETF YTD analysis file not found.")
 
     with ytd_sub_all:
-        st.subheader("All Stocks")
         ath_breadth_path = latest_valid_png(os.path.join(base_dir, "stocks_ath_breadth_*_graph.png"))
         if ath_breadth_path:
             show_chart(ath_breadth_path, max_width=1600, max_height=640)
