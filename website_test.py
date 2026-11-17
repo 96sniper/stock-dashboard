@@ -144,99 +144,6 @@ def latest_valid_png(pattern: str, exclude_substring: str | None = None) -> str 
     return None
 
 
-def render_bull_pct_donut(df: pd.DataFrame) -> None:
-    def polar_to_cartesian(center_x: float, center_y: float, radius: float, angle_in_degrees: float) -> tuple[float, float]:
-        angle_in_radians = (angle_in_degrees - 90.0) * 3.141592653589793 / 180.0
-        return (
-            center_x + radius * float(__import__("math").cos(angle_in_radians)),
-            center_y + radius * float(__import__("math").sin(angle_in_radians)),
-        )
-
-    def describe_arc(center_x: float, center_y: float, radius: float, start_angle: float, end_angle: float) -> str:
-        start_x, start_y = polar_to_cartesian(center_x, center_y, radius, end_angle)
-        end_x, end_y = polar_to_cartesian(center_x, center_y, radius, start_angle)
-        large_arc_flag = "1" if end_angle - start_angle > 180 else "0"
-        return (
-            f"M {center_x} {center_y} "
-            f"L {start_x:.2f} {start_y:.2f} "
-            f"A {radius} {radius} 0 {large_arc_flag} 0 {end_x:.2f} {end_y:.2f} "
-            "Z"
-        )
-
-    bull_pct_column = None
-    for column in df.columns:
-        normalized = str(column).strip().upper().replace(" ", "_")
-        if normalized == "BULL_PCT":
-            bull_pct_column = column
-            break
-
-    if bull_pct_column is None:
-        return
-
-    numeric_values = pd.to_numeric(df[bull_pct_column], errors="coerce").dropna().round(2)
-    if numeric_values.empty:
-        return
-
-    target_values = [0.0, 33.33, 66.67, 100.0]
-    counts = [
-        int(((numeric_values == 0.0) | (numeric_values == 0)).sum()) if target_values[0] == 0.0 else 0,
-        int(((numeric_values >= 32.99) & (numeric_values <= 33.67)).sum()) if target_values[1] == 33.33 else 0,
-        int(((numeric_values >= 66.0) & (numeric_values <= 67.34)).sum()) if target_values[2] == 66.67 else 0,
-        int(((numeric_values == 100.0) | (numeric_values == 100)).sum()) if target_values[3] == 100.0 else 0,
-    ]
-    if sum(counts) == 0:
-        return
-
-    colors = ["#F04444", "#FFFFFF", "#FFFFFF", "#2ECC71"]
-    labels = ["0", "33.33", "66.67", "100"]
-
-    total = sum(counts)
-    center_x = 90.0
-    center_y = 90.0
-    radius = 72.0
-    stroke_width = 28.0
-    current_angle = 0.0
-    svg_paths = []
-
-    for count, color in zip(counts, colors):
-        if count <= 0:
-            continue
-        sweep_angle = 360.0 * (count / total)
-        start_angle = current_angle
-        end_angle = current_angle + sweep_angle
-        
-        # Handle full 360° arc by splitting into two 180° arcs
-        if sweep_angle >= 359.99:
-            path1 = describe_arc(center_x, center_y, radius, start_angle, start_angle + 180.0)
-            path2 = describe_arc(center_x, center_y, radius, start_angle + 180.0, start_angle + 360.0)
-            svg_paths.append(f'<path d="{path1}" fill="{color}" stroke="#666666" stroke-width="1.5" />')
-            svg_paths.append(f'<path d="{path2}" fill="{color}" stroke="#666666" stroke-width="1.5" />')
-        else:
-            path = describe_arc(center_x, center_y, radius, start_angle, end_angle)
-            svg_paths.append(
-                f'<path d="{path}" fill="{color}" stroke="#666666" stroke-width="1.5" />'
-            )
-        current_angle = end_angle
-
-    legend_text = " | ".join(f"{label}: {count}" for label, count in zip(labels, counts))
-    svg = f'''
-    <div style="display:flex; justify-content:center; margin:0.35rem 0 0.75rem 0;">
-      <svg width="220" height="220" viewBox="0 0 180 180" role="img" aria-label="BULL_PCT donut chart">
-        <circle cx="90" cy="90" r="{radius}" fill="#FFFFFF" stroke="#D0D0D0" stroke-width="1" />
-        {''.join(svg_paths)}
-        <circle cx="90" cy="90" r="{radius - stroke_width}" fill="#FFFFFF" stroke="#D0D0D0" stroke-width="1" />
-        <text x="90" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#111111">BULL_PCT</text>
-        <text x="90" y="104" text-anchor="middle" font-size="10" fill="#444444">{total} rows</text>
-      </svg>
-    </div>
-    <div style="text-align:center; font-size:0.8rem; color:#444444; margin-top:-0.35rem; margin-bottom:0.75rem;">
-      {legend_text}
-    </div>
-    '''
-
-    components.html(svg, height=320, scrolling=False)
-
-
 def render_daily_close_strength_donut(df: pd.DataFrame) -> None:
     ticker_column = find_matching_column(df, ["TICKER"])
     strength_column = find_matching_column(df, ["D_CLOSE_STRENGTH"])
@@ -509,9 +416,9 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab_trend_summary, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab_crypto, tab11 = st.tabs([
+tab_trend_summary, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
                                                           "Trend Summary", "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below",
-                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows",                                                          "Crypto", "Notes"])
+                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows", "Notes"])
 
 ###############################################################################################################################################################
 
@@ -521,6 +428,7 @@ with tab_trend_summary:
         ("Sector ETFs", "sector_etfs_trend_summary"),
         ("Favorites", "favorites_trend_summary"),
         ("Additional ETFs", "additional_ETFS_trend_summary"),
+        ("Crypto", "crypto_trend_summary"),
         ("All Stocks", "all_stocks_trend_summary"),
     ]
     for summary_tab, (label, prefix) in zip(st.tabs([label for label, _ in summary_groups]), summary_groups):
@@ -570,7 +478,7 @@ with tab1:
         pattern = os.path.join(base_dir, "spy_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            show_chart(latest_file, width=1500)
+            show_chart(latest_file, max_width=1850, max_height=650)
         else:
             st.warning("SPY seasonality image not found.")
 
@@ -578,7 +486,7 @@ with tab1:
         pattern = os.path.join(base_dir, "qqq_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            show_chart(latest_file, width=1500)
+            show_chart(latest_file, max_width=1850, max_height=650)
         else:
             st.warning("QQQ seasonality image not found.")
 
@@ -586,7 +494,7 @@ with tab1:
         pattern = os.path.join(base_dir, "iwm_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            show_chart(latest_file, width=1500)
+            show_chart(latest_file, max_width=1850, max_height=650)
         else:
             st.warning("IWM seasonality image not found.")
 
@@ -594,7 +502,7 @@ with tab1:
         pattern = os.path.join(base_dir, "VIX_seasonality_*.png")
         latest_file = latest_valid_png(pattern)
         if latest_file:
-            show_chart(latest_file, width=1500)
+            show_chart(latest_file, max_width=1850, max_height=650)
         else:
             st.warning("VIX seasonality image not found.")
 
@@ -864,86 +772,72 @@ with tab3:
         "UTILITY",
     ]
     with cab_summary_tab1:
-        st.write("Current trend summary tables and percentage trend analysis for ETFs/indices.")
-        pattern = os.path.join(base_dir, "CURRENT_TREND_SUMMARY_*.xlsx")
-        matching_files = [
-            p for p in glob.glob(pattern)
-            if "CURRENT_TREND_SUMMARY_ALL_STOCKS_" not in os.path.basename(p)
-        ]
-        if matching_files:
-            latest_file = max(matching_files, key=os.path.getmtime)
-            try:
-                df = pd.read_excel(latest_file)
-                st.subheader("Trend Distribution by Timeframe")
-                render_trend_pie_charts(df)
-                st.subheader("BULL Percentage Distribution")
-                render_bull_pct_donut(df)
-                st.subheader("Detailed Summary")
-                st.dataframe(df, use_container_width=True)
-            except Exception as e:
-                st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY XLSX file: {e}")
-        else:
-            st.warning("CURRENT_TREND_SUMMARY XLSX file not found.")
-
-        matches = [
-            p for p in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
-            if "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_" not in os.path.basename(p)
-        ]
-        valid_matches = [path for path in matches if is_valid_png(path)]
-        if valid_matches:
-            st.image(max(valid_matches, key=os.path.getmtime), width=1500)
-        else:
-            st.warning("Close Above/Below Summary image not found.")
+        summary_png_tab, summary_data_tab = st.tabs(["CURRENT_TREND_SUMMARY", "Full Dataset"])
+        with summary_png_tab:
+            matches = [
+                p for p in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_*.png"))
+                if "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_" not in os.path.basename(p)
+            ]
+            valid_matches = [path for path in matches if is_valid_png(path)]
+            if valid_matches:
+                st.image(max(valid_matches, key=os.path.getmtime), width=1500)
+            else:
+                st.warning("Close Above/Below Summary image not found.")
+        with summary_data_tab:
+            matching_files = [
+                p for p in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_*.xlsx"))
+                if "CURRENT_TREND_SUMMARY_ALL_STOCKS_" not in os.path.basename(p)
+            ]
+            if matching_files:
+                try:
+                    st.dataframe(pd.read_excel(max(matching_files, key=os.path.getmtime)), use_container_width=True)
+                except Exception as e:
+                    st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY XLSX file: {e}")
+            else:
+                st.warning("CURRENT_TREND_SUMMARY XLSX file not found.")
 
     with cab_summary_tab2:
-        st.write("Current trend summary tables and percentage trend analysis for the all-stocks universe.")
-        matches = [
-            path
-            for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx"))
-            if re.match(
-                r"^CURRENT_TREND_SUMMARY_ALL_STOCKS_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.xlsx$",
-                os.path.basename(path),
-            )
-        ]
-        if matches:
-            latest_file = max(matches, key=os.path.getmtime)
-            try:
-                df = pd.read_excel(latest_file)
-                st.subheader("Trend Distribution by Timeframe")
-                render_trend_pie_charts(df)
-                st.subheader("BULL Percentage Distribution")
-                render_bull_pct_donut(df)
-                st.subheader("Detailed Summary")
-                st.dataframe(df, use_container_width=True)
-            except Exception as e:
-                st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file: {e}")
-        else:
-            st.warning("CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file not found.")
-
-        matches = [
-            path
-            for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
-            if re.match(
-                r"^CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.png$",
-                os.path.basename(path),
-            )
-        ]
-        valid_matches = [path for path in matches if is_valid_png(path)]
-        if valid_matches:
-            try:
-                st.image(max(valid_matches, key=os.path.getmtime), width=1500)
-            except Image.DecompressionBombError:
-                st.error("The all-stock summary PNG is too large to display safely. "
-                         "Regenerate it with the updated combined script and upload the new PNG. "
-                         "The full dataset remains available in the table above.")
-        else:
-            st.warning("Close Above/Below Summary - All Stocks image not found.")
+        stocks_png_tab, stocks_data_tab = st.tabs(["CURRENT_TREND_SUMMARY_ALL_STOCKS", "Full Dataset"])
+        with stocks_png_tab:
+            matches = [
+                path
+                for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_*.png"))
+                if re.match(
+                    r"^CURRENT_TREND_SUMMARY_TABLE_ALL_STOCKS_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.png$",
+                    os.path.basename(path),
+                )
+            ]
+            valid_matches = [path for path in matches if is_valid_png(path)]
+            if valid_matches:
+                try:
+                    st.image(max(valid_matches, key=os.path.getmtime), width=1500)
+                except Image.DecompressionBombError:
+                    st.error("The all-stock summary PNG is too large to display safely. "
+                             "Regenerate it with the updated combined script and upload the new PNG. "
+                             "The full dataset remains available in the Full Dataset tab.")
+            else:
+                st.warning("Close Above/Below Summary - All Stocks image not found.")
+        with stocks_data_tab:
+            matches = [
+                path
+                for path in glob.glob(os.path.join(base_dir, "CURRENT_TREND_SUMMARY_ALL_STOCKS_*.xlsx"))
+                if re.match(
+                    r"^CURRENT_TREND_SUMMARY_ALL_STOCKS_(\d{2}_\d{2}_\d{4}|\d{4}-\d{2}-\d{2})\.xlsx$",
+                    os.path.basename(path),
+                )
+            ]
+            if matches:
+                try:
+                    st.dataframe(pd.read_excel(max(matches, key=os.path.getmtime)), use_container_width=True)
+                except Exception as e:
+                    st.error(f"⚠️ Failed to load CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file: {e}")
+            else:
+                st.warning("CURRENT_TREND_SUMMARY_ALL_STOCKS XLSX file not found.")
 
 ###############################################################################################################################################################
 
 # Close Above/Below Sector Summary
 with tab_sector_summary:
-    st.write("Sector-specific trend summaries with detailed tables.")
 
     base_dir = DATA_DIR
     
@@ -1049,8 +943,6 @@ with tab_sector_summary:
 
 # Close Above/Below Industry Summary
 with tab_industry_summary:
-    st.write("Industry-specific trend summaries with detailed tables.")
-
     base_dir = DATA_DIR
     industry_tokens = discover_industry_tokens(base_dir)
 
@@ -1082,10 +974,9 @@ with tab_industry_summary:
         industry_tabs = st.tabs(inner_tabs)
 
         with industry_tabs[0]:
-            st.subheader("BULL_PCT per Industry")
             breadth_matches = glob.glob(os.path.join(base_dir, "BULL_PCT_per_INDUSTRY_*.png"))
             if breadth_matches:
-                show_chart(max(breadth_matches, key=os.path.getmtime), width=1800)
+                show_chart(max(breadth_matches, key=os.path.getmtime), max_width=1850, max_height=700)
             else:
                 st.warning("BULL_PCT per Industry image not found. Run the combined analysis script to generate it.")
 
@@ -1310,13 +1201,6 @@ with tab_8ema_study:
     with ema_full_data_tab:
         show_8ema_csv("TICKERS_FULL_PRICE_DATA.csv", "stock")
 
-with tab_crypto:
-    crypto_summary_path = latest_valid_png(os.path.join(DATA_DIR, "crypto_trend_summary_*.png"))
-    if crypto_summary_path:
-        st.image(crypto_summary_path, use_container_width=True)
-    else:
-        st.warning("Crypto trend summary PNG not found. Run the combined analysis script to generate it.")
-
 ###############################################################################################################################################################
 
 # Drawdown
@@ -1452,7 +1336,6 @@ with tab_spy_vix:
 
     with svix_tab1:
         vix_four_year_col, vix_last_five_col = st.columns(2)
-        vix_four_year_col.subheader("Last 4 Years")
         vix_weekday_path = latest_valid_png(
             os.path.join(base_dir, "vix_weekday_*_graph.png"), exclude_substring="_last_five_",
         )
@@ -1460,7 +1343,6 @@ with tab_spy_vix:
             show_chart(vix_weekday_path, container=vix_four_year_col, max_width=850, max_height=620)
         else:
             vix_four_year_col.warning("VIX Weekday Returns & Hit Rate image not found.")
-        vix_last_five_col.subheader("Last 5 Occurrences per Weekday")
         vix_recent_path = latest_valid_png(os.path.join(base_dir, "vix_weekday_last_five_*_graph.png"))
         if vix_recent_path:
             show_chart(vix_recent_path, container=vix_last_five_col, max_width=850, max_height=620)
