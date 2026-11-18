@@ -507,7 +507,6 @@ with tab1:
             st.warning("VIX seasonality image not found.")
 
     with season_tab_mercury:
-        st.subheader("Mercury Retrograde")
 
         def extract_mercury_page_number(path: str) -> int:
             name = os.path.basename(path)
@@ -607,6 +606,20 @@ with tab2:
         else:
             st.warning(not_found_message)
 
+    def show_tail_count_pair(period: str, timeframe: str) -> None:
+        net_column, separate_column = st.columns(2)
+        show_latest_png(
+            f"{period}_tail_candle_count_*.png",
+            f"{timeframe} Tail Candle Count image not found.",
+            exclude_substring=f"{period}_tail_candle_count_separate_",
+            container=net_column,
+        )
+        show_latest_png(
+            f"{period}_tail_candle_count_separate_*.png",
+            f"{timeframe} Tail Candle Count (Separate) image not found.",
+            container=separate_column,
+        )
+
     timeframe_tabs = st.tabs(["Daily", "Weekly", "Monthly"])
     for timeframe, timeframe_tab in zip(("Daily", "Weekly", "Monthly"), timeframe_tabs):
         period = timeframe.lower()
@@ -626,18 +639,33 @@ with tab2:
                 )
 
             with count_tab:
-                net_column, separate_column = st.columns(2)
-                show_latest_png(
-                    f"{period}_tail_candle_count_*.png",
-                    f"{timeframe} Tail Candle Count image not found.",
-                    exclude_substring=f"{period}_tail_candle_count_separate_",
-                    container=net_column,
-                )
-                show_latest_png(
-                    f"{period}_tail_candle_count_separate_*.png",
-                    f"{timeframe} Tail Candle Count (Separate) image not found.",
-                    container=separate_column,
-                )
+                if period == "monthly":
+                    current_tab, historical_tab = st.tabs(["Current", "Historical"])
+                    with current_tab:
+                        show_tail_count_pair(period, timeframe)
+                    with historical_tab:
+                        st.caption("Historical counts use today's tracked tickers and include each ticker only for months with available price data.")
+                        history_pairs = {}
+                        for path in glob.glob(os.path.join(base_dir, "monthly_tail_history_*.png")):
+                            match = re.fullmatch(
+                                r"monthly_tail_history_(net|separate)_(\d{6})_(\d{6})\.png",
+                                os.path.basename(path),
+                            )
+                            if match:
+                                kind, start, end = match.groups()
+                                history_pairs.setdefault((start, end), {})[kind] = path
+                        if not history_pairs:
+                            st.warning("Historical monthly tail charts not found. Run the combined analysis script to generate them.")
+                        for window in sorted(history_pairs, reverse=True):
+                            charts = history_pairs[window]
+                            net_column, separate_column = st.columns(2)
+                            for kind, column in (("net", net_column), ("separate", separate_column)):
+                                if kind in charts:
+                                    show_chart(charts[kind], container=column)
+                                else:
+                                    column.warning(f"Monthly historical {kind} chart missing for {window[0]}–{window[1]}.")
+                else:
+                    show_tail_count_pair(period, timeframe)
 
             with bullish_tab:
                 show_wick_table(
