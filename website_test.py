@@ -1122,9 +1122,41 @@ with tab_market_cap:
 
 # Moving Average Studies
 with tab9:
-    tab_20_50_crossover, tab_8_20_crossover, tab_8ema_study = st.tabs(
-        ["20/50 Crossover", "8 EMA / 20 SMA Crossover", "8_EMA Study"]
+    tab_20_50_crossover, tab_8_20_crossover, tab_8ema_study, tab_ma_breadth = st.tabs(
+        ["20/50 Crossover", "8 EMA / 20 SMA Crossover", "8_EMA Study", "Above/Below MAs"]
     )
+
+def show_ma_breadth_chart(prefix: str, days: int) -> None:
+    path = latest_valid_png(os.path.join(DATA_DIR, f"{prefix}_{days}_sma_*.png"))
+    if path:
+        show_chart(path, max_width=1850, max_height=650)
+    else:
+        st.warning(f"{days}-day SMA breadth chart not found. Run the combined analysis script to generate it.")
+
+
+with tab_ma_breadth:
+    ma_windows = (20, 50, 200)
+    ma_tabs = st.tabs([f"{days}-Day SMA" for days in ma_windows] + ["Per Sector"])
+    for days, ma_tab in zip(ma_windows, ma_tabs[:-1]):
+        with ma_tab:
+            show_ma_breadth_chart("stocks_above_below", days)
+
+    with ma_tabs[-1]:
+        sector_tokens = set()
+        for path in glob.glob(os.path.join(DATA_DIR, "stocks_sector_ma_*.png")):
+            match = re.fullmatch(r"stocks_sector_ma_([A-Za-z0-9_]+)_(?:20|50|200)_sma_\d{2}_\d{2}_\d{4}\.png",
+                                 os.path.basename(path))
+            if match and is_valid_png(path):
+                sector_tokens.add(match[1])
+        if sector_tokens:
+            st.caption("Sector charts use today's sector classifications and exclude unclassified stocks.")
+            sectors = sorted(sector_tokens)
+            for token, sector_tab in zip(sectors, st.tabs([token.replace("_", " ") for token in sectors])):
+                with sector_tab:
+                    for days in ma_windows:
+                        show_ma_breadth_chart(f"stocks_sector_ma_{token}", days)
+        else:
+            st.warning("No sector SMA breadth charts found. Run the combined analysis script to generate them.")
 
 
 def show_crossover_study(file_prefix: str, study_label: str) -> None:
