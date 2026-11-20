@@ -1,0 +1,29 @@
+TICKER,DESCRIPTION,DATE,CLOSE,8_EMA,8_EMA_ABOVE_BELOW,8_EMA_SLOPE,8_EMA_20_SMA_CROSS,DAILY_CLOSE_ABV_BLW,WEEKLY_8_EMA_20_SMA_CROSS,WEEKLY_CLOSE_ABV_BLW,MONTHLY_CLOSE_ABV_BLW,TOTAL_SCORE
+KWEB,China Internet,2026-11-20,20.719999313354492,22.06,Below,Downward,Below,Below,Below,Below,Below,0
+FXI,China Large-Caps,2026-11-20,31.229999542236328,32.58,Below,Downward,Below,Below,Below,Below,Below,0
+SLV,Silver,2026-11-20,36.970001220703125,41.55,Below,Downward,Below,Below,Below,Below,Below,0
+GLD,Gold,2026-11-20,322.8699951171875,344.74,Below,Downward,Below,Below,Below,Below,Below,0
+URA,Uranium,2026-11-20,26.790000915527344,29.84,Below,Downward,Below,Below,Below,Below,Below,0
+TAN,Solar,2026-11-20,33.970001220703125,38.49,Below,Downward,Below,Below,Below,Below,Below,0
+EEM,Emerging Markets,2026-11-20,53.84000015258789,57.8,Below,Downward,Below,Below,Below,Below,Below,0
+GDX,Gold Miners,2026-11-20,68.4000015258789,76.35,Below,Downward,Below,Below,Below,Below,Below,0
+ICLN,Clean Energy,2026-11-20,13.84000015258789,14.93,Below,Downward,Below,Below,Below,Below,Below,0
+COPX,Copper Miners,2026-11-20,56.33000183105469,63.64,Below,Downward,Below,Below,Below,Below,Below,0
+TNX,10-Year Yield,2026-11-20,4.911999702453613,5.02,Below,Downward,Above,Below,Above,Above,Above,57
+TBT,Short Treasuries,2026-11-20,38.459999084472656,39.35,Below,Downward,Above,Below,Above,Above,Above,57
+MJ,Marijuana,2026-11-20,17.84040069580078,20.15,Below,Downward,Below,Below,Below,Below,Below,0
+UGA,Gasoline,2026-11-20,116.81999969482422,119.1,Below,Downward,Below,Above,Above,Below,Below,29
+TLT,Long Treasuries,2026-11-20,81.44999694824219,80.5,Above,Upward,Below,Above,Below,Below,Below,43
+HYG,High-Yield Bonds,2026-11-20,76.33000183105469,76.71,Below,Downward,Below,Below,Below,Below,Below,0
+JNK,High-Yield Bonds,2026-11-20,91.54000091552734,92.04,Below,Downward,Below,Below,Below,Below,Below,0
+DJP,Commodities,2026-11-20,45.970001220703125,47.15,Below,Downward,Below,Below,Below,Below,Below,0
+IBIT,Bitcoin,2026-11-20,33.02000045776367,36.78,Below,Downward,Below,Below,Below,Below,Below,0
+DRAM,Memory Chips,2026-11-20,33.36000061035156,38.88,Below,Downward,Below,Below,Below,Below,Below,0
+MAGS,Magnificent Seven,2026-11-20,61.65999984741211,65.89,Below,Downward,Below,Below,Below,Below,Below,0
+QQQE,Equal-Weight Nasdaq,2026-11-20,105.41000366210938,111.4,Below,Downward,Below,Below,Below,Below,Below,0
+RSP,Equal-Weight S&P,2026-11-20,207.44000244140625,214.73,Below,Downward,Below,Below,Below,Below,Below,0
+BUG,Cybersecurity,2026-11-20,45.029998779296875,45.54,Below,Downward,Below,Below,Above,Below,Above,29
+HACK,Cybersecurity,2026-11-20,115.30000305175781,117.03,Below,Downward,Below,Below,Above,Below,Below,14
+IFRA,Infrastructure,2026-11-20,54.720001220703125,56.52,Below,Downward,Below,Below,Below,Below,Below,0
+NCLD,Neocloud,2026-11-20,10.149999618530273,12.45,Below,Downward,Below,Below,Unavailable,Below,Below,0
+ETHA,Ethereum,2026-11-20,36.099998474121094,41.34,Below,Downward,Below,Below,Below,Below,Below,0
