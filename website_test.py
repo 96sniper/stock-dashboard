@@ -1126,35 +1126,43 @@ with tab9:
         ["20/50 Crossover", "8 EMA / 20 SMA Crossover", "8_EMA Study", "Above/Below MAs"]
     )
 
-def show_ma_breadth_chart(prefix: str, days: int) -> None:
-    path = latest_valid_png(os.path.join(DATA_DIR, f"{prefix}_{days}_sma_*.png"))
+def show_ma_breadth_chart(prefix: str, days: int, average_type: str = "SMA") -> None:
+    path = latest_valid_png(os.path.join(DATA_DIR, f"{prefix}_{days}_{average_type.lower()}_*.png"))
     if path:
         show_chart(path, max_width=1850, max_height=650)
     else:
-        st.warning(f"{days}-day SMA breadth chart not found. Run the combined analysis script to generate it.")
+        st.warning(f"{days}-day {average_type} breadth chart not found. Run the combined analysis script to generate it.")
 
 
 with tab_ma_breadth:
-    ma_windows = (20, 50, 200)
-    ma_tabs = st.tabs([f"{days}-Day SMA" for days in ma_windows] + ["Per Sector"])
-    for days, ma_tab in zip(ma_windows, ma_tabs[:-1]):
+    ma_windows = ((8, "EMA"), (20, "SMA"), (50, "SMA"), (200, "SMA"))
+    ma_tabs = st.tabs([f"{days}-Day {average_type}" for days, average_type in ma_windows] + ["Per Sector"])
+    for (days, average_type), ma_tab in zip(ma_windows, ma_tabs[:-1]):
         with ma_tab:
-            show_ma_breadth_chart("stocks_above_below", days)
+            show_ma_breadth_chart("stocks_above_below", days, average_type)
 
     with ma_tabs[-1]:
         sector_tokens = set()
         for path in glob.glob(os.path.join(DATA_DIR, "stocks_sector_ma_*.png")):
-            match = re.fullmatch(r"stocks_sector_ma_([A-Za-z0-9_]+)_(?:20|50|200)_sma_\d{2}_\d{2}_\d{4}\.png",
+            match = re.fullmatch(r"stocks_sector_ma_([A-Za-z0-9_]+)_(?:8_ema|(?:20|50|200)_sma)_\d{2}_\d{2}_\d{4}\.png",
                                  os.path.basename(path))
             if match and is_valid_png(path):
                 sector_tokens.add(match[1])
         if sector_tokens:
             st.caption("Sector charts use today's sector classifications and exclude unclassified stocks.")
-            sectors = sorted(sector_tokens)
-            for token, sector_tab in zip(sectors, st.tabs([token.replace("_", " ") for token in sectors])):
+            groups = [(token.replace("_", " "), f"stocks_sector_ma_{token}") for token in sorted(sector_tokens)]
+            technology_groups = [
+                ("Semiconductors", "stocks_ma_group_Semiconductors"),
+                ("Software", "stocks_ma_group_Software"),
+                ("All Other Technology", "stocks_ma_group_All_Other_Technology"),
+            ]
+            insert_at = next((i + 1 for i, (name, _) in enumerate(groups) if name == "Technology"),
+                             next((i for i, (name, _) in enumerate(groups) if name > "Technology"), len(groups)))
+            groups[insert_at:insert_at] = technology_groups
+            for (_, prefix), sector_tab in zip(groups, st.tabs([name for name, _ in groups])):
                 with sector_tab:
-                    for days in ma_windows:
-                        show_ma_breadth_chart(f"stocks_sector_ma_{token}", days)
+                    for days, average_type in ma_windows:
+                        show_ma_breadth_chart(prefix, days, average_type)
         else:
             st.warning("No sector SMA breadth charts found. Run the combined analysis script to generate them.")
 
@@ -1429,7 +1437,7 @@ with tab_spy_vix:
     with svix_tab3:
         matches = glob.glob(os.path.join(base_dir, "vix_analysis_*_graph.png"))
         if matches:
-            show_chart(max(matches, key=os.path.getmtime), width=1200)
+            show_chart(max(matches, key=os.path.getmtime), max_width=1850, max_height=650)
         else:
             st.warning("VIX Avg Price & STD Dev Bands image not found.")
 
