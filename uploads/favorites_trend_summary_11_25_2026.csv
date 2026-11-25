@@ -1,0 +1,15 @@
+TICKER,DATE,CLOSE,8_EMA,8_EMA_ABOVE_BELOW,8_EMA_SLOPE,8_EMA_20_SMA_CROSS,DAILY_CLOSE_ABV_BLW,WEEKLY_8_EMA_20_SMA_CROSS,WEEKLY_CLOSE_ABV_BLW,MONTHLY_CLOSE_ABV_BLW,TOTAL_SCORE
+HOOD,2026-11-25,65.78,68.67,Below,Downward,Below,Below,Below,Below,Below,0
+SPCX,2026-11-25,127.44,132.56,Below,Downward,Below,Below,Below,Below,Below,0
+ORCL,2026-11-25,103.88,110.92,Below,Downward,Below,Below,Below,Below,Below,0
+TSLA,2026-11-25,380.14,378.55,Above,Upward,Below,Above,Above,Below,Above,71
+META,2026-11-25,609.89,602.82,Above,Upward,Below,Above,Below,Below,Above,57
+MSFT,2026-11-25,489.93,499.34,Below,Downward,Below,Below,Above,Below,Below,14
+NVDA,2026-11-25,149.3,154.09,Below,Downward,Below,Below,Below,Below,Below,0
+GOOGL,2026-11-25,273.1,278.51,Below,Downward,Below,Below,Below,Below,Below,0
+AMZN,2026-11-25,244.43,253.83,Below,Downward,Below,Below,Below,Below,Below,0
+AAPL,2026-11-25,355.58,351.43,Above,Upward,Above,Above,Above,Below,Above,86
+SMH,2026-11-25,422.4599914550781,443.45,Below,Downward,Below,Below,Below,Below,Below,0
+NFLX,2026-11-25,59.41,59.41,Below,Downward,Below,Above,Below,Below,Below,14
+AMD,2026-11-25,406.03,454.76,Below,Downward,Below,Below,Below,Below,Below,0
+LLY,2026-11-25,1392.22,1387.9,Above,Upward,Below,Above,Above,Below,Above,71
