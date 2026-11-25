@@ -1195,8 +1195,11 @@ def show_crossover_study(file_prefix: str, study_label: str) -> None:
         latest_run_pages = sorted(latest_run_pages, key=extract_page_number, reverse=True)
         with crossover_recent_tab:
             recent_columns = st.columns(2)
-            for column, page_path in zip(recent_columns, latest_run_pages[:2]):
-                column.subheader(f"Page {extract_page_number(page_path)}")
+            for index, (column, page_path) in enumerate(zip(recent_columns, latest_run_pages[:2])):
+                column.subheader(
+                    "Last 3 Months" if study_label == "8 EMA / 20 SMA" and index == 1
+                    else f"Page {extract_page_number(page_path)}"
+                )
                 show_chart(page_path, container=column)
             st.write(f"SPY daily candlestick pages with {study_label} crossover zones and summary stats.")
             if study_label == "MA 20/50":
@@ -1206,6 +1209,7 @@ def show_crossover_study(file_prefix: str, study_label: str) -> None:
                 st.write("The price action following a 20/50ma crossover is not guaranteed but the odds increase for a certain direction.")
             else:
                 st.write("Green zones begin when the daily 8 EMA crosses above the 20 SMA; red zones begin when it crosses below.")
+                st.write("Recent shows the last three months. Historical contains all multi-year candlestick pages.")
                 st.write("Uses unadjusted daily closes since 2000. Summary stats show historical zone ranges and trading-day lengths, including the developing latest zone; they are not a forecast.")
             st.write("The zones were calculated by looking for the maximum price gain or decline within the zone. This simply gives an idea to what direction price should be heading short term.")
         with crossover_historical_tab:
@@ -1511,7 +1515,7 @@ with tab_spy_analysis:
                     col.warning(f"Monthly {ticker} Gain Chart image not found.")
 
     with day_tab4:
-        for yearly_row in (["SPY", "QQQ", "IWM"], ["CL1!"]):
+        for yearly_row in (["SPY", "QQQ", "IWM"], ["CL1!", "BTC", "SMH"]):
             yearly_cols = st.columns(3)
             for col, ticker in zip(yearly_cols, yearly_row):
                 yearly_gain_path = os.path.join(base_dir, f"YEARLY_{ticker}_Gain_Chart.png")
@@ -1566,8 +1570,8 @@ with tab_ytd:
     )
 
     row_height = 24
-    ytd_sub_sector, ytd_sub_all, sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_ytd_lines = st.tabs(
-        ["Sector ETFs", "All Stocks", "Yearly Table", "Year-to-Date", "Quarter-to-Date", "YTD Line Charts"]
+    ytd_sub_sector, ytd_sub_all, sub_tab_yearly, sub_tab_ytd, sub_tab_qtd, sub_tab_ytd_lines, sub_tab_datasets = st.tabs(
+        ["Sector ETFs", "All Stocks", "Yearly Table", "Year-to-Date", "Quarter-to-Date", "YTD Line Charts", "Full Datasets"]
     )
     with sub_tab_ytd_lines:
         ytd_line_symbols = [
@@ -1578,7 +1582,7 @@ with tab_ytd:
             with ticker_tab:
                 line_path = latest_valid_png(os.path.join(base_dir, f"{symbol}_ytd_line_chart_*.png"))
                 if line_path:
-                    show_chart(line_path)
+                    show_chart(line_path, max_width=1850, max_height=700)
                 else:
                     st.warning(f"{symbol} YTD line chart not found. Run the combined analysis script to generate it.")
     with sub_tab_ytd:
@@ -1592,15 +1596,6 @@ with tab_ytd:
             latest_sector_file = max(sector_matches, key=os.path.getmtime)
             try:
                 sector_df = pd.read_excel(latest_sector_file)
-                sector_table_height = min(900, max(360, row_height * (len(sector_df) + 1) + 12))
-                st.dataframe(
-                    sector_df,
-                    use_container_width=True,
-                    height=sector_table_height,
-                    hide_index=True,
-                    row_height=row_height,
-                )
-
                 # --- %_FROM_ATH chart ---
                 ath_col = find_matching_column(sector_df, ["%_FROM_ATH", "PCT_FROM_ATH", "% From ATH", "pct_from_ath"])
                 ticker_col = find_matching_column(sector_df, ["Ticker", "TICKER", "Symbol", "SYMBOL"])
@@ -1663,22 +1658,29 @@ with tab_ytd:
             )
         else:
             st.warning("Historical stock ATH breadth chart not found. Run the combined analysis script to generate it.")
-        if all_stocks_matches:
-            latest_all_stocks_file = max(all_stocks_matches, key=os.path.getmtime)
-            try:
-                all_stocks_df = pd.read_excel(latest_all_stocks_file)
-                all_stocks_table_height = min(900, max(360, row_height * (len(all_stocks_df) + 1) + 12))
-                st.dataframe(
-                    all_stocks_df,
-                    use_container_width=True,
-                    height=all_stocks_table_height,
-                    hide_index=True,
-                    row_height=row_height,
-                )
-            except Exception as e:
-                st.error(f"⚠️ Failed to load all-stocks XLSX file: {e}")
-        else:
-            st.warning("All stocks YTD analysis file not found.")
+
+    with sub_tab_datasets:
+        dataset_tabs = st.tabs(["All Stocks", "Sector ETFs"])
+        for dataset_tab, matches, label in zip(
+            dataset_tabs, (all_stocks_matches, sector_matches), ("All stocks", "Sector ETF"),
+        ):
+            with dataset_tab:
+                if matches:
+                    latest_dataset_file = max(matches, key=os.path.getmtime)
+                    try:
+                        dataset_df = pd.read_excel(latest_dataset_file)
+                        table_height = min(900, max(360, row_height * (len(dataset_df) + 1) + 12))
+                        st.dataframe(
+                            dataset_df,
+                            use_container_width=True,
+                            height=table_height,
+                            hide_index=True,
+                            row_height=row_height,
+                        )
+                    except Exception as e:
+                        st.error(f"Failed to load {label} YTD analysis XLSX file: {e}")
+                else:
+                    st.warning(f"{label} YTD analysis file not found.")
 
     sector_chart_width = 1200
     yearly_chart_width = 1600
