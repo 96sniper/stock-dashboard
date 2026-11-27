@@ -416,11 +416,23 @@ DATA_DIR = resolve_data_dir()
 ####################################################################################################################################################################
 
 # Tabs
-tab_trend_summary, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab11 = st.tabs([
+tab_trend_summary, tab1, tab_spy_vix, tab_spy_analysis, tab_ytd, tab_candle_strength, tab_beta, tab_fed_funds_spy, tab2, tab3, tab8, tab_market_cap, tab9, tab_drawdown, tab_52_week, tab_intraday_statistics, tab11 = st.tabs([
                                                           "Trend Summary", "Seasonality", "SPY/VIX Analysis", "Index Analysis", "YTD Analysis", "Candle Strength", "Price and Volume Stats", "Fed Funds Rate - SPY", "Tail Candles (D-W-M)", "Close Above/Below",
-                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows", "Notes"])
+                                                          "Upcoming Earnings", "Market Cap",                                                           "Moving Average Studies", "Drawdown", "52-Week Highs/Lows", "Intraday Statistics", "Notes"])
 
 ###############################################################################################################################################################
+
+with tab_intraday_statistics:
+    btc_hour_tab, btc_weekday_tab = st.tabs(["BTC Hourly", "BTC Weekdays"])
+    for stats_tab, prefix in (
+        (btc_hour_tab, "btc_hourly_average_gain"), (btc_weekday_tab, "btc_weekday_average_gain"),
+    ):
+        with stats_tab:
+            stats_path = latest_valid_png(os.path.join(DATA_DIR, f"{prefix}_*.png"))
+            if stats_path:
+                show_chart(stats_path, max_width=1850, max_height=700)
+            else:
+                st.warning("BTC statistics PNG not found. Run the combined analysis script to generate it.")
 
 with tab_trend_summary:
     summary_groups = [
